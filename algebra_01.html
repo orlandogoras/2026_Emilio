@@ -1,0 +1,2179 @@
+<!DOCTYPE html>
+<html lang="es" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AventuraGRADO 6° - Introducción al Álgebra y Álgebra</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&family=Fira+Code:wght@400;600&display=swap" rel="stylesheet">
+    <!-- html2canvas CDN -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <style>
+        :root {
+            --bg-color: #f3f8f4;
+            --card-bg: #ffffff;
+            --text-color: #1e3528;
+            --text-muted: #5a7265;
+            --primary: #1b8a5a;
+            --primary-hover: #136843;
+            --secondary: #0d4b31;
+            --accent: #38b000;
+            --success: #16a34a;
+            --danger: #dc2626;
+            --warning: #d97706;
+            --border-color: #d6e6dc;
+            --shadow: 0 4px 15px rgba(27, 138, 90, 0.08);
+            --radius: 12px;
+            --font-main: 'Poppins', sans-serif;
+            --font-code: 'Fira Code', monospace;
+        }
+
+        [data-theme="dark"] {
+            --bg-color: #0e1a14;
+            --card-bg: #16261e;
+            --text-color: #ecf7f0;
+            --text-muted: #8fb39e;
+            --primary: #2ecc71;
+            --primary-hover: #27ae60;
+            --secondary: #0a3622;
+            --accent: #52d681;
+            --success: #2ecc71;
+            --danger: #f87171;
+            --warning: #fbbf24;
+            --border-color: #264033;
+            --shadow: 0 4px 15px rgba(0, 0, 0, 0.35);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+        }
+
+        body {
+            font-family: var(--font-main);
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            padding-bottom: 40px;
+        }
+
+        sup, sub {
+            font-size: 0.74em;
+            line-height: 0;
+            position: relative;
+            vertical-align: baseline;
+        }
+        sup { top: -0.52em; }
+        sub { bottom: -0.26em; }
+
+        header {
+            background-color: var(--card-bg);
+            border-bottom: 1px solid var(--border-color);
+            padding: 1rem 2rem;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: var(--shadow);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .logo-icon {
+            font-size: 2rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        h1 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--text-color);
+        }
+
+        .controls {
+            display: flex;
+            gap: 0.75rem;
+            align-items: center;
+        }
+
+        .btn {
+            background-color: var(--card-bg);
+            color: var(--text-color);
+            border: 1px solid var(--border-color);
+            padding: 0.5rem 1rem;
+            border-radius: var(--radius);
+            font-family: var(--font-main);
+            font-weight: 600;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+
+        .btn:hover {
+            border-color: var(--primary);
+            color: var(--primary);
+        }
+
+        .btn-primary {
+            background-color: var(--primary);
+            color: white;
+            border: none;
+        }
+
+        .btn-primary:hover {
+            background-color: var(--primary-hover);
+            color: white;
+        }
+
+        nav.tabs-nav {
+            display: flex;
+            justify-content: center;
+            background-color: var(--card-bg);
+            border-bottom: 1px solid var(--border-color);
+            padding: 0.5rem 1rem 0;
+            gap: 0.5rem;
+            overflow-x: auto;
+        }
+
+        .tab-btn {
+            background: none;
+            border: none;
+            padding: 0.75rem 1.25rem;
+            font-family: var(--font-main);
+            font-weight: 600;
+            color: var(--text-muted);
+            cursor: pointer;
+            border-bottom: 3px solid transparent;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            white-space: nowrap;
+        }
+
+        .tab-btn:hover {
+            color: var(--primary);
+        }
+
+        .tab-btn.active {
+            color: var(--primary);
+            border-bottom-color: var(--primary);
+        }
+
+        main {
+            max-width: 1100px;
+            margin: 2rem auto;
+            padding: 0 1.5rem;
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+            animation: fadeIn 0.4s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .card {
+            background-color: var(--card-bg);
+            border-radius: var(--radius);
+            border: 1px solid var(--border-color);
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            box-shadow: var(--shadow);
+        }
+
+        .grid-3 {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.25rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .trim-header {
+            font-size: 1.15rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin: 1.5rem 0 0.9rem;
+            padding-bottom: 0.4rem;
+            border-bottom: 2px solid var(--border-color);
+        }
+
+        .accordion-item {
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius);
+            margin-bottom: 0.75rem;
+            overflow: hidden;
+            background-color: var(--card-bg);
+        }
+
+        .accordion-header {
+            width: 100%;
+            padding: 1rem 1.25rem;
+            background: none;
+            border: none;
+            text-align: left;
+            font-family: var(--font-main);
+            font-weight: 600;
+            font-size: 1.05rem;
+            color: var(--text-color);
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .accordion-header:hover {
+            background-color: rgba(27, 138, 90, 0.05);
+        }
+
+        .accordion-body {
+            padding: 0 1.25rem 1.25rem;
+            display: none;
+            border-top: 1px solid var(--border-color);
+            padding-top: 1rem;
+        }
+
+        .accordion-item.active .accordion-body {
+            display: block;
+        }
+
+        .accordion-item.active .accordion-icon {
+            transform: rotate(180deg);
+        }
+
+        .examples-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 0.85rem;
+            margin-top: 1rem;
+        }
+
+        .example-box {
+            background-color: var(--bg-color);
+            border-left: 4px solid var(--primary);
+            padding: 0.9rem 1rem;
+            border-radius: 0 var(--radius) var(--radius) 0;
+            font-family: var(--font-main);
+            font-size: 0.94rem;
+        }
+
+        .math-code {
+            font-family: var(--font-code);
+            background-color: rgba(27, 138, 90, 0.13);
+            padding: 0.15rem 0.45rem;
+            border-radius: 5px;
+            font-weight: 600;
+            color: var(--primary);
+            display: inline-block;
+        }
+
+        .lab-controls {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+            margin-bottom: 1.5rem;
+            background-color: var(--bg-color);
+            padding: 1rem;
+            border-radius: var(--radius);
+        }
+
+        .control-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+            flex: 1;
+            min-width: 180px;
+        }
+
+        .control-group label {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--text-muted);
+        }
+
+        input[type="range"] {
+            width: 100%;
+            accent-color: var(--primary);
+        }
+
+        .svg-container {
+            width: 100%;
+            height: 360px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: var(--bg-color);
+            border-radius: var(--radius);
+            border: 1px solid var(--border-color);
+            overflow: hidden;
+        }
+
+        .quiz-card {
+            position: relative;
+        }
+
+        .quiz-question {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        .quiz-options {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+            gap: 0.75rem;
+            margin-bottom: 1rem;
+        }
+
+        .option-btn {
+            padding: 0.75rem 1rem;
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius);
+            background-color: var(--card-bg);
+            color: var(--text-color);
+            font-family: var(--font-main);
+            font-weight: 500;
+            cursor: pointer;
+            text-align: left;
+            font-size: 1rem;
+        }
+
+        .option-btn:hover {
+            border-color: var(--primary);
+            background-color: rgba(27, 138, 90, 0.07);
+        }
+
+        .feedback {
+            padding: 0.75rem 1rem;
+            border-radius: var(--radius);
+            margin-top: 1rem;
+            font-weight: 600;
+            display: none;
+        }
+
+        .feedback.success {
+            display: block;
+            background-color: rgba(22, 163, 74, 0.15);
+            color: var(--success);
+            border: 1px solid var(--success);
+        }
+
+        .feedback.error {
+            display: block;
+            background-color: rgba(220, 38, 38, 0.14);
+            color: var(--danger);
+            border: 1px solid var(--danger);
+        }
+
+        .sketchpad-container {
+            margin-top: 1rem;
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius);
+            overflow: hidden;
+            background-color: #ffffff;
+        }
+
+        .sketchpad-toolbar {
+            background-color: var(--bg-color);
+            padding: 0.5rem;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            align-items: center;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .tool-btn {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            padding: 0.3rem 0.6rem;
+            cursor: pointer;
+            font-size: 0.9rem;
+            color: var(--text-color);
+        }
+
+        .tool-btn.active {
+            background-color: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+
+        .canvas-resize-wrapper {
+            position: relative;
+            width: 100%;
+            height: 240px;
+            min-height: 150px;
+            max-height: 750px;
+            background-color: #ffffff;
+        }
+
+        canvas.sketchpad {
+            display: block;
+            width: 100%;
+            height: 100%;
+            cursor: crosshair;
+            touch-action: none;
+        }
+
+        .canvas-resize-handle {
+            width: 100%;
+            height: 18px;
+            background-color: var(--bg-color);
+            border-top: 1px solid var(--border-color);
+            cursor: ns-resize;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 0.72rem;
+            font-weight: 600;
+            color: var(--text-muted);
+            user-select: none;
+            touch-action: none;
+        }
+
+        .canvas-resize-handle:hover {
+            background-color: rgba(27, 138, 90, 0.14);
+            color: var(--primary);
+        }
+
+        .hero-banner {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 2.5rem 2rem;
+            border-radius: var(--radius);
+            margin-bottom: 2rem;
+            box-shadow: var(--shadow);
+        }
+
+        .hero-banner h2 {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 0.25rem 0.65rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            background-color: var(--accent);
+            color: #ffffff;
+            margin-bottom: 0.5rem;
+        }
+
+        .topic-tag {
+            font-size: 0.78rem;
+            padding: 0.25rem 0.65rem;
+            border-radius: 6px;
+            font-weight: 600;
+            background-color: rgba(27, 138, 90, 0.15);
+            color: var(--primary);
+        }
+
+        .quick-card {
+            cursor: pointer;
+            margin-bottom: 0;
+        }
+
+        .quick-card:hover {
+            border-color: var(--primary);
+            transform: translateY(-2px);
+        }
+
+        @media (max-width: 768px) {
+            header { padding: 1rem; }
+            main { padding: 0 1rem; }
+            .hero-banner { padding: 1.5rem 1rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header & Navigation -->
+    <header>
+        <div class="logo-container">
+            <span class="logo-icon">xⁿ</span>
+            <h1>AventuraGRADO 6°</h1>
+        </div>
+        <div class="controls">
+            <button class="btn" id="langToggleBtn" onclick="toggleLanguage()">🌐 ES</button>
+            <button class="btn" id="themeToggleBtn" onclick="toggleTheme()">🌙</button>
+        </div>
+    </header>
+
+    <nav class="tabs-nav">
+        <button class="tab-btn active" id="nav-inicio" onclick="switchTab('inicio', this)">🏠 <span data-i18n="tab_home">Inicio</span></button>
+        <button class="tab-btn" id="nav-teoria" onclick="switchTab('teoria', this)">📚 <span data-i18n="tab_theory">Teoría y Ejemplos</span></button>
+        <button class="tab-btn" id="nav-laboratorio" onclick="switchTab('laboratorio', this)">🧪 <span data-i18n="tab_lab">Laboratorio SVG</span></button>
+        <button class="tab-btn" id="nav-quiz" onclick="switchTab('quiz', this)">📝 <span data-i18n="tab_quiz">Práctica de Examen</span></button>
+    </nav>
+
+    <main>
+        <!-- TAB 1: INICIO -->
+        <section id="tab-inicio" class="tab-content active">
+            <div class="hero-banner">
+                <span class="badge" data-i18n="grade_badge">Grado 6° • Introducción al Álgebra y Álgebra</span>
+                <h2 data-i18n="welcome_title">¡Bienvenido a AventuraGRADO 6°!</h2>
+                <p data-i18n="welcome_subtitle">Explora el mundo del pensamiento algebraico: patrones, secuencias, valor numérico, polinomios, productos notables y cocientes notables.</p>
+            </div>
+
+            <div class="trim-header" data-i18n="trim1_title">📗 Introducción al Álgebra — 1er Trimestre</div>
+            <div class="grid-3">
+                <div class="card quick-card" onclick="openTopicFromHome(1)">
+                    <h3>🧩 <span data-i18n="card_1_title">1. Patrones</span></h3>
+                    <p data-i18n="card_1_desc">Regularidades numéricas y geométricas para descubrir reglas de formación.</p>
+                </div>
+                <div class="card quick-card" onclick="openTopicFromHome(2)">
+                    <h3>🔢 <span data-i18n="card_2_title">2. Secuencias</span></h3>
+                    <p data-i18n="card_2_desc">Sucesiones ordenadas de términos y determinación del término general.</p>
+                </div>
+                <div class="card quick-card" onclick="openTopicFromHome(3)">
+                    <h3>🎯 <span data-i18n="card_3_title">3. Valor Numérico</span></h3>
+                    <p data-i18n="card_3_desc">Evaluación de expresiones algebraicas asignando valores concretos a sus variables.</p>
+                </div>
+            </div>
+
+            <div class="trim-header" data-i18n="trim3_title">📘 Álgebra — 3er Trimestre</div>
+            <div class="grid-3">
+                <div class="card quick-card" onclick="openTopicFromHome(4)">
+                    <h3>🔤 <span data-i18n="card_4_title">4. Números Generalizados</span></h3>
+                    <p data-i18n="card_4_desc">Uso de letras como representación general de cantidades y propiedades aritméticas.</p>
+                </div>
+                <div class="card quick-card" onclick="openTopicFromHome(5)">
+                    <h3>🧮 <span data-i18n="card_5_title">5. Expresiones Algebraicas</span></h3>
+                    <p data-i18n="card_5_desc">Traducción del lenguaje cotidiano al lenguaje simbólico con coeficientes y variables.</p>
+                </div>
+                <div class="card quick-card" onclick="openTopicFromHome(6)">
+                    <h3>🧱 <span data-i18n="card_6_title">6. Monomios y Polinomios</span></h3>
+                    <p data-i18n="card_6_desc">Estructura, partes, grado absoluto y relativo de expresiones de uno o más términos.</p>
+                </div>
+                <div class="card quick-card" onclick="openTopicFromHome(7)">
+                    <h3>🔗 <span data-i18n="card_7_title">7. Términos Semejantes</span></h3>
+                    <p data-i18n="card_7_desc">Identificación y reducción de términos con idéntica parte literal y exponentes.</p>
+                </div>
+                <div class="card quick-card" onclick="openTopicFromHome(8)">
+                    <h3>⚙️ <span data-i18n="card_8_title">8. Operaciones con Polinomios</span></h3>
+                    <p data-i18n="card_8_desc">Adición, sustracción, multiplicación y división entre expresiones polinómicas.</p>
+                </div>
+                <div class="card quick-card" onclick="openTopicFromHome(9)">
+                    <h3>📐 <span data-i18n="card_9_title">9. Productos Notables</span></h3>
+                    <p data-i18n="card_9_desc">Cuadrado de un binomio, suma por diferencia y producto de binomios con término común.</p>
+                </div>
+                <div class="card quick-card" onclick="openTopicFromHome(10)">
+                    <h3>➗ <span data-i18n="card_10_title">10. Cocientes Notables</span></h3>
+                    <p data-i18n="card_10_desc">Divisiones exactas reconocibles directamente por su estructura algebraica.</p>
+                </div>
+            </div>
+
+            <div class="card">
+                <h3 data-i18n="goals_title">🎯 Metas Curriculares de Aprendizaje (Grado 6°)</h3>
+                <ul style="margin-left: 1.5rem; margin-top: 0.5rem;" id="goals-list"></ul>
+            </div>
+        </section>
+
+        <!-- TAB 2: TEORÍA Y EJEMPLOS -->
+        <section id="tab-teoria" class="tab-content">
+            <div class="card">
+                <h2 data-i18n="theory_header">Guía Teórica de Álgebra (Grado 6°) — 3 Ejemplos por Tema</h2>
+                <p data-i18n="theory_sub">Haz clic en cada tema del 1er y 3er trimestre para estudiar sus conceptos fundamentales y analizar tres ejemplos resueltos paso a paso.</p>
+            </div>
+
+            <div id="accordion-container"></div>
+        </section>
+
+        <!-- TAB 3: LABORATORIO SVG -->
+        <section id="tab-laboratorio" class="tab-content">
+            <div class="card">
+                <h2 data-i18n="lab_header">Laboratorio Interactivo de Álgebra (SVG)</h2>
+                <p data-i18n="lab_sub">Manipula los deslizadores para explorar secuencias numéricas, modelos geométricos de productos notables y reducción de términos semejantes.</p>
+                
+                <div style="margin-top: 1rem; display: flex; gap: 0.5rem; flex-wrap: wrap;">
+                    <button class="btn btn-primary" onclick="setLabMode('sequences')" data-i18n="lab_mode_seq">🔢 Patrones y Secuencias</button>
+                    <button class="btn" onclick="setLabMode('notable_area')" data-i18n="lab_mode_area">📐 Área Geométrica (a + b)²</button>
+                    <button class="btn" onclick="setLabMode('like_terms')" data-i18n="lab_mode_terms">🔗 Reducción de Términos Semejantes</button>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="lab-controls" id="lab-controls"></div>
+                <div class="svg-container">
+                    <svg id="svg-lab-viewport" width="100%" height="100%" viewBox="0 0 600 360"></svg>
+                </div>
+                <div id="lab-metrics" style="margin-top: 1rem; font-weight: 600; text-align: center; font-size: 1.05rem;"></div>
+            </div>
+        </section>
+
+        <!-- TAB 4: PRÁCTICA DE EXAMEN (QUIZ) -->
+        <section id="tab-quiz" class="tab-content">
+            <div class="card" style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;">
+                <div>
+                    <h2 data-i18n="quiz_header">Banco Dinámico de Problemas — Grado 6°</h2>
+                    <p data-i18n="quiz_sub">Resuelve los 10 ejercicios de los trimestres 1 y 3. Usa la pizarra vectorial de cada tarjeta para realizar tus procedimientos.</p>
+                </div>
+                <button class="btn btn-primary" onclick="generateQuiz()"><span data-i18n="btn_regenerate">🔄 Generar Nuevos Modelos / Preguntas</span></button>
+            </div>
+
+            <div id="quiz-container"></div>
+        </section>
+    </main>
+
+    <script>
+        /* ==========================================================================
+           1. ESTADO GLOBAL E IDIOMAS
+           ========================================================================== */
+        let currentLang = localStorage.getItem('aventura6_lang') || 'ES';
+        let currentTheme = localStorage.getItem('aventura6_theme') || 'light';
+        let currentLabMode = 'sequences';
+
+        const i18n = {
+            ES: {
+                tab_home: "Inicio",
+                tab_theory: "Teoría y Ejemplos",
+                tab_lab: "Laboratorio SVG",
+                tab_quiz: "Práctica de Examen",
+                grade_badge: "Grado 6° • Introducción al Álgebra y Álgebra",
+                welcome_title: "¡Bienvenido a AventuraGRADO 6°!",
+                welcome_subtitle: "Explora el mundo del pensamiento algebraico: patrones, secuencias, valor numérico, polinomios, productos notables y cocientes notables.",
+                trim1_title: "📗 Introducción al Álgebra — 1er Trimestre",
+                trim3_title: "📘 Álgebra — 3er Trimestre",
+                card_1_title: "1. Patrones",
+                card_1_desc: "Regularidades numéricas y geométricas para descubrir reglas de formación.",
+                card_2_title: "2. Secuencias",
+                card_2_desc: "Sucesiones ordenadas de términos y determinación del término general.",
+                card_3_title: "3. Valor Numérico",
+                card_3_desc: "Evaluación de expresiones algebraicas asignando valores concretos a sus variables.",
+                card_4_title: "4. Números Generalizados",
+                card_4_desc: "Uso de letras como representación general de cantidades y propiedades aritméticas.",
+                card_5_title: "5. Expresiones Algebraicas",
+                card_5_desc: "Traducción del lenguaje cotidiano al lenguaje simbólico con coeficientes y variables.",
+                card_6_title: "6. Monomios y Polinomios",
+                card_6_desc: "Estructura, partes, grado absoluto y relativo de expresiones de uno o más términos.",
+                card_7_title: "7. Términos Semejantes",
+                card_7_desc: "Identificación y reducción de términos con idéntica parte literal y exponentes.",
+                card_8_title: "8. Operaciones con Polinomios",
+                card_8_desc: "Adición, sustracción, multiplicación y división entre expresiones polinómicas.",
+                card_9_title: "9. Productos Notables",
+                card_9_desc: "Cuadrado de un binomio, suma por diferencia y producto de binomios con término común.",
+                card_10_title: "10. Cocientes Notables",
+                card_10_desc: "Divisiones exactas reconocibles directamente por su estructura algebraica.",
+                goals_title: "🎯 Metas Curriculares de Aprendizaje (Grado 6°)",
+                theory_header: "Guía Teórica de Álgebra (Grado 6°) — 3 Ejemplos por Tema",
+                theory_sub: "Haz clic en cada tema del 1er y 3er trimestre para estudiar sus conceptos fundamentales y analizar tres ejemplos resueltos paso a paso.",
+                lab_header: "Laboratorio Interactivo de Álgebra (SVG)",
+                lab_sub: "Manipula los deslizadores para explorar secuencias numéricas, modelos geométricos de productos notables y reducción de términos semejantes.",
+                lab_mode_seq: "🔢 Patrones y Secuencias",
+                lab_mode_area: "📐 Área Geométrica (a + b)²",
+                lab_mode_terms: "🔗 Reducción de Términos Semejantes",
+                quiz_header: "Banco Dinámico de Problemas — Grado 6°",
+                quiz_sub: "Resuelve los 10 ejercicios de los trimestres 1 y 3. Usa la pizarra vectorial de cada tarjeta para realizar tus procedimientos.",
+                btn_regenerate: "🔄 Generar Nuevos Modelos / Preguntas",
+                correct_msg: "¡Excelente trabajo! Respuesta correcta. 🎉",
+                incorrect_msg: "Respuesta incorrecta. Revisa tus cálculos e inténtalo de nuevo.",
+                sketch_pencil: "✏️ Pincel",
+                sketch_line: "📏 Línea",
+                sketch_rect: "⬛ Rectángulo",
+                sketch_eraser: "🧹 Borrador Inteligente",
+                sketch_clear: "🗑️ Limpiar Pizarra",
+                sketch_copy: "📋 Copiar Captura",
+                sketch_download: "💾 Descargar Imagen",
+                resize_label: "↕ Arrastra para ajustar altura del lienzo"
+            },
+            EN: {
+                tab_home: "Home",
+                tab_theory: "Theory & Examples",
+                tab_lab: "SVG Laboratory",
+                tab_quiz: "Exam Practice",
+                grade_badge: "6th Grade • Intro to Algebra & Algebra",
+                welcome_title: "Welcome to AventuraGRADO 6°!",
+                welcome_subtitle: "Explore the world of algebraic thinking: patterns, sequences, numerical value, polynomials, special products, and special quotients.",
+                trim1_title: "📗 Introduction to Algebra — 1st Trimester",
+                trim3_title: "📘 Algebra — 3rd Trimester",
+                card_1_title: "1. Patterns",
+                card_1_desc: "Numerical and geometric regularities to discover formation rules.",
+                card_2_title: "2. Sequences",
+                card_2_desc: "Ordered lists of terms and determining the general term.",
+                card_3_title: "3. Numerical Value",
+                card_3_desc: "Evaluating algebraic expressions by assigning specific values to variables.",
+                card_4_title: "4. Generalized Numbers",
+                card_4_desc: "Using letters to represent general quantities and arithmetic properties.",
+                card_5_title: "5. Algebraic Expressions",
+                card_5_desc: "Translating everyday language into symbolic expressions with coefficients and variables.",
+                card_6_title: "6. Monomials & Polynomials",
+                card_6_desc: "Structure, parts, absolute and relative degree of single and multi-term expressions.",
+                card_7_title: "7. Like Terms",
+                card_7_desc: "Identifying and combining terms with identical literal parts and exponents.",
+                card_8_title: "8. Polynomial Operations",
+                card_8_desc: "Addition, subtraction, multiplication, and division of polynomial expressions.",
+                card_9_title: "9. Special Products",
+                card_9_desc: "Square of a binomial, sum and difference, and product of binomials with a common term.",
+                card_10_title: "10. Special Quotients",
+                card_10_desc: "Exact divisions recognizable directly from their algebraic structure.",
+                goals_title: "🎯 Curriculum Learning Goals (6th Grade)",
+                theory_header: "Algebra Theory Guide (6th Grade) — 3 Examples per Topic",
+                theory_sub: "Click on each topic from the 1st and 3rd trimesters to study core concepts and review three step-by-step solved examples.",
+                lab_header: "Interactive Algebra Laboratory (SVG)",
+                lab_sub: "Adjust sliders to explore number sequences, geometric area models of special products, and combining like terms.",
+                lab_mode_seq: "🔢 Patterns & Sequences",
+                lab_mode_area: "📐 Geometric Area (a + b)²",
+                lab_mode_terms: "🔗 Combining Like Terms",
+                quiz_header: "Dynamic Problem Bank — 6th Grade",
+                quiz_sub: "Solve all 10 problems from Trimesters 1 and 3. Use the vector sketchpad on each card for your scratch work.",
+                btn_regenerate: "🔄 Generate New Models / Questions",
+                correct_msg: "Great job! Correct answer. 🎉",
+                incorrect_msg: "Incorrect answer. Check your work and try again.",
+                sketch_pencil: "✏️ Pencil",
+                sketch_line: "📏 Line",
+                sketch_rect: "⬛ Rectangle",
+                sketch_eraser: "🧹 Smart Eraser",
+                sketch_clear: "🗑️ Clear Canvas",
+                sketch_copy: "📋 Copy Shot",
+                sketch_download: "💾 Download Image",
+                resize_label: "↕ Drag to resize canvas height"
+            }
+        };
+
+        const goalsData = {
+            ES: [
+                "Identificar regularidades en patrones numéricos y geométricos para predecir elementos posteriores.",
+                "Construir y analizar secuencias numéricas expresando su regla o término general.",
+                "Calcular el valor numérico de expresiones algebraicas sustituyendo las variables por números dados.",
+                "Comprender el concepto de número generalizado y traducir enunciados verbales a expresiones algebraicas.",
+                "Clasificar monomios y polinomios según su número de términos y determinar su grado.",
+                "Reducir términos semejantes y efectuar operaciones básicas entre polinomios.",
+                "Desarrollar productos notables y cocientes notables aplicando sus reglas estructurales con agilidad."
+            ],
+            EN: [
+                "Identify regularities in numerical and geometric patterns to predict subsequent elements.",
+                "Build and analyze numerical sequences by expressing their rule or general term.",
+                "Calculate the numerical value of algebraic expressions by substituting given values for variables.",
+                "Understand generalized numbers and translate verbal statements into algebraic expressions.",
+                "Classify monomials and polynomials by term count and determine their degree.",
+                "Combine like terms and perform basic operations with polynomials.",
+                "Expand special products and evaluate special quotients using their structural algebraic rules."
+            ]
+        };
+
+        /* ==========================================================================
+           2. TEORÍA Y 3 EJEMPLOS POR CADA UNO DE LOS 10 TEMAS
+           ========================================================================== */
+        const theoryData = [
+            // --- 1ER TRIMESTRE ---
+            {
+                id: 1,
+                trimester: 1,
+                title: { ES: "1. Patrones (1er Trimestre)", EN: "1. Patterns (1st Trimester)" },
+                content: {
+                    ES: `Un <strong>patrón</strong> es una regularidad o regla que se repite de forma predecible en una colección de figuras, colores o números. Descubrir un patrón consiste en observar qué cambia y qué permanece constante entre un elemento y el siguiente.`,
+                    EN: `A <strong>pattern</strong> is a regularity or rule that repeats predictably in a collection of shapes, colors, or numbers. Discovering a pattern means observing what changes and what stays constant from one element to the next.`
+                },
+                examples: [
+                    {
+                        ES: `<strong>Ejemplo 1 (Patrón numérico aditivo):</strong> Observa la lista <span class="math-code">4, 9, 14, 19, 24, ...</span><br>
+                        <em>Solución:</em> Cada número se obtiene sumando <span class="math-code">5</span> al anterior. El siguiente elemento es <span class="math-code">24 + 5 = 29</span>.`,
+                        EN: `<strong>Example 1 (Additive pattern):</strong> Look at <span class="math-code">4, 9, 14, 19, 24, ...</span><br>
+                        <em>Solution:</em> Each number adds <span class="math-code">5</span> to the previous one. The next element is <span class="math-code">24 + 5 = 29</span>.`
+                    },
+                    {
+                        ES: `<strong>Ejemplo 2 (Patrón geométrico con palillos):</strong> Para armar 1 triángulo se usan <span class="math-code">3</span> palillos; para 2 triángulos unidos, <span class="math-code">5</span> palillos; para 3 triángulos unidos, <span class="math-code">7</span> palillos.<br>
+                        <em>Solución:</em> Por cada triángulo nuevo se agregan <span class="math-code">2</span> palillos. Para 4 triángulos se necesitan <span class="math-code">7 + 2 = 9</span> palillos.`,
+                        EN: `<strong>Example 2 (Matchstick pattern):</strong> 1 triangle uses <span class="math-code">3</span> sticks; 2 joined triangles use <span class="math-code">5</span>; 3 joined triangles use <span class="math-code">7</span>.<br>
+                        <em>Solution:</em> Each added triangle requires <span class="math-code">2</span> more sticks. For 4 triangles: <span class="math-code">7 + 2 = 9</span> sticks.`
+                    },
+                    {
+                        ES: `<strong>Ejemplo 3 (Patrón multiplicativo):</strong> Analiza <span class="math-code">2, 6, 18, 54, ...</span><br>
+                        <em>Solución:</em> Cada término se triplica respecto al anterior (<span class="math-code">× 3</span>). El quinto valor es <span class="math-code">54 × 3 = 162</span>.`,
+                        EN: `<strong>Example 3 (Multiplicative pattern):</strong> Analyze <span class="math-code">2, 6, 18, 54, ...</span><br>
+                        <em>Solution:</em> Each term is multiplied by <span class="math-code">3</span>. The fifth value is <span class="math-code">54 × 3 = 162</span>.`
+                    }
+                ]
+            },
+            {
+                id: 2,
+                trimester: 1,
+                title: { ES: "2. Secuencias (1er Trimestre)", EN: "2. Sequences (1st Trimester)" },
+                content: {
+                    ES: `Una <strong>secuencia</strong> (o sucesión) es un conjunto ordenado de elementos llamados <strong>términos</strong> (<span class="math-code">a<sub>1</sub>, a<sub>2</sub>, a<sub>3</sub>, ..., a<sub>n</sub></span>) donde cada uno ocupa una posición <em>n</em>. La fórmula que permite calcular cualquier término según su posición <em>n</em> se denomina <strong>término general</strong>.`,
+                    EN: `A <strong>sequence</strong> is an ordered list of elements called <strong>terms</strong> (<span class="math-code">a<sub>1</sub>, a<sub>2</sub>, a<sub>3</sub>, ..., a<sub>n</sub></span>) where each occupies a position <em>n</em>. The formula used to find any term from its position <em>n</em> is called the <strong>general term</strong>.`
+                },
+                examples: [
+                    {
+                        ES: `<strong>Ejemplo 1 (Término general lineal):</strong> Dada la regla <span class="math-code">a<sub>n</sub> = 3n + 1</span>, halla los primeros tres términos.<br>
+                        <em>Solución:</em> Para <span class="math-code">n = 1: 3(1)+1 = 4</span>; para <span class="math-code">n = 2: 3(2)+1 = 7</span>; para <span class="math-code">n = 3: 3(3)+1 = 10</span>. Secuencia: <span class="math-code">4, 7, 10</span>.`,
+                        EN: `<strong>Example 1 (Linear general term):</strong> Given <span class="math-code">a<sub>n</sub> = 3n + 1</span>, find the first three terms.<br>
+                        <em>Solution:</em> For <span class="math-code">n = 1: 4</span>; <span class="math-code">n = 2: 7</span>; <span class="math-code">n = 3: 10</span>. Sequence: <span class="math-code">4, 7, 10</span>.`
+                    },
+                    {
+                        ES: `<strong>Ejemplo 2 (Posición avanzada):</strong> En la secuencia <span class="math-code">a<sub>n</sub> = 4n - 2</span>, calcula el término en la posición <span class="math-code">n = 15</span>.<br>
+                        <em>Solución:</em> Sustituimos <span class="math-code">n = 15</span>: <span class="math-code">a<sub>15</sub> = 4(15) - 2 = 60 - 2 = 58</span>.`,
+                        EN: `<strong>Example 2 (Advanced position):</strong> In <span class="math-code">a<sub>n</sub> = 4n - 2</span>, find the term at position <span class="math-code">n = 15</span>.<br>
+                        <em>Solution:</em> Substitute <span class="math-code">n = 15</span>: <span class="math-code">a<sub>15</sub> = 4(15) - 2 = 60 - 2 = 58</span>.`
+                    },
+                    {
+                        ES: `<strong>Ejemplo 3 (Secuencia cuadrática básica):</strong> En la secuencia de cuadrados <span class="math-code">1, 4, 9, 16, ...</span> (<span class="math-code">a<sub>n</sub> = n<sup>2</sup></span>), ¿qué valor ocupa el lugar 8?<br>
+                        <em>Solución:</em> <span class="math-code">a<sub>8</sub> = 8<sup>2</sup> = 64</span>.`,
+                        EN: `<strong>Example 3 (Square sequence):</strong> In <span class="math-code">1, 4, 9, 16, ...</span> (<span class="math-code">a<sub>n</sub> = n<sup>2</sup></span>), what is the 8th term?<br>
+                        <em>Solution:</em> <span class="math-code">a<sub>8</sub> = 8<sup>2</sup> = 64</span>.`
+                    }
+                ]
+            },
+            {
+                id: 3,
+                trimester: 1,
+                title: { ES: "3. Valor Numérico de una Expresión Algebraica (1er Trimestre)", EN: "3. Numerical Value of an Algebraic Expression (1st Trimester)" },
+                content: {
+                    ES: `El <strong>valor numérico</strong> de una expresión algebraica es el resultado que se obtiene al reemplazar cada letra (variable) por un número determinado y efectuar las operaciones indicadas respetando la jerarquía operacional.`,
+                    EN: `The <strong>numerical value</strong> of an algebraic expression is the result obtained when each variable is replaced by a specific number and the indicated operations are performed in order.`
+                },
+                examples: [
+                    {
+                        ES: `<strong>Ejemplo 1 (Una variable):</strong> Calcula el valor de <span class="math-code">5x - 7</span> cuando <span class="math-code">x = 4</span>.<br>
+                        <em>Solución:</em> Reemplazamos <span class="math-code">x</span> por <span class="math-code">4</span>: <span class="math-code">5(4) - 7 = 20 - 7 = 13</span>.`,
+                        EN: `<strong>Example 1 (One variable):</strong> Evaluate <span class="math-code">5x - 7</span> when <span class="math-code">x = 4</span>.<br>
+                        <em>Solution:</em> Replace <span class="math-code">x</span> with <span class="math-code">4</span>: <span class="math-code">5(4) - 7 = 20 - 7 = 13</span>.`
+                    },
+                    {
+                        ES: `<strong>Ejemplo 2 (Dos variables):</strong> Evalúa <span class="math-code">2a + 3b - 4</span> si <span class="math-code">a = 6</span> y <span class="math-code">b = 2</span>.<br>
+                        <em>Solución:</em> <span class="math-code">2(6) + 3(2) - 4 = 12 + 6 - 4 = 14</span>.`,
+                        EN: `<strong>Example 2 (Two variables):</strong> Evaluate <span class="math-code">2a + 3b - 4</span> if <span class="math-code">a = 6</span> and <span class="math-code">b = 2</span>.<br>
+                        <em>Solution:</em> <span class="math-code">2(6) + 3(2) - 4 = 12 + 6 - 4 = 14</span>.`
+                    },
+                    {
+                        ES: `<strong>Ejemplo 3 (Con exponentes):</strong> Halla el valor de <span class="math-code">m<sup>2</sup> + 2m + 1</span> para <span class="math-code">m = 5</span>.<br>
+                        <em>Solución:</em> <span class="math-code">5<sup>2</sup> + 2(5) + 1 = 25 + 10 + 1 = 36</span>.`,
+                        EN: `<strong>Example 3 (With exponents):</strong> Find the value of <span class="math-code">m<sup>2</sup> + 2m + 1</span> for <span class="math-code">m = 5</span>.<br>
+                        <em>Solution:</em> <span class="math-code">5<sup>2</sup> + 2(5) + 1 = 25 + 10 + 1 = 36</span>.`
+                    }
+                ]
+            },
+
+            // --- 3ER TRIMESTRE ---
+            {
+                id: 4,
+                trimester: 3,
+                title: { ES: "4. Números Generalizados (3er Trimestre)", EN: "4. Generalized Numbers (3rd Trimester)" },
+                content: {
+                    ES: `Un <strong>número generalizado</strong> es una letra (como <em>a, b, n, x</em>) utilizada para representar cualquier número dentro de un conjunto numérico, permitiendo expresar leyes generales sin limitarse a un caso particular.`,
+                    EN: `A <strong>generalized number</strong> is a letter (such as <em>a, b, n, x</em>) used to represent any number in a set, allowing general laws to be stated without restricting them to a single case.`
+                },
+                examples: [
+                    {
+                        ES: `<strong>Ejemplo 1 (Propiedad conmutativa):</strong> Para cualesquiera dos números <span class="math-code">a</span> y <span class="math-code">b</span>, <span class="math-code">a + b = b + a</span>.<br>
+                        <em>Solución:</em> Representa que el orden de los sumandos no altera la suma (ej. <span class="math-code">7 + 3 = 3 + 7</span>).`,
+                        EN: `<strong>Example 1 (Commutative property):</strong> For any two numbers <span class="math-code">a</span> and <span class="math-code">b</span>, <span class="math-code">a + b = b + a</span>.<br>
+                        <em>Solution:</em> States that order does not change the sum (e.g., <span class="math-code">7 + 3 = 3 + 7</span>).`
+                    },
+                    {
+                        ES: `<strong>Ejemplo 2 (Números pares e impares):</strong> Si <span class="math-code">n</span> es un número natural, <span class="math-code">2n</span> representa siempre un número par y <span class="math-code">2n + 1</span> un número impar.<br>
+                        <em>Solución:</em> Si <span class="math-code">n = 9</span>, <span class="math-code">2(9) = 18</span> (par) y <span class="math-code">2(9) + 1 = 19</span> (impar).`,
+                        EN: `<strong>Example 2 (Even & odd numbers):</strong> If <span class="math-code">n</span> is a whole number, <span class="math-code">2n</span> is always even and <span class="math-code">2n + 1</span> is always odd.<br>
+                        <em>Solution:</em> If <span class="math-code">n = 9</span>, <span class="math-code">2(9) = 18</span> (even) and <span class="math-code">2(9) + 1 = 19</span> (odd).`
+                    },
+                    {
+                        ES: `<strong>Ejemplo 3 (Perímetro de un cuadrado):</strong> Si el lado de cualquier cuadrado mide <span class="math-code">L</span>, su perímetro es <span class="math-code">P = 4L</span>.<br>
+                        <em>Solución:</em> La letra <span class="math-code">L</span> generaliza la medida del lado para cualquier tamaño de cuadrado.`,
+                        EN: `<strong>Example 3 (Perimeter of a square):</strong> If any square has side length <span class="math-code">L</span>, its perimeter is <span class="math-code">P = 4L</span>.<br>
+                        <em>Solution:</em> The letter <span class="math-code">L</span> generalizes the side length for any square.`
+                    }
+                ]
+            },
+            {
+                id: 5,
+                trimester: 3,
+                title: { ES: "5. Expresiones Algebraicas (3er Trimestre)", EN: "5. Algebraic Expressions (3rd Trimester)" },
+                content: {
+                    ES: `Una <strong>expresión algebraica</strong> es una combinación de números (constantes) y letras (variables) unidos mediante operaciones de suma, resta, multiplicación, división o potenciación.`,
+                    EN: `An <strong>algebraic expression</strong> is a combination of numbers (constants) and letters (variables) linked by addition, subtraction, multiplication, division, or exponentiation.`
+                },
+                examples: [
+                    {
+                        ES: `<strong>Ejemplo 1 (Lenguaje algebraico):</strong> "El triple de un número aumentado en 8".<br>
+                        <em>Solución:</em> Si el número es <span class="math-code">x</span>, la expresión es <span class="math-code">3x + 8</span>.`,
+                        EN: `<strong>Example 1 (Algebraic translation):</strong> "Three times a number increased by 8".<br>
+                        <em>Solution:</em> Letting the number be <span class="math-code">x</span>, the expression is <span class="math-code">3x + 8</span>.`
+                    },
+                    {
+                        ES: `<strong>Ejemplo 2 (Diferencia de cuadrados):</strong> "La diferencia entre el cuadrado de un número y la mitad de otro".<br>
+                        <em>Solución:</em> <span class="math-code">a<sup>2</sup> - b / 2</span>.`,
+                        EN: `<strong>Example 2 (Two quantities):</strong> "The difference between the square of a number and half of another".<br>
+                        <em>Solution:</em> <span class="math-code">a<sup>2</sup> - b / 2</span>.`
+                    },
+                    {
+                        ES: `<strong>Ejemplo 3 (Contexto de compra):</strong> Cada cuaderno cuesta <span class="math-code">4 500</span> y cada lápiz <span class="math-code">1 200</span>. El costo total de <span class="math-code">c</span> cuadernos y <span class="math-code">p</span> lápices es:<br>
+                        <em>Solución:</em> <span class="math-code">4 500c + 1 200p</span>.`,
+                        EN: `<strong>Example 3 (Shopping context):</strong> Each notebook costs <span class="math-code">4 500</span> and each pencil <span class="math-code">1 200</span>. Total cost for <span class="math-code">c</span> notebooks and <span class="math-code">p</span> pencils:<br>
+                        <em>Solution:</em> <span class="math-code">4 500c + 1 200p</span>.`
+                    }
+                ]
+            },
+            {
+                id: 6,
+                trimester: 3,
+                title: { ES: "6. Monomios y Polinomios (3er Trimestre)", EN: "6. Monomials & Polynomials (3rd Trimester)" },
+                content: {
+                    ES: `• <strong>Monomio:</strong> Expresión algebraica de un solo término (ej. <span class="math-code">-7x<sup>3</sup>y<sup>2</sup></span>). Consta de <em>signo</em>, <em>coeficiente</em> (<span class="math-code">-7</span>) y <em>parte literal</em> (<span class="math-code">x<sup>3</sup>y<sup>2</sup></span>). Su <strong>grado absoluto</strong> es la suma de los exponentes de sus variables (<span class="math-code">3 + 2 = 5</span>).<br>
+                    • <strong>Polinomio:</strong> Suma o resta de dos o más monomios no semejantes (binomio: 2 términos; trinomio: 3 términos). Su grado es el mayor grado de sus términos.`,
+                    EN: `• <strong>Monomial:</strong> Single-term algebraic expression (e.g., <span class="math-code">-7x<sup>3</sup>y<sup>2</sup></span>). Has <em>sign</em>, <em>coefficient</em> (<span class="math-code">-7</span>), and <em>literal part</em> (<span class="math-code">x<sup>3</sup>y<sup>2</sup></span>). Its <strong>absolute degree</strong> is the sum of variable exponents (<span class="math-code">3 + 2 = 5</span>).<br>
+                    • <strong>Polynomial:</strong> Sum or difference of two or more unlike monomials (binomial: 2 terms; trinomial: 3 terms). Its degree is the highest degree among its terms.`
+                },
+                examples: [
+                    {
+                        ES: `<strong>Ejemplo 1 (Partes de un monomio):</strong> Identifica coeficiente, parte literal y grado absoluto de <span class="math-code">9a<sup>4</sup>b<sup>2</sup></span>.<br>
+                        <em>Solución:</em> Coeficiente: <span class="math-code">9</span>; parte literal: <span class="math-code">a<sup>4</sup>b<sup>2</sup></span>; grado absoluto: <span class="math-code">4 + 2 = 6</span>.`,
+                        EN: `<strong>Example 1 (Monomial parts):</strong> Identify coefficient, literal part, and degree of <span class="math-code">9a<sup>4</sup>b<sup>2</sup></span>.<br>
+                        <em>Solution:</em> Coefficient: <span class="math-code">9</span>; literal part: <span class="math-code">a<sup>4</sup>b<sup>2</sup></span>; degree: <span class="math-code">4 + 2 = 6</span>.`
+                    },
+                    {
+                        ES: `<strong>Ejemplo 2 (Clasificación y grado de polinomio):</strong> Analiza <span class="math-code">4x<sup>5</sup> - 2x<sup>3</sup> + 7x - 1</span>.<br>
+                        <em>Solución:</em> Tiene 4 términos (polinomio de 4 términos) y su grado absoluto es <span class="math-code">5</span> (mayor exponente de <span class="math-code">x</span>).`,
+                        EN: `<strong>Example 2 (Polynomial degree):</strong> Analyze <span class="math-code">4x<sup>5</sup> - 2x<sup>3</sup> + 7x - 1</span>.<br>
+                        <em>Solution:</em> Has 4 terms and its degree is <span class="math-code">5</span> (highest exponent of <span class="math-code">x</span>).`
+                    },
+                    {
+                        ES: `<strong>Ejemplo 3 (Trinomio):</strong> En <span class="math-code">3m<sup>2</sup>n<sup>3</sup> + 5mn - 8</span>, determina el grado.<br>
+                        <em>Solución:</em> Es un trinomio. El primer término tiene grado <span class="math-code">2 + 3 = 5</span>, el segundo <span class="math-code">2</span> y el tercero <span class="math-code">0</span>. El grado del trinomio es <span class="math-code">5</span>.`,
+                        EN: `<strong>Example 3 (Trinomial):</strong> Find the degree of <span class="math-code">3m<sup>2</sup>n<sup>3</sup> + 5mn - 8</span>.<br>
+                        <em>Solution:</em> It is a trinomial. First term has degree <span class="math-code">2 + 3 = 5</span>, second <span class="math-code">2</span>, third <span class="math-code">0</span>. Polynomial degree is <span class="math-code">5</span>.`
+                    }
+                ]
+            },
+            {
+                id: 7,
+                trimester: 3,
+                title: { ES: "7. Términos Semejantes (3er Trimestre)", EN: "7. Like Terms (3rd Trimester)" },
+                content: {
+                    ES: `Dos o más términos son <strong>semejantes</strong> cuando tienen exactamente la <strong>misma parte literal</strong> (las mismas variables elevadas a los mismos exponentes), sin importar sus coeficientes. Para reducirlos se suman o restan sus coeficientes y se conserva la parte literal.`,
+                    EN: `Two or more terms are <strong>like terms</strong> when they have the exact <strong>same literal part</strong> (same variables raised to the same exponents), regardless of their coefficients. Combine them by adding or subtracting their coefficients while keeping the literal part.`
+                },
+                examples: [
+                    {
+                        ES: `<strong>Ejemplo 1 (Reducción simple):</strong> Simplifica <span class="math-code">7x + 5x - 3x</span>.<br>
+                        <em>Solución:</em> Todos tienen parte literal <span class="math-code">x</span>: <span class="math-code">(7 + 5 - 3)x = 9x</span>.`,
+                        EN: `<strong>Example 1 (Simple reduction):</strong> Simplify <span class="math-code">7x + 5x - 3x</span>.<br>
+                        <em>Solution:</em> All have literal part <span class="math-code">x</span>: <span class="math-code">(7 + 5 - 3)x = 9x</span>.`
+                    },
+                    {
+                        ES: `<strong>Ejemplo 2 (Agrupación por familias):</strong> Reduce <span class="math-code">6a<sup>2</sup> + 4b - 2a<sup>2</sup> + 5b</span>.<br>
+                        <em>Solución:</em> Agrupamos <span class="math-code">a<sup>2</sup></span> y <span class="math-code">b</span> por separado: <span class="math-code">(6 - 2)a<sup>2</sup> + (4 + 5)b = 4a<sup>2</sup> + 9b</span>.`,
+                        EN: `<strong>Example 2 (Grouping families):</strong> Combine <span class="math-code">6a<sup>2</sup> + 4b - 2a<sup>2</sup> + 5b</span>.<br>
+                        <em>Solution:</em> Group <span class="math-code">a<sup>2</sup></span> and <span class="math-code">b</span> separately: <span class="math-code">(6 - 2)a<sup>2</sup> + (4 + 5)b = 4a<sup>2</sup> + 9b</span>.`
+                    },
+                    {
+                        ES: `<strong>Ejemplo 3 (Diferenciar exponentes):</strong> Reduce <span class="math-code">8xy<sup>2</sup> - 3x<sup>2</sup>y + 2xy<sup>2</sup></span>.<br>
+                        <em>Solución:</em> Solo <span class="math-code">8xy<sup>2</sup></span> y <span class="math-code">2xy<sup>2</sup></span> son semejantes: <span class="math-code">10xy<sup>2</sup> - 3x<sup>2</sup>y</span>.`,
+                        EN: `<strong>Example 3 (Distinguishing exponents):</strong> Simplify <span class="math-code">8xy<sup>2</sup> - 3x<sup>2</sup>y + 2xy<sup>2</sup></span>.<br>
+                        <em>Solution:</em> Only <span class="math-code">8xy<sup>2</sup></span> and <span class="math-code">2xy<sup>2</sup></span> are like terms: <span class="math-code">10xy<sup>2</sup> - 3x<sup>2</sup>y</span>.`
+                    }
+                ]
+            },
+            {
+                id: 8,
+                trimester: 3,
+                title: { ES: "8. Operaciones con Polinomios (3er Trimestre)", EN: "8. Operations with Polynomials (3rd Trimester)" },
+                content: {
+                    ES: `• <strong>Suma y Resta:</strong> Se suprimen paréntesis (cambiando los signos si hay un signo menos delante) y se reducen términos semejantes.<br>
+                    • <strong>Multiplicación:</strong> Se aplica la propiedad distributiva multiplicando coeficientes y sumando exponentes de bases iguales (<span class="math-code">x<sup>a</sup> · x<sup>b</sup> = x<sup>a + b</sup></span>).<br>
+                    • <strong>División entre monomio:</strong> Se divide cada término del polinomio entre el monomio divisor restando exponentes (<span class="math-code">x<sup>a</sup> ÷ x<sup>b</sup> = x<sup>a - b</sup></span>).`,
+                    EN: `• <strong>Addition & Subtraction:</strong> Remove parentheses (flipping signs after a minus sign) and combine like terms.<br>
+                    • <strong>Multiplication:</strong> Apply the distributive property, multiplying coefficients and adding exponents of like bases (<span class="math-code">x<sup>a</sup> · x<sup>b</sup> = x<sup>a + b</sup></span>).<br>
+                    • <strong>Division by a monomial:</strong> Divide each term of the polynomial by the monomial divisor, subtracting exponents (<span class="math-code">x<sup>a</sup> ÷ x<sup>b</sup> = x<sup>a - b</sup></span>).`
+                },
+                examples: [
+                    {
+                        ES: `<strong>Ejemplo 1 (Suma y resta de polinomios):</strong> Resuelve <span class="math-code">(5x<sup>2</sup> + 3x - 2) - (2x<sup>2</sup> - 4x + 5)</span>.<br>
+                        <em>Solución:</em> Cambiamos signos del segundo paréntesis: <span class="math-code">5x<sup>2</sup> + 3x - 2 - 2x<sup>2</sup> + 4x - 5 = 3x<sup>2</sup> + 7x - 7</span>.`,
+                        EN: `<strong>Example 1 (Polynomial subtraction):</strong> Evaluate <span class="math-code">(5x<sup>2</sup> + 3x - 2) - (2x<sup>2</sup> - 4x + 5)</span>.<br>
+                        <em>Solution:</em> Distribute minus sign: <span class="math-code">5x<sup>2</sup> + 3x - 2 - 2x<sup>2</sup> + 4x - 5 = 3x<sup>2</sup> + 7x - 7</span>.`
+                    },
+                    {
+                        ES: `<strong>Ejemplo 2 (Multiplicación):</strong> Multiplica <span class="math-code">3x<sup>2</sup>(4x<sup>3</sup> - 2x + 5)</span>.<br>
+                        <em>Solución:</em> Distribuimos <span class="math-code">3x<sup>2</sup></span>: <span class="math-code">12x<sup>5</sup> - 6x<sup>3</sup> + 15x<sup>2</sup></span>.`,
+                        EN: `<strong>Example 2 (Multiplication):</strong> Multiply <span class="math-code">3x<sup>2</sup>(4x<sup>3</sup> - 2x + 5)</span>.<br>
+                        <em>Solution:</em> Distribute <span class="math-code">3x<sup>2</sup></span>: <span class="math-code">12x<sup>5</sup> - 6x<sup>3</sup> + 15x<sup>2</sup></span>.`
+                    },
+                    {
+                        ES: `<strong>Ejemplo 3 (División entre monomio):</strong> Divide <span class="math-code">(16y<sup>4</sup> - 12y<sup>3</sup> + 8y<sup>2</sup>) ÷ (4y<sup>2</sup>)</span>.<br>
+                        <em>Solución:</em> Dividimos cada término entre <span class="math-code">4y<sup>2</sup></span>: <span class="math-code">4y<sup>2</sup> - 3y + 2</span>.`,
+                        EN: `<strong>Example 3 (Division by monomial):</strong> Divide <span class="math-code">(16y<sup>4</sup> - 12y<sup>3</sup> + 8y<sup>2</sup>) ÷ (4y<sup>2</sup>)</span>.<br>
+                        <em>Solution:</em> Divide each term by <span class="math-code">4y<sup>2</sup></span>: <span class="math-code">4y<sup>2</sup> - 3y + 2</span>.`
+                    }
+                ]
+            },
+            {
+                id: 9,
+                trimester: 3,
+                title: { ES: "9. Productos Notables (3er Trimestre)", EN: "9. Special Products (3rd Trimester)" },
+                content: {
+                    ES: `Son multiplicaciones algebraicas con estructura fija que se resuelven por inspección directa sin multiplicar término a término:<br>
+                    • <strong>Cuadrado de una suma:</strong> <span class="math-code">(a + b)<sup>2</sup> = a<sup>2</sup> + 2ab + b<sup>2</sup></span><br>
+                    • <strong>Cuadrado de una diferencia:</strong> <span class="math-code">(a - b)<sup>2</sup> = a<sup>2</sup> - 2ab + b<sup>2</sup></span><br>
+                    • <strong>Suma por diferencia:</strong> <span class="math-code">(a + b)(a - b) = a<sup>2</sup> - b<sup>2</sup></span><br>
+                    • <strong>Producto con término común:</strong> <span class="math-code">(x + a)(x + b) = x<sup>2</sup> + (a + b)x + ab</span>`,
+                    EN: `These are algebraic multiplications with fixed patterns that can be expanded directly without term-by-term FOIL:<br>
+                    • <strong>Square of a sum:</strong> <span class="math-code">(a + b)<sup>2</sup> = a<sup>2</sup> + 2ab + b<sup>2</sup></span><br>
+                    • <strong>Square of a difference:</strong> <span class="math-code">(a - b)<sup>2</sup> = a<sup>2</sup> - 2ab + b<sup>2</sup></span><br>
+                    • <strong>Sum and difference:</strong> <span class="math-code">(a + b)(a - b) = a<sup>2</sup> - b<sup>2</sup></span><br>
+                    • <strong>Binomials with common term:</strong> <span class="math-code">(x + a)(x + b) = x<sup>2</sup> + (a + b)x + ab</span>`
+                },
+                examples: [
+                    {
+                        ES: `<strong>Ejemplo 1 (Cuadrado de un binomio):</strong> Desarrolla <span class="math-code">(x + 6)<sup>2</sup></span>.<br>
+                        <em>Solución:</em> <span class="math-code">x<sup>2</sup> + 2(x)(6) + 6<sup>2</sup> = x<sup>2</sup> + 12x + 36</span>.`,
+                        EN: `<strong>Example 1 (Square of a binomial):</strong> Expand <span class="math-code">(x + 6)<sup>2</sup></span>.<br>
+                        <em>Solution:</em> <span class="math-code">x<sup>2</sup> + 2(x)(6) + 6<sup>2</sup> = x<sup>2</sup> + 12x + 36</span>.`
+                    },
+                    {
+                        ES: `<strong>Ejemplo 2 (Suma por diferencia):</strong> Calcula <span class="math-code">(3m + 5)(3m - 5)</span>.<br>
+                        <em>Solución:</em> <span class="math-code">(3m)<sup>2</sup> - 5<sup>2</sup> = 9m<sup>2</sup> - 25</span>.`,
+                        EN: `<strong>Example 2 (Sum and difference):</strong> Compute <span class="math-code">(3m + 5)(3m - 5)</span>.<br>
+                        <em>Solution:</em> <span class="math-code">(3m)<sup>2</sup> - 5<sup>2</sup> = 9m<sup>2</sup> - 25</span>.`
+                    },
+                    {
+                        ES: `<strong>Ejemplo 3 (Término común):</strong> Desarrolla <span class="math-code">(x + 4)(x + 7)</span>.<br>
+                        <em>Solución:</em> <span class="math-code">x<sup>2</sup> + (4 + 7)x + (4)(7) = x<sup>2</sup> + 11x + 28</span>.`,
+                        EN: `<strong>Example 3 (Common term):</strong> Expand <span class="math-code">(x + 4)(x + 7)</span>.<br>
+                        <em>Solution:</em> <span class="math-code">x<sup>2</sup> + (4 + 7)x + (4)(7) = x<sup>2</sup> + 11x + 28</span>.`
+                    }
+                ]
+            },
+            {
+                id: 10,
+                trimester: 3,
+                title: { ES: "10. Cocientes Notables (3er Trimestre)", EN: "10. Special Quotients (3rd Trimester)" },
+                content: {
+                    ES: `Son divisiones algebraicas exactas cuyo resultado se escribe directamente a partir de la relación entre el numerador y el denominador:<br>
+                    • <strong>Diferencia de cuadrados entre suma:</strong> <span class="math-code">(a<sup>2</sup> - b<sup>2</sup>) / (a + b) = a - b</span><br>
+                    • <strong>Diferencia de cuadrados entre resta:</strong> <span class="math-code">(a<sup>2</sup> - b<sup>2</sup>) / (a - b) = a + b</span><br>
+                    • <strong>Suma de cubos entre suma:</strong> <span class="math-code">(a<sup>3</sup> + b<sup>3</sup>) / (a + b) = a<sup>2</sup> - ab + b<sup>2</sup></span><br>
+                    • <strong>Diferencia de cubos entre resta:</strong> <span class="math-code">(a<sup>3</sup> - b<sup>3</sup>) / (a - b) = a<sup>2</sup> + ab + b<sup>2</sup></span>`,
+                    EN: `These are exact algebraic divisions whose quotient is written directly from the numerator-denominator structure:<br>
+                    • <strong>Difference of squares over sum:</strong> <span class="math-code">(a<sup>2</sup> - b<sup>2</sup>) / (a + b) = a - b</span><br>
+                    • <strong>Difference of squares over difference:</strong> <span class="math-code">(a<sup>2</sup> - b<sup>2</sup>) / (a - b) = a + b</span><br>
+                    • <strong>Sum of cubes over sum:</strong> <span class="math-code">(a<sup>3</sup> + b<sup>3</sup>) / (a + b) = a<sup>2</sup> - ab + b<sup>2</sup></span><br>
+                    • <strong>Difference of cubes over difference:</strong> <span class="math-code">(a<sup>3</sup> - b<sup>3</sup>) / (a - b) = a<sup>2</sup> + ab + b<sup>2</sup></span>`
+                },
+                examples: [
+                    {
+                        ES: `<strong>Ejemplo 1 (Diferencia de cuadrados):</strong> Halla el cociente de <span class="math-code">(x<sup>2</sup> - 49) / (x + 7)</span>.<br>
+                        <em>Solución:</em> Como <span class="math-code">49 = 7<sup>2</sup></span>, aplicando la regla obtenemos <span class="math-code">x - 7</span>.`,
+                        EN: `<strong>Example 1 (Difference of squares):</strong> Find the quotient <span class="math-code">(x<sup>2</sup> - 49) / (x + 7)</span>.<br>
+                        <em>Solution:</em> Since <span class="math-code">49 = 7<sup>2</sup></span>, applying the rule gives <span class="math-code">x - 7</span>.`
+                    },
+                    {
+                        ES: `<strong>Ejemplo 2 (Con coeficientes):</strong> Simplifica <span class="math-code">(16m<sup>2</sup> - 81) / (4m - 9)</span>.<br>
+                        <em>Solución:</em> Como <span class="math-code">(4m)<sup>2</sup> = 16m<sup>2</sup></span> y <span class="math-code">9<sup>2</sup> = 81</span>, el cociente es <span class="math-code">4m + 9</span>.`,
+                        EN: `<strong>Example 2 (With coefficients):</strong> Simplify <span class="math-code">(16m<sup>2</sup> - 81) / (4m - 9)</span>.<br>
+                        <em>Solution:</em> Since <span class="math-code">(4m)<sup>2</sup> = 16m<sup>2</sup></span> and <span class="math-code">9<sup>2</sup> = 81</span>, the quotient is <span class="math-code">4m + 9</span>.`
+                    },
+                    {
+                        ES: `<strong>Ejemplo 3 (Suma de cubos):</strong> Calcula <span class="math-code">(x<sup>3</sup> + 8) / (x + 2)</span>.<br>
+                        <em>Solución:</em> Como <span class="math-code">8 = 2<sup>3</sup></span>, el resultado es <span class="math-code">x<sup>2</sup> - 2x + 4</span>.`,
+                        EN: `<strong>Example 3 (Sum of cubes):</strong> Evaluate <span class="math-code">(x<sup>3</sup> + 8) / (x + 2)</span>.<br>
+                        <em>Solution:</em> Since <span class="math-code">8 = 2<sup>3</sup></span>, the quotient is <span class="math-code">x<sup>2</sup> - 2x + 4</span>.`
+                    }
+                ]
+            }
+        ];
+
+        /* Formateador numérico con espacios limpios como separadores de miles */
+        function formatNumber(num) {
+            if (num === null || num === undefined) return '';
+            let n = parseFloat(num);
+            if (isNaN(n)) return num;
+            let parts = n.toString().split('.');
+            parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
+            return parts.join('.');
+        }
+
+        /* ==========================================================================
+           3. NAVEGACIÓN Y CONFIGURACIÓN GLOBAL
+           ========================================================================== */
+        function toggleTheme() {
+            currentTheme = currentTheme === 'light' ? 'dark' : 'light';
+            document.documentElement.setAttribute('data-theme', currentTheme);
+            localStorage.setItem('aventura6_theme', currentTheme);
+            document.getElementById('themeToggleBtn').innerText = currentTheme === 'light' ? '🌙' : '☀️';
+            renderLab();
+        }
+
+        function toggleLanguage() {
+            currentLang = currentLang === 'ES' ? 'EN' : 'ES';
+            localStorage.setItem('aventura6_lang', currentLang);
+            document.getElementById('langToggleBtn').innerText = currentLang === 'ES' ? '🌐 ES' : '🌐 EN';
+            updateI18nText();
+            renderGoals();
+            renderTheory();
+            renderLab();
+            generateQuiz();
+        }
+
+        function updateI18nText() {
+            document.querySelectorAll('[data-i18n]').forEach(el => {
+                const key = el.getAttribute('data-i18n');
+                if (i18n[currentLang][key]) {
+                    el.innerText = i18n[currentLang][key];
+                }
+            });
+        }
+
+        function switchTab(tabId, btnEl) {
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
+            
+            if (btnEl) btnEl.classList.add('active');
+            document.getElementById(`tab-${tabId}`).classList.add('active');
+            
+            if (tabId === 'laboratorio') renderLab();
+            if (tabId === 'quiz') {
+                setTimeout(() => {
+                    Object.keys(canvasInstances).forEach(idx => syncCanvasResolution(idx));
+                }, 50);
+            }
+        }
+
+        function openTopicFromHome(topicId) {
+            const theoryBtn = document.getElementById('nav-teoria');
+            switchTab('teoria', theoryBtn);
+            const targetAcc = document.getElementById(`accordion-${topicId}`);
+            if (targetAcc) {
+                targetAcc.classList.add('active');
+                targetAcc.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }
+        }
+
+        function renderGoals() {
+            const list = document.getElementById('goals-list');
+            list.innerHTML = goalsData[currentLang].map(g => `<li style="margin-bottom:0.4rem;">${g}</li>`).join('');
+        }
+
+        function renderTheory() {
+            const container = document.getElementById('accordion-container');
+            const t1Items = theoryData.filter(t => t.trimester === 1);
+            const t3Items = theoryData.filter(t => t.trimester === 3);
+
+            const renderGroup = (items) => items.map(item => `
+                <div class="accordion-item" id="accordion-${item.id}">
+                    <button class="accordion-header" onclick="toggleAccordion(${item.id})">
+                        <span>${item.title[currentLang]}</span>
+                        <span class="accordion-icon">▼</span>
+                    </button>
+                    <div class="accordion-body">
+                        <div>${item.content[currentLang]}</div>
+                        <div class="examples-grid">
+                            ${item.examples.map(ex => `
+                                <div class="example-box">
+                                    ${ex[currentLang]}
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+
+            container.innerHTML = `
+                <div class="trim-header">${i18n[currentLang].trim1_title}</div>
+                ${renderGroup(t1Items)}
+                <div class="trim-header">${i18n[currentLang].trim3_title}</div>
+                ${renderGroup(t3Items)}
+            `;
+        }
+
+        function toggleAccordion(id) {
+            const item = document.getElementById(`accordion-${id}`);
+            item.classList.toggle('active');
+        }
+
+        /* ==========================================================================
+           4. LABORATORIO SVG INTERACTIVO (ÁLGEBRA GRADO 6°)
+           ========================================================================== */
+        let labState = {
+            seqStart: 3,
+            seqStep: 4,
+            seqN: 5,
+            areaA: 4,
+            areaB: 2,
+            termX1: 5,
+            termX2: 3,
+            termY1: 4,
+            termY2: -2
+        };
+
+        function setLabMode(mode) {
+            currentLabMode = mode;
+            renderLab();
+        }
+
+        function renderLab() {
+            const controls = document.getElementById('lab-controls');
+            const svg = document.getElementById('svg-lab-viewport');
+            const metrics = document.getElementById('lab-metrics');
+            svg.innerHTML = '';
+
+            const primaryColor = currentTheme === 'light' ? '#1b8a5a' : '#2ecc71';
+            const accentColor = currentTheme === 'light' ? '#38b000' : '#52d681';
+            const textColor = currentTheme === 'light' ? '#1e3528' : '#ecf7f0';
+
+            if (currentLabMode === 'sequences') {
+                controls.innerHTML = `
+                    <div class="control-group">
+                        <label>${currentLang === 'ES' ? 'Primer término (a₁)' : 'First term (a₁)'}: ${labState.seqStart}</label>
+                        <input type="range" min="1" max="10" step="1" value="${labState.seqStart}" oninput="labState.seqStart = parseInt(this.value); renderLab();">
+                    </div>
+                    <div class="control-group">
+                        <label>${currentLang === 'ES' ? 'Diferencia / Patrón (+d)' : 'Step / Pattern (+d)'}: +${labState.seqStep}</label>
+                        <input type="range" min="1" max="8" step="1" value="${labState.seqStep}" oninput="labState.seqStep = parseInt(this.value); renderLab();">
+                    </div>
+                    <div class="control-group">
+                        <label>${currentLang === 'ES' ? 'Posición resaltada (n)' : 'Highlighted position (n)'}: ${labState.seqN}</label>
+                        <input type="range" min="1" max="6" step="1" value="${labState.seqN}" oninput="labState.seqN = parseInt(this.value); renderLab();">
+                    </div>
+                `;
+
+                let bars = '';
+                const maxVal = labState.seqStart + 5 * labState.seqStep;
+                const baseY = 290;
+                const maxBarH = 200;
+
+                for (let n = 1; n <= 6; n++) {
+                    const val = labState.seqStart + (n - 1) * labState.seqStep;
+                    const barH = Math.max(25, (val / maxVal) * maxBarH);
+                    const x = 55 + (n - 1) * 85;
+                    const y = baseY - barH;
+                    const isSelected = n === labState.seqN;
+
+                    bars += `
+                        <rect x="${x}" y="${y}" width="55" height="${barH}" rx="8"
+                              fill="${isSelected ? primaryColor : 'rgba(27, 138, 90, 0.25)'}"
+                              stroke="${primaryColor}" stroke-width="2" />
+                        <text x="${x + 27.5}" y="${y - 8}" fill="${textColor}" font-size="15" font-weight="700" text-anchor="middle">${val}</text>
+                        <text x="${x + 27.5}" y="${baseY + 22}" fill="${textColor}" font-size="13" font-weight="600" text-anchor="middle">n = ${n}</text>
+                    `;
+                }
+
+                const targetVal = labState.seqStart + (labState.seqN - 1) * labState.seqStep;
+                svg.innerHTML = `
+                    <line x1="35" y1="${baseY}" x2="565" y2="${baseY}" stroke="${textColor}" stroke-width="2" />
+                    ${bars}
+                    <text x="300" y="38" fill="${primaryColor}" font-size="17" font-weight="700" text-anchor="middle">
+                        a<tspan dy="4" font-size="12">n</tspan><tspan dy="-4"> = ${labState.seqStart} + (n - 1)·${labState.seqStep}</tspan>
+                    </text>
+                `;
+
+                metrics.innerHTML = `${currentLang === 'ES' ? 'Valor en posición' : 'Value at position'} n = ${labState.seqN}: <strong>${targetVal}</strong>`;
+
+            } else if (currentLabMode === 'notable_area') {
+                controls.innerHTML = `
+                    <div class="control-group">
+                        <label>${currentLang === 'ES' ? 'Lado a' : 'Side a'}: ${labState.areaA}</label>
+                        <input type="range" min="2" max="6" step="1" value="${labState.areaA}" oninput="labState.areaA = parseInt(this.value); renderLab();">
+                    </div>
+                    <div class="control-group">
+                        <label>${currentLang === 'ES' ? 'Lado b' : 'Side b'}: ${labState.areaB}</label>
+                        <input type="range" min="1" max="4" step="1" value="${labState.areaB}" oninput="labState.areaB = parseInt(this.value); renderLab();">
+                    </div>
+                `;
+
+                const total = labState.areaA + labState.areaB;
+                const boxSize = 240;
+                const scale = boxSize / total;
+                const pxA = labState.areaA * scale;
+                const pxB = labState.areaB * scale;
+                const startX = 180, startY = 60;
+
+                svg.innerHTML = `
+                    <!-- a^2 -->
+                    <rect x="${startX}" y="${startY}" width="${pxA}" height="${pxA}" fill="rgba(27, 138, 90, 0.35)" stroke="${primaryColor}" stroke-width="2" />
+                    <text x="${startX + pxA / 2}" y="${startY + pxA / 2 + 5}" fill="${textColor}" font-size="15" font-weight="700" text-anchor="middle">a² = ${labState.areaA * labState.areaA}</text>
+
+                    <!-- ab (derecha) -->
+                    <rect x="${startX + pxA}" y="${startY}" width="${pxB}" height="${pxA}" fill="rgba(56, 176, 0, 0.25)" stroke="${accentColor}" stroke-width="2" />
+                    <text x="${startX + pxA + pxB / 2}" y="${startY + pxA / 2 + 5}" fill="${textColor}" font-size="13" font-weight="600" text-anchor="middle">ab = ${labState.areaA * labState.areaB}</text>
+
+                    <!-- ab (abajo) -->
+                    <rect x="${startX}" y="${startY + pxA}" width="${pxA}" height="${pxB}" fill="rgba(56, 176, 0, 0.25)" stroke="${accentColor}" stroke-width="2" />
+                    <text x="${startX + pxA / 2}" y="${startY + pxA + pxB / 2 + 5}" fill="${textColor}" font-size="13" font-weight="600" text-anchor="middle">ab = ${labState.areaA * labState.areaB}</text>
+
+                    <!-- b^2 -->
+                    <rect x="${startX + pxA}" y="${startY + pxA}" width="${pxB}" height="${pxB}" fill="rgba(217, 119, 6, 0.28)" stroke="var(--warning)" stroke-width="2" />
+                    <text x="${startX + pxA + pxB / 2}" y="${startY + pxA + pxB / 2 + 5}" fill="${textColor}" font-size="12" font-weight="700" text-anchor="middle">b²=${labState.areaB * labState.areaB}</text>
+
+                    <!-- Etiquetas laterales -->
+                    <text x="${startX + pxA / 2}" y="${startY - 10}" fill="${primaryColor}" font-weight="700" font-size="14" text-anchor="middle">a = ${labState.areaA}</text>
+                    <text x="${startX + pxA + pxB / 2}" y="${startY - 10}" fill="${accentColor}" font-weight="700" font-size="14" text-anchor="middle">b = ${labState.areaB}</text>
+                    <text x="${startX - 18}" y="${startY + pxA / 2 + 5}" fill="${primaryColor}" font-weight="700" font-size="14" text-anchor="end">a = ${labState.areaA}</text>
+                    <text x="${startX - 18}" y="${startY + pxA + pxB / 2 + 5}" fill="${accentColor}" font-weight="700" font-size="14" text-anchor="end">b = ${labState.areaB}</text>
+                `;
+
+                const a2 = labState.areaA * labState.areaA;
+                const twoAB = 2 * labState.areaA * labState.areaB;
+                const b2 = labState.areaB * labState.areaB;
+                metrics.innerHTML = `(a + b)<sup>2</sup> = a<sup>2</sup> + 2ab + b<sup>2</sup> &nbsp;⇒&nbsp; (${labState.areaA} + ${labState.areaB})<sup>2</sup> = ${a2} + ${twoAB} + ${b2} = <strong>${a2 + twoAB + b2}</strong>`;
+
+            } else if (currentLabMode === 'like_terms') {
+                controls.innerHTML = `
+                    <div class="control-group">
+                        <label>${currentLang === 'ES' ? 'Términos en x' : 'Terms in x'}: ${labState.termX1}x + ${labState.termX2}x</label>
+                        <input type="range" min="1" max="8" step="1" value="${labState.termX1}" oninput="labState.termX1 = parseInt(this.value); renderLab();">
+                    </div>
+                    <div class="control-group">
+                        <label>${currentLang === 'ES' ? 'Segundo término en x' : 'Second term in x'}: +${labState.termX2}x</label>
+                        <input type="range" min="1" max="7" step="1" value="${labState.termX2}" oninput="labState.termX2 = parseInt(this.value); renderLab();">
+                    </div>
+                    <div class="control-group">
+                        <label>${currentLang === 'ES' ? 'Términos en y' : 'Terms in y'}: ${labState.termY1}y + (${labState.termY2}y)</label>
+                        <input type="range" min="1" max="8" step="1" value="${labState.termY1}" oninput="labState.termY1 = parseInt(this.value); renderLab();">
+                    </div>
+                `;
+
+                const sumX = labState.termX1 + labState.termX2;
+                const sumY = labState.termY1 + labState.termY2;
+
+                svg.innerHTML = `
+                    <rect x="45" y="45" width="235" height="115" rx="12" fill="rgba(27, 138, 90, 0.14)" stroke="${primaryColor}" stroke-width="2" />
+                    <text x="162" y="80" fill="${textColor}" font-size="14" font-weight="600" text-anchor="middle">${currentLang === 'ES' ? 'FAMILIA DE VARIABLE x' : 'VARIABLE x FAMILY'}</text>
+                    <text x="162" y="128" fill="${primaryColor}" font-size="23" font-weight="700" text-anchor="middle">${labState.termX1}x + ${labState.termX2}x = ${sumX}x</text>
+
+                    <rect x="320" y="45" width="235" height="115" rx="12" fill="rgba(56, 176, 0, 0.14)" stroke="${accentColor}" stroke-width="2" />
+                    <text x="437" y="80" fill="${textColor}" font-size="14" font-weight="600" text-anchor="middle">${currentLang === 'ES' ? 'FAMILIA DE VARIABLE y' : 'VARIABLE y FAMILY'}</text>
+                    <text x="437" y="128" fill="${accentColor}" font-size="23" font-weight="700" text-anchor="middle">${labState.termY1}y - ${Math.abs(labState.termY2)}y = ${sumY}y</text>
+
+                    <rect x="110" y="195" width="380" height="115" rx="12" fill="rgba(217, 119, 6, 0.12)" stroke="var(--warning)" stroke-width="2" />
+                    <text x="300" y="232" fill="${textColor}" font-size="14" font-weight="600" text-anchor="middle">${currentLang === 'ES' ? 'EXPRESIÓN REDUCIDA FINAL' : 'FINAL REDUCED EXPRESSION'}</text>
+                    <text x="300" y="278" fill="${textColor}" font-size="24" font-weight="700" text-anchor="middle">${sumX}x + ${sumY}y</text>
+                `;
+
+                metrics.innerHTML = `${labState.termX1}x + ${labState.termY1}y + ${labState.termX2}x - ${Math.abs(labState.termY2)}y = <strong>${sumX}x + ${sumY}y</strong>`;
+            }
+        }
+
+        /* ==========================================================================
+           5. GENERADOR ALGORÍTMICO DE PROBLEMAS (10 TEMAS - SIN PISTAS NI SUGERENCIAS)
+           ========================================================================== */
+        let quizData = [];
+        let canvasInstances = {};
+
+        function generateQuiz() {
+            quizData = [
+                generateQ1Patterns(),           // 1. Patrones
+                generateQ2Sequences(),          // 2. Secuencias
+                generateQ3NumericalValue(),     // 3. Valor numérico
+                generateQ4GeneralizedNumbers(), // 4. Números generalizados
+                generateQ5AlgebraicExpr(),      // 5. Expresiones algebraicas
+                generateQ6MonomialsPoly(),      // 6. Monomios y polinomios
+                generateQ7LikeTerms(),          // 7. Términos semejantes
+                generateQ8PolyOperations(),     // 8. Operaciones con polinomios
+                generateQ9SpecialProducts(),    // 9. Productos notables
+                generateQ10SpecialQuotients()   // 10. Cocientes notables
+            ];
+
+            const container = document.getElementById('quiz-container');
+            container.innerHTML = quizData.map((q, idx) => `
+                <div class="card quiz-card" id="quiz-card-${idx}">
+                    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.65rem;">
+                        <span class="badge">${q.topicName[currentLang]}</span>
+                        <span class="topic-tag">${currentLang === 'ES' ? 'Ejercicio' : 'Problem'} #${idx + 1}</span>
+                    </div>
+                    <div class="quiz-question">${q.question[currentLang]}</div>
+
+                    <div class="quiz-options">
+                        ${q.options.map((opt, oIdx) => `
+                            <button class="option-btn" onclick="checkAnswer(${idx}, ${oIdx})">${opt}</button>
+                        `).join('')}
+                    </div>
+                    <div class="feedback" id="feedback-${idx}"></div>
+
+                    <!-- Lienzo Vectorial Redimensionable por cada Pregunta -->
+                    <div class="sketchpad-container">
+                        <div class="sketchpad-toolbar">
+                            <button class="tool-btn active" onclick="setCanvasTool(${idx}, 'pencil', this)" title="${i18n[currentLang].sketch_pencil}">✏️ Pincel</button>
+                            <button class="tool-btn" onclick="setCanvasTool(${idx}, 'line', this)" title="${i18n[currentLang].sketch_line}">📏 Línea</button>
+                            <button class="tool-btn" onclick="setCanvasTool(${idx}, 'rect', this)" title="${i18n[currentLang].sketch_rect}">⬛ Rect</button>
+                            <button class="tool-btn" onclick="setCanvasTool(${idx}, 'eraser', this)" title="${i18n[currentLang].sketch_eraser}">🧹 Borrador</button>
+                            <input type="color" id="color-${idx}" value="#1e3528" onchange="updateCanvasStyle(${idx})" style="width:28px; height:28px; border:none; cursor:pointer;">
+                            <input type="range" id="size-${idx}" min="1" max="15" value="3" onchange="updateCanvasStyle(${idx})" style="width:60px;">
+                            <button class="tool-btn" onclick="adjustCanvasHeight(${idx}, -60)" title="${currentLang === 'ES' ? 'Reducir altura' : 'Decrease height'}">➖</button>
+                            <button class="tool-btn" onclick="adjustCanvasHeight(${idx}, 60)" title="${currentLang === 'ES' ? 'Ampliar altura' : 'Increase height'}">➕</button>
+                            <button class="tool-btn" onclick="clearCanvas(${idx})" title="${i18n[currentLang].sketch_clear}">🗑️ Limpiar</button>
+                            <button class="tool-btn" onclick="copyCardScreenshot(${idx})" title="${i18n[currentLang].sketch_copy}" style="background-color:rgba(27,138,90,0.14); font-weight:600;">📋 Copiar Captura</button>
+                            <button class="tool-btn" onclick="downloadCardScreenshot(${idx})" title="${i18n[currentLang].sketch_download}" style="background-color:rgba(56,176,0,0.14); font-weight:600;">💾 Descargar Imagen</button>
+                        </div>
+                        <div class="canvas-resize-wrapper" id="canvas-wrapper-${idx}">
+                            <canvas id="sketchpad-${idx}" class="sketchpad"></canvas>
+                        </div>
+                        <div class="canvas-resize-handle" onpointerdown="startCanvasResize(event, ${idx})">
+                            ${i18n[currentLang].resize_label}
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+
+            setTimeout(() => {
+                quizData.forEach((_, idx) => initCanvas(idx));
+            }, 100);
+        }
+
+        // 1. Patrones (sin sugerencias)
+        function generateQ1Patterns() {
+            const model = Math.floor(Math.random() * 2);
+            if (model === 0) {
+                const start = Math.floor(Math.random() * 8 + 3);
+                const step = Math.floor(Math.random() * 6 + 4);
+                const t1 = start, t2 = start + step, t3 = start + 2 * step, t4 = start + 3 * step;
+                const ans = start + 4 * step;
+                const ansCorrect = `${formatNumber(ans)}`;
+                const options = shuffle([
+                    ansCorrect,
+                    `${formatNumber(ans + step)}`,
+                    `${formatNumber(ans - 1)}`,
+                    `${formatNumber(t4 + 2)}`
+                ]);
+                return {
+                    topicName: { ES: "1. Patrones (1er Trim.)", EN: "1. Patterns (1st Trim.)" },
+                    question: {
+                        ES: `¿Cuál es el número que continúa en el patrón: ${t1}, ${t2}, ${t3}, ${t4}, ___ ?`,
+                        EN: `What number comes next in the pattern: ${t1}, ${t2}, ${t3}, ${t4}, ___ ?`
+                    },
+                    correctIndex: options.indexOf(ansCorrect),
+                    options
+                };
+            } else {
+                const base = Math.floor(Math.random() * 3 + 2);
+                const ratio = Math.floor(Math.random() * 2 + 2); // 2 o 3
+                const t1 = base, t2 = base * ratio, t3 = base * ratio * ratio, t4 = t3 * ratio;
+                const ans = t4 * ratio;
+                const ansCorrect = `${formatNumber(ans)}`;
+                const options = shuffle([
+                    ansCorrect,
+                    `${formatNumber(t4 + ratio)}`,
+                    `${formatNumber(ans * ratio)}`,
+                    `${formatNumber(t4 + t3)}`
+                ]);
+                return {
+                    topicName: { ES: "1. Patrones (1er Trim.)", EN: "1. Patterns (1st Trim.)" },
+                    question: {
+                        ES: `Determina el quinto término del patrón numérico: ${t1}, ${t2}, ${t3}, ${t4}, ___`,
+                        EN: `Determine the fifth term of the numerical pattern: ${t1}, ${t2}, ${t3}, ${t4}, ___`
+                    },
+                    correctIndex: options.indexOf(ansCorrect),
+                    options
+                };
+            }
+        }
+
+        // 2. Secuencias (sin sugerencias)
+        function generateQ2Sequences() {
+            const model = Math.floor(Math.random() * 2);
+            if (model === 0) {
+                const m = Math.floor(Math.random() * 4 + 2);
+                const b = Math.floor(Math.random() * 6 + 1);
+                const n = Math.floor(Math.random() * 6 + 8);
+                const ans = m * n + b;
+                const ansCorrect = `${formatNumber(ans)}`;
+                const options = shuffle([
+                    ansCorrect,
+                    `${formatNumber(m * (n + 1) + b)}`,
+                    `${formatNumber(m + n + b)}`,
+                    `${formatNumber(ans - m)}`
+                ]);
+                return {
+                    topicName: { ES: "2. Secuencias (1er Trim.)", EN: "2. Sequences (1st Trim.)" },
+                    question: {
+                        ES: `En una secuencia definida por a<sub>n</sub> = ${m}n + ${b}, ¿cuál es el valor del término en la posición n = ${n}?`,
+                        EN: `In a sequence defined by a<sub>n</sub> = ${m}n + ${b}, what is the value of the term at position n = ${n}?`
+                    },
+                    correctIndex: options.indexOf(ansCorrect),
+                    options
+                };
+            } else {
+                const k = Math.floor(Math.random() * 3 + 2);
+                const n = Math.floor(Math.random() * 4 + 5);
+                const ans = k * n * n;
+                const ansCorrect = `${formatNumber(ans)}`;
+                const options = shuffle([
+                    ansCorrect,
+                    `${formatNumber(k * n * 2)}`,
+                    `${formatNumber(Math.pow(k * n, 2))}`,
+                    `${formatNumber(ans + k)}`
+                ]);
+                return {
+                    topicName: { ES: "2. Secuencias (1er Trim.)", EN: "2. Sequences (1st Trim.)" },
+                    question: {
+                        ES: `Dada la secuencia cuyo término general es a<sub>n</sub> = ${k}n<sup>2</sup>, halla a<sub>${n}</sub>.`,
+                        EN: `Given the sequence with general term a<sub>n</sub> = ${k}n<sup>2</sup>, find a<sub>${n}</sub>.`
+                    },
+                    correctIndex: options.indexOf(ansCorrect),
+                    options
+                };
+            }
+        }
+
+        // 3. Valor numérico para una expresión algebraica (sin sugerencias)
+        function generateQ3NumericalValue() {
+            const model = Math.floor(Math.random() * 2);
+            if (model === 0) {
+                const a = Math.floor(Math.random() * 4 + 3);
+                const b = Math.floor(Math.random() * 4 + 2);
+                const c = Math.floor(Math.random() * 7 + 2);
+                const x = Math.floor(Math.random() * 5 + 2);
+                const y = Math.floor(Math.random() * 4 + 2);
+                const val = a * x + b * y - c;
+                const ansCorrect = `${formatNumber(val)}`;
+                const options = shuffle([
+                    ansCorrect,
+                    `${formatNumber(val + c * 2)}`,
+                    `${formatNumber(a * y + b * x - c)}`,
+                    `${formatNumber(val + 5)}`
+                ]);
+                return {
+                    topicName: { ES: "3. Valor Numérico (1er Trim.)", EN: "3. Numerical Value (1st Trim.)" },
+                    question: {
+                        ES: `Calcula el valor numérico de ${a}x + ${b}y - ${c} para x = ${x} y y = ${y}.`,
+                        EN: `Compute the numerical value of ${a}x + ${b}y - ${c} for x = ${x} and y = ${y}.`
+                    },
+                    correctIndex: options.indexOf(ansCorrect),
+                    options
+                };
+            } else {
+                const coef = Math.floor(Math.random() * 3 + 2);
+                const sub = Math.floor(Math.random() * 6 + 3);
+                const m = Math.floor(Math.random() * 4 + 3);
+                const val = coef * m * m - sub;
+                const ansCorrect = `${formatNumber(val)}`;
+                const options = shuffle([
+                    ansCorrect,
+                    `${formatNumber(coef * m * 2 - sub)}`,
+                    `${formatNumber(Math.pow(coef * m, 2) - sub)}`,
+                    `${formatNumber(val + sub)}`
+                ]);
+                return {
+                    topicName: { ES: "3. Valor Numérico (1er Trim.)", EN: "3. Numerical Value (1st Trim.)" },
+                    question: {
+                        ES: `Determina el valor numérico de la expresión ${coef}m<sup>2</sup> - ${sub} cuando m = ${m}.`,
+                        EN: `Determine the numerical value of the expression ${coef}m<sup>2</sup> - ${sub} when m = ${m}.`
+                    },
+                    correctIndex: options.indexOf(ansCorrect),
+                    options
+                };
+            }
+        }
+
+        // 4. Números generalizados (sin sugerencias)
+        function generateQ4GeneralizedNumbers() {
+            const model = Math.floor(Math.random() * 2);
+            if (model === 0) {
+                const k = Math.floor(Math.random() * 5 + 3);
+                const ansCorrect = `${k}n`;
+                const options = shuffle([
+                    ansCorrect,
+                    `n + ${k}`,
+                    `n<sup>${k}</sup>`,
+                    `n / ${k}`
+                ]);
+                return {
+                    topicName: { ES: "4. Números Generalizados (3er Trim.)", EN: "4. Generalized Numbers (3rd Trim.)" },
+                    question: {
+                        ES: `Si n representa cualquier número natural, ¿qué expresión generaliza a todos los múltiplos de ${k}?`,
+                        EN: `If n represents any whole number, which expression generalizes all multiples of ${k}?`
+                    },
+                    correctIndex: options.indexOf(ansCorrect),
+                    options
+                };
+            } else {
+                const ansCorrect = `n + (n + 1) + (n + 2)`;
+                const options = shuffle([
+                    ansCorrect,
+                    `3n`,
+                    `n + 2n + 3n`,
+                    `n<sup>3</sup> + 3`
+                ]);
+                return {
+                    topicName: { ES: "4. Números Generalizados (3er Trim.)", EN: "4. Generalized Numbers (3rd Trim.)" },
+                    question: {
+                        ES: `Si n es un número entero cualquiera, ¿cómo se representa de manera general la suma de tres números enteros consecutivos a partir de n?`,
+                        EN: `If n is any integer, how is the sum of three consecutive integers starting at n represented in general?`
+                    },
+                    correctIndex: options.indexOf(ansCorrect),
+                    options
+                };
+            }
+        }
+
+        // 5. Expresiones algebraicas (sin sugerencias)
+        function generateQ5AlgebraicExpr() {
+            const model = Math.floor(Math.random() * 2);
+            if (model === 0) {
+                const mult = Math.floor(Math.random() * 4 + 2);
+                const diff = Math.floor(Math.random() * 9 + 4);
+                const ansCorrect = `${mult}x - ${diff}`;
+                const options = shuffle([
+                    ansCorrect,
+                    `${diff} - ${mult}x`,
+                    `x<sup>${mult}</sup> - ${diff}`,
+                    `${mult}(x - ${diff})`
+                ]);
+                return {
+                    topicName: { ES: "5. Expresiones Algebraicas (3er Trim.)", EN: "5. Algebraic Expressions (3rd Trim.)" },
+                    question: {
+                        ES: `¿Cuál es la expresión algebraica correspondiente a "${mult} veces un número x, disminuido en ${diff}"?`,
+                        EN: `Which algebraic expression corresponds to "${mult} times a number x, decreased by ${diff}"?`
+                    },
+                    correctIndex: options.indexOf(ansCorrect),
+                    options
+                };
+            } else {
+                const priceA = (Math.floor(Math.random() * 4 + 2)) * 1000;
+                const priceB = (Math.floor(Math.random() * 3 + 1)) * 1500;
+                const ansCorrect = `${formatNumber(priceA)}a + ${formatNumber(priceB)}b`;
+                const options = shuffle([
+                    ansCorrect,
+                    `${formatNumber(priceA + priceB)}(a + b)`,
+                    `${formatNumber(priceA)}b + ${formatNumber(priceB)}a`,
+                    `${formatNumber(priceA * priceB)}ab`
+                ]);
+                return {
+                    topicName: { ES: "5. Expresiones Algebraicas (3er Trim.)", EN: "5. Algebraic Expressions (3rd Trim.)" },
+                    question: {
+                        ES: `Un libro cuesta $${formatNumber(priceA)} y una libreta cuesta $${formatNumber(priceB)}. ¿Qué expresión representa el valor total de "a" libros y "b" libretas?`,
+                        EN: `A book costs $${formatNumber(priceA)} and a notebook costs $${formatNumber(priceB)}. Which expression represents the total cost of "a" books and "b" notebooks?`
+                    },
+                    correctIndex: options.indexOf(ansCorrect),
+                    options
+                };
+            }
+        }
+
+        // 6. Monomios y polinomios (sin sugerencias)
+        function generateQ6MonomialsPoly() {
+            const model = Math.floor(Math.random() * 2);
+            if (model === 0) {
+                const c = Math.floor(Math.random() * 7 + 3);
+                const e1 = Math.floor(Math.random() * 4 + 2);
+                const e2 = Math.floor(Math.random() * 3 + 2);
+                const deg = e1 + e2;
+                const ansCorrect = `${deg}`;
+                const options = shuffle([
+                    ansCorrect,
+                    `${e1 * e2}`,
+                    `${c}`,
+                    `${Math.max(e1, e2)}`
+                ]);
+                return {
+                    topicName: { ES: "6. Monomios y Polinomios (3er Trim.)", EN: "6. Monomials & Polynomials (3rd Trim.)" },
+                    question: {
+                        ES: `¿Cuál es el grado absoluto del monomio -${c}x<sup>${e1}</sup>y<sup>${e2}</sup>?`,
+                        EN: `What is the absolute degree of the monomial -${c}x<sup>${e1}</sup>y<sup>${e2}</sup>?`
+                    },
+                    correctIndex: options.indexOf(ansCorrect),
+                    options
+                };
+            } else {
+                const d1 = Math.floor(Math.random() * 3 + 4); // 4, 5, 6
+                const d2 = d1 - 2;
+                const ansCorrect = currentLang === 'ES' ? `Trinomio de grado ${d1}` : `Trinomial of degree ${d1}`;
+                const options = shuffle([
+                    ansCorrect,
+                    currentLang === 'ES' ? `Binomio de grado ${d1}` : `Binomial of degree ${d1}`,
+                    currentLang === 'ES' ? `Trinomio de grado ${d1 + d2}` : `Trinomial of degree ${d1 + d2}`,
+                    currentLang === 'ES' ? `Monomio de grado ${d2}` : `Monomial of degree ${d2}`
+                ]);
+                return {
+                    topicName: { ES: "6. Monomios y Polinomios (3er Trim.)", EN: "6. Monomials & Polynomials (3rd Trim.)" },
+                    question: {
+                        ES: `Clasifica y determina el grado del polinomio: 7m<sup>${d1}</sup> - 4m<sup>${d2}</sup> + 9`,
+                        EN: `Classify and determine the degree of the polynomial: 7m<sup>${d1}</sup> - 4m<sup>${d2}</sup> + 9`
+                    },
+                    correctIndex: options.indexOf(ansCorrect),
+                    options
+                };
+            }
+        }
+
+        // 7. Términos semejantes (sin sugerencias)
+        function generateQ7LikeTerms() {
+            const a1 = Math.floor(Math.random() * 6 + 4);
+            const a2 = Math.floor(Math.random() * 4 + 2);
+            const b1 = Math.floor(Math.random() * 5 + 3);
+            const b2 = Math.floor(Math.random() * 4 + 2);
+            const resA = a1 - a2;
+            const resB = b1 + b2;
+            const ansCorrect = `${resA}x<sup>2</sup> + ${resB}y`;
+            const options = shuffle([
+                ansCorrect,
+                `${a1 + a2}x<sup>2</sup> + ${b1 - b2}y`,
+                `${resA + resB}x<sup>2</sup>y`,
+                `${resA}x + ${resB}y<sup>2</sup>`
+            ]);
+            return {
+                topicName: { ES: "7. Términos Semejantes (3er Trim.)", EN: "7. Like Terms (3rd Trim.)" },
+                question: {
+                    ES: `Reduce la expresión algebraica: ${a1}x<sup>2</sup> + ${b1}y - ${a2}x<sup>2</sup> + ${b2}y`,
+                    EN: `Simplify the algebraic expression: ${a1}x<sup>2</sup> + ${b1}y - ${a2}x<sup>2</sup> + ${b2}y`
+                },
+                correctIndex: options.indexOf(ansCorrect),
+                options
+            };
+        }
+
+        // 8. Operaciones con polinomios (sin sugerencias)
+        function generateQ8PolyOperations() {
+            const model = Math.floor(Math.random() * 2);
+            if (model === 0) {
+                const a1 = Math.floor(Math.random() * 4 + 5);
+                const b1 = Math.floor(Math.random() * 4 + 2);
+                const c1 = Math.floor(Math.random() * 5 + 3);
+                const a2 = Math.floor(Math.random() * 3 + 2);
+                const b2 = Math.floor(Math.random() * 4 + 2);
+                const c2 = Math.floor(Math.random() * 4 + 1);
+                const rA = a1 - a2;
+                const rB = b1 + b2;
+                const rC = c1 - c2;
+                const ansCorrect = `${rA}x<sup>2</sup> + ${rB}x + ${rC}`;
+                const options = shuffle([
+                    ansCorrect,
+                    `${rA}x<sup>2</sup> + ${b1 - b2}x + ${c1 + c2}`,
+                    `${a1 + a2}x<sup>2</sup> + ${rB}x + ${rC}`,
+                    `${rA}x<sup>2</sup> - ${rB}x + ${rC}`
+                ]);
+                return {
+                    topicName: { ES: "8. Operaciones con Polinomios (3er Trim.)", EN: "8. Polynomial Operations (3rd Trim.)" },
+                    question: {
+                        ES: `Calcula: (${a1}x<sup>2</sup> + ${b1}x + ${c1}) - (${a2}x<sup>2</sup> - ${b2}x + ${c2})`,
+                        EN: `Compute: (${a1}x<sup>2</sup> + ${b1}x + ${c1}) - (${a2}x<sup>2</sup> - ${b2}x + ${c2})`
+                    },
+                    correctIndex: options.indexOf(ansCorrect),
+                    options
+                };
+            } else {
+                const k = Math.floor(Math.random() * 3 + 2);
+                const m = Math.floor(Math.random() * 4 + 2);
+                const n = Math.floor(Math.random() * 4 + 2);
+                const ansCorrect = `${k * m}x<sup>3</sup> - ${k * n}x<sup>2</sup>`;
+                const options = shuffle([
+                    ansCorrect,
+                    `${k * m}x<sup>2</sup> - ${k * n}x`,
+                    `${k + m}x<sup>3</sup> - ${k + n}x<sup>2</sup>`,
+                    `${k * m}x<sup>3</sup> + ${k * n}x<sup>2</sup>`
+                ]);
+                return {
+                    topicName: { ES: "8. Operaciones con Polinomios (3er Trim.)", EN: "8. Polynomial Operations (3rd Trim.)" },
+                    question: {
+                        ES: `Resuelve el producto: ${k}x<sup>2</sup>(${m}x - ${n})`,
+                        EN: `Evaluate the product: ${k}x<sup>2</sup>(${m}x - ${n})`
+                    },
+                    correctIndex: options.indexOf(ansCorrect),
+                    options
+                };
+            }
+        }
+
+        // 9. Productos notables (sin sugerencias)
+        function generateQ9SpecialProducts() {
+            const model = Math.floor(Math.random() * 2);
+            if (model === 0) {
+                const b = Math.floor(Math.random() * 6 + 3);
+                const ansCorrect = `x<sup>2</sup> + ${2 * b}x + ${b * b}`;
+                const options = shuffle([
+                    ansCorrect,
+                    `x<sup>2</sup> + ${b * b}`,
+                    `x<sup>2</sup> + ${b}x + ${b * b}`,
+                    `x<sup>2</sup> + ${2 * b}x + ${2 * b}`
+                ]);
+                return {
+                    topicName: { ES: "9. Productos Notables (3er Trim.)", EN: "9. Special Products (3rd Trim.)" },
+                    question: {
+                        ES: `Desarrolla el producto notable: (x + ${b})<sup>2</sup>`,
+                        EN: `Expand the special product: (x + ${b})<sup>2</sup>`
+                    },
+                    correctIndex: options.indexOf(ansCorrect),
+                    options
+                };
+            } else {
+                const a = Math.floor(Math.random() * 3 + 2);
+                const b = Math.floor(Math.random() * 6 + 3);
+                const ansCorrect = `${a * a}y<sup>2</sup> - ${b * b}`;
+                const options = shuffle([
+                    ansCorrect,
+                    `${a * a}y<sup>2</sup> + ${b * b}`,
+                    `${a}y<sup>2</sup> - ${b * b}`,
+                    `${a * a}y<sup>2</sup> - ${2 * a * b}y + ${b * b}`
+                ]);
+                return {
+                    topicName: { ES: "9. Productos Notables (3er Trim.)", EN: "9. Special Products (3rd Trim.)" },
+                    question: {
+                        ES: `Halla el resultado de: (${a}y + ${b})(${a}y - ${b})`,
+                        EN: `Find the result of: (${a}y + ${b})(${a}y - ${b})`
+                    },
+                    correctIndex: options.indexOf(ansCorrect),
+                    options
+                };
+            }
+        }
+
+        // 10. Cocientes notables (sin sugerencias)
+        function generateQ10SpecialQuotients() {
+            const model = Math.floor(Math.random() * 2);
+            if (model === 0) {
+                const k = Math.floor(Math.random() * 7 + 3);
+                const ansCorrect = `x - ${k}`;
+                const options = shuffle([
+                    ansCorrect,
+                    `x + ${k}`,
+                    `x<sup>2</sup> - ${k}`,
+                    `x - ${k * k}`
+                ]);
+                return {
+                    topicName: { ES: "10. Cocientes Notables (3er Trim.)", EN: "10. Special Quotients (3rd Trim.)" },
+                    question: {
+                        ES: `Determina el cociente exacto: (x<sup>2</sup> - ${k * k}) / (x + ${k})`,
+                        EN: `Determine the exact quotient: (x<sup>2</sup> - ${k * k}) / (x + ${k})`
+                    },
+                    correctIndex: options.indexOf(ansCorrect),
+                    options
+                };
+            } else {
+                const k = [2, 3, 4][Math.floor(Math.random() * 3)];
+                const ansCorrect = `x<sup>2</sup> - ${k}x + ${k * k}`;
+                const options = shuffle([
+                    ansCorrect,
+                    `x<sup>2</sup> + ${k}x + ${k * k}`,
+                    `x<sup>2</sup> - ${k * k}`,
+                    `x + ${k}`
+                ]);
+                return {
+                    topicName: { ES: "10. Cocientes Notables (3er Trim.)", EN: "10. Special Quotients (3rd Trim.)" },
+                    question: {
+                        ES: `Halla el resultado de la división exacta: (x<sup>3</sup> + ${k * k * k}) / (x + ${k})`,
+                        EN: `Find the result of the exact division: (x<sup>3</sup> + ${k * k * k}) / (x + ${k})`
+                    },
+                    correctIndex: options.indexOf(ansCorrect),
+                    options
+                };
+            }
+        }
+
+        function shuffle(arr) {
+            return arr.sort(() => Math.random() - 0.5);
+        }
+
+        function checkAnswer(qIdx, optionIdx) {
+            const feedbackEl = document.getElementById(`feedback-${qIdx}`);
+            const q = quizData[qIdx];
+
+            if (optionIdx === q.correctIndex) {
+                feedbackEl.className = "feedback success";
+                feedbackEl.innerText = i18n[currentLang].correct_msg;
+            } else {
+                feedbackEl.className = "feedback error";
+                feedbackEl.innerText = i18n[currentLang].incorrect_msg;
+            }
+        }
+
+        /* ==========================================================================
+           6. LIENZO DE DIBUJO VECTORIAL CON BORRADOR PRECISO Y CAPTURA HTML2CANVAS
+           ========================================================================== */
+        function initCanvas(idx) {
+            const canvas = document.getElementById(`sketchpad-${idx}`);
+            if (!canvas) return;
+            const ctx = canvas.getContext('2d');
+            
+            const rect = canvas.getBoundingClientRect();
+            canvas.width = rect.width || 600;
+            canvas.height = rect.height || 240;
+
+            canvasInstances[idx] = {
+                canvas: canvas,
+                ctx: ctx,
+                tool: 'pencil',
+                color: document.getElementById(`color-${idx}`).value,
+                size: parseInt(document.getElementById(`size-${idx}`).value),
+                isDrawing: false,
+                startX: 0,
+                startY: 0,
+                strokes: [],
+                currentStroke: null
+            };
+
+            canvas.addEventListener('pointerdown', (e) => startDraw(e, idx));
+            canvas.addEventListener('pointermove', (e) => draw(e, idx));
+            canvas.addEventListener('pointerup', (e) => endDraw(e, idx));
+            canvas.addEventListener('pointerleave', (e) => endDraw(e, idx));
+        }
+
+        function syncCanvasResolution(idx) {
+            const inst = canvasInstances[idx];
+            if (!inst) return;
+            const rect = inst.canvas.getBoundingClientRect();
+            if (rect.width > 0 && rect.height > 0) {
+                inst.canvas.width = rect.width;
+                inst.canvas.height = rect.height;
+                redrawCanvas(idx);
+            }
+        }
+
+        function adjustCanvasHeight(idx, delta) {
+            const wrapper = document.getElementById(`canvas-wrapper-${idx}`);
+            if (!wrapper) return;
+            const currentH = wrapper.getBoundingClientRect().height;
+            const nextH = Math.max(150, Math.min(750, currentH + delta));
+            wrapper.style.height = `${nextH}px`;
+            syncCanvasResolution(idx);
+        }
+
+        function startCanvasResize(e, idx) {
+            e.preventDefault();
+            const wrapper = document.getElementById(`canvas-wrapper-${idx}`);
+            if (!wrapper) return;
+            const startY = e.clientY;
+            const startHeight = wrapper.getBoundingClientRect().height;
+
+            const onPointerMove = (moveEvent) => {
+                const newHeight = Math.max(150, Math.min(750, startHeight + (moveEvent.clientY - startY)));
+                wrapper.style.height = `${newHeight}px`;
+                syncCanvasResolution(idx);
+            };
+
+            const onPointerUp = () => {
+                window.removeEventListener('pointermove', onPointerMove);
+                window.removeEventListener('pointerup', onPointerUp);
+            };
+
+            window.addEventListener('pointermove', onPointerMove);
+            window.addEventListener('pointerup', onPointerUp);
+        }
+
+        window.addEventListener('resize', () => {
+            Object.keys(canvasInstances).forEach(idx => syncCanvasResolution(idx));
+        });
+
+        function setCanvasTool(idx, tool, btnEl) {
+            canvasInstances[idx].tool = tool;
+            const toolbar = document.getElementById(`canvas-wrapper-${idx}`).previousElementSibling;
+            toolbar.querySelectorAll('.tool-btn').forEach(btn => btn.classList.remove('active'));
+            if (btnEl) btnEl.classList.add('active');
+        }
+
+        function updateCanvasStyle(idx) {
+            canvasInstances[idx].color = document.getElementById(`color-${idx}`).value;
+            canvasInstances[idx].size = parseInt(document.getElementById(`size-${idx}`).value);
+        }
+
+        function getPos(e, canvas) {
+            const rect = canvas.getBoundingClientRect();
+            const scaleX = canvas.width / rect.width;
+            const scaleY = canvas.height / rect.height;
+            return {
+                x: (e.clientX - rect.left) * scaleX,
+                y: (e.clientY - rect.top) * scaleY
+            };
+        }
+
+        function startDraw(e, idx) {
+            const inst = canvasInstances[idx];
+            inst.isDrawing = true;
+            const pos = getPos(e, inst.canvas);
+            inst.startX = pos.x;
+            inst.startY = pos.y;
+
+            if (inst.tool === 'pencil') {
+                inst.currentStroke = {
+                    type: 'pencil',
+                    color: inst.color,
+                    size: inst.size,
+                    points: [{ x: pos.x, y: pos.y }]
+                };
+            } else if (inst.tool === 'eraser') {
+                eraseStrokeAt(idx, pos.x, pos.y);
+            }
+        }
+
+        function draw(e, idx) {
+            const inst = canvasInstances[idx];
+            if (!inst.isDrawing) return;
+            const pos = getPos(e, inst.canvas);
+
+            if (inst.tool === 'pencil') {
+                inst.currentStroke.points.push({ x: pos.x, y: pos.y });
+                redrawCanvas(idx);
+            } else if (inst.tool === 'line' || inst.tool === 'rect') {
+                redrawCanvas(idx);
+                inst.ctx.beginPath();
+                inst.ctx.strokeStyle = inst.color;
+                inst.ctx.lineWidth = inst.size;
+                if (inst.tool === 'line') {
+                    inst.ctx.moveTo(inst.startX, inst.startY);
+                    inst.ctx.lineTo(pos.x, pos.y);
+                } else if (inst.tool === 'rect') {
+                    inst.ctx.rect(inst.startX, inst.startY, pos.x - inst.startX, pos.y - inst.startY);
+                }
+                inst.ctx.stroke();
+            } else if (inst.tool === 'eraser') {
+                eraseStrokeAt(idx, pos.x, pos.y);
+            }
+        }
+
+        function endDraw(e, idx) {
+            const inst = canvasInstances[idx];
+            if (!inst.isDrawing) return;
+            inst.isDrawing = false;
+            const pos = getPos(e, inst.canvas);
+
+            if (inst.tool === 'pencil' && inst.currentStroke) {
+                inst.strokes.push(inst.currentStroke);
+                inst.currentStroke = null;
+            } else if (inst.tool === 'line') {
+                inst.strokes.push({
+                    type: 'line', color: inst.color, size: inst.size,
+                    x1: inst.startX, y1: inst.startY, x2: pos.x, y2: pos.y
+                });
+            } else if (inst.tool === 'rect') {
+                inst.strokes.push({
+                    type: 'rect', color: inst.color, size: inst.size,
+                    x1: inst.startX, y1: inst.startY, x2: pos.x, y2: pos.y
+                });
+            }
+            redrawCanvas(idx);
+        }
+
+        function redrawCanvas(idx) {
+            const inst = canvasInstances[idx];
+            inst.ctx.clearRect(0, 0, inst.canvas.width, inst.canvas.height);
+
+            const renderStroke = (s) => {
+                inst.ctx.beginPath();
+                inst.ctx.strokeStyle = s.color;
+                inst.ctx.lineWidth = s.size;
+                inst.ctx.lineCap = 'round';
+                inst.ctx.lineJoin = 'round';
+
+                if (s.type === 'pencil') {
+                    if (s.points.length === 1) {
+                        inst.ctx.arc(s.points[0].x, s.points[0].y, s.size / 2, 0, Math.PI * 2);
+                        inst.ctx.fillStyle = s.color;
+                        inst.ctx.fill();
+                        return;
+                    }
+                    if (s.points.length < 2) return;
+                    inst.ctx.moveTo(s.points[0].x, s.points[0].y);
+                    for (let i = 1; i < s.points.length; i++) {
+                        inst.ctx.lineTo(s.points[i].x, s.points[i].y);
+                    }
+                } else if (s.type === 'line') {
+                    inst.ctx.moveTo(s.x1, s.y1);
+                    inst.ctx.lineTo(s.x2, s.y2);
+                } else if (s.type === 'rect') {
+                    inst.ctx.rect(s.x1, s.y1, s.x2 - s.x1, s.y2 - s.y1);
+                }
+                inst.ctx.stroke();
+            };
+
+            inst.strokes.forEach(renderStroke);
+            if (inst.currentStroke) renderStroke(inst.currentStroke);
+        }
+
+        function eraseStrokeAt(idx, px, py) {
+            const inst = canvasInstances[idx];
+            const threshold = 14;
+            const p = { x: px, y: py };
+
+            inst.strokes = inst.strokes.filter(s => {
+                if (s.type === 'pencil') {
+                    if (s.points.length === 1) {
+                        return Math.hypot(s.points[0].x - px, s.points[0].y - py) > threshold;
+                    }
+                    for (let i = 0; i < s.points.length - 1; i++) {
+                        if (distToSegment(p, s.points[i], s.points[i + 1]) <= threshold) return false;
+                    }
+                    return true;
+                } else if (s.type === 'line') {
+                    return distToSegment(p, { x: s.x1, y: s.y1 }, { x: s.x2, y: s.y2 }) > threshold;
+                } else if (s.type === 'rect') {
+                    const p1 = { x: s.x1, y: s.y1 }, p2 = { x: s.x2, y: s.y1 };
+                    const p3 = { x: s.x2, y: s.y2 }, p4 = { x: s.x1, y: s.y2 };
+                    return Math.min(
+                        distToSegment(p, p1, p2), distToSegment(p, p2, p3),
+                        distToSegment(p, p3, p4), distToSegment(p, p4, p1)
+                    ) > threshold;
+                }
+                return true;
+            });
+            redrawCanvas(idx);
+        }
+
+        function distToSegment(p, v, w) {
+            const l2 = Math.pow(v.x - w.x, 2) + Math.pow(v.y - w.y, 2);
+            if (l2 === 0) return Math.hypot(p.x - v.x, p.y - v.y);
+            let t = ((p.x - v.x) * (w.x - v.x) + (p.y - v.y) * (w.y - v.y)) / l2;
+            t = Math.max(0, Math.min(1, t));
+            return Math.hypot(p.x - (v.x + t * (w.x - v.x)), p.y - (v.y + t * (w.y - v.y)));
+        }
+
+        function clearCanvas(idx) {
+            canvasInstances[idx].strokes = [];
+            redrawCanvas(idx);
+        }
+
+        function copyCardScreenshot(idx) {
+            const cardElement = document.getElementById(`quiz-card-${idx}`);
+            html2canvas(cardElement, { scale: 2 }).then(canvas => {
+                canvas.toBlob(blob => {
+                    if (navigator.clipboard && navigator.clipboard.write) {
+                        navigator.clipboard.write([new ClipboardItem({ 'image/png': blob })]);
+                        alert(currentLang === 'ES' ? '¡Captura completa del ejercicio copiada al portapapeles!' : 'Full exercise shot copied to clipboard!');
+                    } else {
+                        alert(currentLang === 'ES' ? 'El navegador no soporta copiado directo. Usa Descargar Imagen.' : 'Direct copy unsupported. Use Download Image instead.');
+                    }
+                });
+            });
+        }
+
+        function downloadCardScreenshot(idx) {
+            const cardElement = document.getElementById(`quiz-card-${idx}`);
+            html2canvas(cardElement, { scale: 2 }).then(canvas => {
+                const link = document.createElement('a');
+                link.download = `AventuraGRADO6_Ejercicio_${idx + 1}.png`;
+                link.href = canvas.toDataURL('image/png');
+                link.click();
+            });
+        }
+
+        /* ==========================================================================
+           7. INICIALIZACIÓN GENERAL
+           ========================================================================== */
+        window.addEventListener('DOMContentLoaded', () => {
+            if (currentTheme === 'dark') {
+                document.documentElement.setAttribute('data-theme', 'dark');
+                document.getElementById('themeToggleBtn').innerText = '☀️';
+            }
+            document.getElementById('langToggleBtn').innerText = currentLang === 'ES' ? '🌐 ES' : '🌐 EN';
+
+            updateI18nText();
+            renderGoals();
+            renderTheory();
+            generateQuiz();
+        });
+    </script>
+</body>
+</html>
