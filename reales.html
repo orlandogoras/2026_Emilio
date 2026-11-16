@@ -1,0 +1,1856 @@
+<!DOCTYPE html>
+<html lang="es" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aventura de Emilio -01°° - Números Reales (Grado 9°)</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&family=Fira+Code:wght@400;600&display=swap" rel="stylesheet">
+    <!-- html2canvas CDN -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <style>
+        :root {
+            --bg-color: #f4f6f9;
+            --card-bg: #ffffff;
+            --text-color: #2c3e50;
+            --text-muted: #6c757d;
+            --primary: #4b6cb7;
+            --primary-hover: #3b5998;
+            --secondary: #182848;
+            --accent: #00b4d8;
+            --success: #2ec4b6;
+            --danger: #e63946;
+            --warning: #ffb703;
+            --border-color: #e0e6ed;
+            --shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+            --radius: 12px;
+            --font-main: 'Poppins', sans-serif;
+            --font-code: 'Fira Code', monospace;
+        }
+
+        [data-theme="dark"] {
+            --bg-color: #121824;
+            --card-bg: #1e2738;
+            --text-color: #f1f5f9;
+            --text-muted: #94a3b8;
+            --primary: #4895ef;
+            --primary-hover: #3a0ca3;
+            --secondary: #0f172a;
+            --accent: #4cc9f0;
+            --success: #06d6a0;
+            --danger: #ef476f;
+            --warning: #ffd166;
+            --border-color: #334155;
+            --shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+        }
+
+        body {
+            font-family: var(--font-main);
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            padding-bottom: 40px;
+        }
+
+        sup, sub {
+            font-size: 0.74em;
+            line-height: 0;
+            position: relative;
+            vertical-align: baseline;
+        }
+        sup { top: -0.52em; }
+        sub { bottom: -0.26em; }
+
+        .radicand {
+            border-top: 1.5px solid currentColor;
+            padding: 0 2px;
+            display: inline-block;
+            line-height: 1.15;
+        }
+
+        .root-index {
+            font-size: 0.68em;
+            vertical-align: super;
+            margin-right: -2px;
+        }
+
+        header {
+            background-color: var(--card-bg);
+            border-bottom: 1px solid var(--border-color);
+            padding: 1rem 2rem;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: var(--shadow);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .logo-icon {
+            font-size: 2rem;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        h1 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--text-color);
+        }
+
+        .controls {
+            display: flex;
+            gap: 0.75rem;
+            align-items: center;
+        }
+
+        .btn {
+            background-color: var(--card-bg);
+            color: var(--text-color);
+            border: 1px solid var(--border-color);
+            padding: 0.5rem 1rem;
+            border-radius: var(--radius);
+            font-family: var(--font-main);
+            font-weight: 600;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+
+        .btn:hover {
+            border-color: var(--primary);
+            color: var(--primary);
+        }
+
+        .btn-primary {
+            background-color: var(--primary);
+            color: white;
+            border: none;
+        }
+
+        .btn-primary:hover {
+            background-color: var(--primary-hover);
+            color: white;
+        }
+
+        nav.tabs-nav {
+            display: flex;
+            justify-content: center;
+            background-color: var(--card-bg);
+            border-bottom: 1px solid var(--border-color);
+            padding: 0.5rem 1rem 0;
+            gap: 0.5rem;
+            overflow-x: auto;
+        }
+
+        .tab-btn {
+            background: none;
+            border: none;
+            padding: 0.75rem 1.25rem;
+            font-family: var(--font-main);
+            font-weight: 600;
+            color: var(--text-muted);
+            cursor: pointer;
+            border-bottom: 3px solid transparent;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            white-space: nowrap;
+        }
+
+        .tab-btn:hover {
+            color: var(--primary);
+        }
+
+        .tab-btn.active {
+            color: var(--primary);
+            border-bottom-color: var(--primary);
+        }
+
+        main {
+            max-width: 1100px;
+            margin: 2rem auto;
+            padding: 0 1.5rem;
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+            animation: fadeIn 0.4s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .card {
+            background-color: var(--card-bg);
+            border-radius: var(--radius);
+            border: 1px solid var(--border-color);
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            box-shadow: var(--shadow);
+        }
+
+        .grid-3 {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .accordion-item {
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius);
+            margin-bottom: 0.75rem;
+            overflow: hidden;
+            background-color: var(--card-bg);
+        }
+
+        .accordion-header {
+            width: 100%;
+            padding: 1rem 1.25rem;
+            background: none;
+            border: none;
+            text-align: left;
+            font-family: var(--font-main);
+            font-weight: 600;
+            font-size: 1.05rem;
+            color: var(--text-color);
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .accordion-header:hover {
+            background-color: rgba(0,0,0,0.02);
+        }
+
+        .accordion-body {
+            padding: 0 1.25rem 1.25rem;
+            display: none;
+            border-top: 1px solid var(--border-color);
+            padding-top: 1rem;
+        }
+
+        .accordion-item.active .accordion-body {
+            display: block;
+        }
+
+        .accordion-item.active .accordion-icon {
+            transform: rotate(180deg);
+        }
+
+        .examples-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 0.85rem;
+            margin-top: 1rem;
+        }
+
+        .example-box {
+            background-color: var(--bg-color);
+            border-left: 4px solid var(--accent);
+            padding: 0.9rem 1rem;
+            border-radius: 0 var(--radius) var(--radius) 0;
+            font-family: var(--font-main);
+            font-size: 0.94rem;
+        }
+
+        .math-code {
+            font-family: var(--font-code);
+            background-color: rgba(75, 108, 183, 0.12);
+            padding: 0.15rem 0.45rem;
+            border-radius: 5px;
+            font-weight: 600;
+            color: var(--primary);
+            display: inline-block;
+        }
+
+        .lab-controls {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+            margin-bottom: 1.5rem;
+            background-color: var(--bg-color);
+            padding: 1rem;
+            border-radius: var(--radius);
+        }
+
+        .control-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+            flex: 1;
+            min-width: 180px;
+        }
+
+        .control-group label {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--text-muted);
+        }
+
+        input[type="range"] {
+            width: 100%;
+            accent-color: var(--primary);
+        }
+
+        .svg-container {
+            width: 100%;
+            height: 360px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: var(--bg-color);
+            border-radius: var(--radius);
+            border: 1px solid var(--border-color);
+            overflow: hidden;
+        }
+
+        .quiz-card {
+            position: relative;
+        }
+
+        .quiz-question {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        .quiz-options {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+            gap: 0.75rem;
+            margin-bottom: 1rem;
+        }
+
+        .option-btn {
+            padding: 0.75rem 1rem;
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius);
+            background-color: var(--card-bg);
+            color: var(--text-color);
+            font-family: var(--font-main);
+            font-weight: 500;
+            cursor: pointer;
+            text-align: left;
+            font-size: 1rem;
+        }
+
+        .option-btn:hover {
+            border-color: var(--primary);
+            background-color: rgba(75, 108, 183, 0.05);
+        }
+
+        .feedback {
+            padding: 0.75rem 1rem;
+            border-radius: var(--radius);
+            margin-top: 1rem;
+            font-weight: 600;
+            display: none;
+        }
+
+        .feedback.success {
+            display: block;
+            background-color: rgba(46, 196, 182, 0.15);
+            color: var(--success);
+            border: 1px solid var(--success);
+        }
+
+        .feedback.error {
+            display: block;
+            background-color: rgba(230, 57, 70, 0.15);
+            color: var(--danger);
+            border: 1px solid var(--danger);
+        }
+
+        .sketchpad-container {
+            margin-top: 1rem;
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius);
+            overflow: hidden;
+            background-color: #ffffff;
+        }
+
+        .sketchpad-toolbar {
+            background-color: var(--bg-color);
+            padding: 0.5rem;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            align-items: center;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .tool-btn {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            padding: 0.3rem 0.6rem;
+            cursor: pointer;
+            font-size: 0.9rem;
+            color: var(--text-color);
+        }
+
+        .tool-btn.active {
+            background-color: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+
+        .canvas-resize-wrapper {
+            position: relative;
+            width: 100%;
+            height: 240px;
+            min-height: 150px;
+            max-height: 750px;
+            background-color: #ffffff;
+        }
+
+        canvas.sketchpad {
+            display: block;
+            width: 100%;
+            height: 100%;
+            cursor: crosshair;
+            touch-action: none;
+        }
+
+        .canvas-resize-handle {
+            width: 100%;
+            height: 18px;
+            background-color: var(--bg-color);
+            border-top: 1px solid var(--border-color);
+            cursor: ns-resize;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 0.72rem;
+            font-weight: 600;
+            color: var(--text-muted);
+            user-select: none;
+            touch-action: none;
+        }
+
+        .canvas-resize-handle:hover {
+            background-color: rgba(75, 108, 183, 0.12);
+            color: var(--primary);
+        }
+
+        .hero-banner {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 2.5rem 2rem;
+            border-radius: var(--radius);
+            margin-bottom: 2rem;
+            box-shadow: var(--shadow);
+        }
+
+        .hero-banner h2 {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 0.25rem 0.6rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            background-color: var(--accent);
+            color: white;
+            margin-bottom: 0.5rem;
+        }
+
+        .topic-tag {
+            font-size: 0.78rem;
+            padding: 0.25rem 0.65rem;
+            border-radius: 6px;
+            font-weight: 600;
+            background-color: rgba(75, 108, 183, 0.15);
+            color: var(--primary);
+        }
+
+        @media (max-width: 768px) {
+            header { padding: 1rem; }
+            main { padding: 0 1rem; }
+            .hero-banner { padding: 1.5rem 1rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header & Navigation -->
+    <header>
+        <div class="logo-container">
+            <span class="logo-icon">ℝ</span>
+            <h1>Aventura de Emilio -01°°</h1>
+        </div>
+        <div class="controls">
+            <button class="btn" id="langToggleBtn" onclick="toggleLanguage()">🌐 ES</button>
+            <button class="btn" id="themeToggleBtn" onclick="toggleTheme()">🌙</button>
+        </div>
+    </header>
+
+    <nav class="tabs-nav">
+        <button class="tab-btn active" onclick="switchTab('inicio', this)">🏠 <span data-i18n="tab_home">Inicio</span></button>
+        <button class="tab-btn" onclick="switchTab('teoria', this)">📚 <span data-i18n="tab_theory">Teoría y Ejemplos</span></button>
+        <button class="tab-btn" onclick="switchTab('laboratorio', this)">🧪 <span data-i18n="tab_lab">Laboratorio SVG</span></button>
+        <button class="tab-btn" onclick="switchTab('quiz', this)">📝 <span data-i18n="tab_quiz">Práctica de Examen</span></button>
+    </nav>
+
+    <main>
+        <!-- TAB 1: INICIO -->
+        <section id="tab-inicio" class="tab-content active">
+            <div class="hero-banner">
+                <span class="badge" data-i18n="grade_badge">Preparación Grado 9° • Números Reales</span>
+                <h2 data-i18n="welcome_title">¡Bienvenido a Aventura de Emilio -01°°!</h2>
+                <p data-i18n="welcome_subtitle">Entrena tu razonamiento matemático dominando los Números Reales: intervalos, operaciones, potenciación, radicación, logaritmación y ecuaciones.</p>
+            </div>
+
+            <div class="grid-3">
+                <div class="card" style="margin-bottom:0;">
+                    <h3>📏 <span data-i18n="card_1_title">1. Orden e Intervalos</span></h3>
+                    <p data-i18n="card_1_desc">Ubicación en la recta real, desigualdades e intervalos abiertos, cerrados y semiabiertos.</p>
+                </div>
+                <div class="card" style="margin-bottom:0;">
+                    <h3>➕ <span data-i18n="card_2_title">2. Operaciones Básicas</span></h3>
+                    <p data-i18n="card_2_desc">Propiedades y cálculo con números racionales, irracionales y decimales en contextos reales.</p>
+                </div>
+                <div class="card" style="margin-bottom:0;">
+                    <h3>⚡ <span data-i18n="card_3_title">3. Potenciación</span></h3>
+                    <p data-i18n="card_3_desc">Leyes de los exponentes enteros, negativos y fraccionarios aplicados al crecimiento numérico.</p>
+                </div>
+                <div class="card" style="margin-bottom:0;">
+                    <h3>√ <span data-i18n="card_4_title">4. Radicación</span></h3>
+                    <p data-i18n="card_4_desc">Simplificación de radicales, raíces cuadradas y cúbicas exactas e irracionales.</p>
+                </div>
+                <div class="card" style="margin-bottom:0;">
+                    <h3>📈 <span data-i18n="card_5_title">5. Logaritmación</span></h3>
+                    <p data-i18n="card_5_desc">Relación inversa con la potenciación y propiedades fundamentales de los logaritmos.</p>
+                </div>
+                <div class="card" style="margin-bottom:0;">
+                    <h3>⚖️ <span data-i18n="card_6_title">6. Ecuaciones</span></h3>
+                    <p data-i18n="card_6_desc">Planteamiento y resolución de ecuaciones lineales, cuadráticas puras y exponenciales simples.</p>
+                </div>
+            </div>
+
+            <div class="card">
+                <h3 data-i18n="goals_title">🎯 Metas Curriculares de Aprendizaje (Números Reales)</h3>
+                <ul style="margin-left: 1.5rem; margin-top: 0.5rem;" id="goals-list"></ul>
+            </div>
+        </section>
+
+        <!-- TAB 2: TEORÍA Y EJEMPLOS -->
+        <section id="tab-teoria" class="tab-content">
+            <div class="card">
+                <h2 data-i18n="theory_header">Números Reales: Guía Teórica y 3 Ejemplos por Tema</h2>
+                <p data-i18n="theory_sub">Haz clic en cada uno de los 6 temas para estudiar sus fundamentos y analizar tres ejemplos resueltos paso a paso.</p>
+            </div>
+
+            <div id="accordion-container"></div>
+        </section>
+
+        <!-- TAB 3: LABORATORIO SVG -->
+        <section id="tab-laboratorio" class="tab-content">
+            <div class="card">
+                <h2 data-i18n="lab_header">Laboratorio Interactivo de Números Reales (SVG)</h2>
+                <p data-i18n="lab_sub">Manipula los parámetros visuales para explorar intervalos en la recta real, potencias, logaritmos y ecuaciones.</p>
+                
+                <div style="margin-top: 1rem; display: flex; gap: 0.5rem; flex-wrap: wrap;">
+                    <button class="btn btn-primary" onclick="setLabMode('intervals')" data-i18n="lab_mode_int">📏 Recta Real e Intervalos</button>
+                    <button class="btn" onclick="setLabMode('powers_logs')" data-i18n="lab_mode_pow">⚡ Potencias, Raíces y Logaritmos</button>
+                    <button class="btn" onclick="setLabMode('equations')" data-i18n="lab_mode_eq">⚖️ Explorador de Ecuaciones</button>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="lab-controls" id="lab-controls"></div>
+                <div class="svg-container">
+                    <svg id="svg-lab-viewport" width="100%" height="100%" viewBox="0 0 600 360"></svg>
+                </div>
+                <div id="lab-metrics" style="margin-top: 1rem; font-weight: 600; text-align: center; font-size: 1.05rem;"></div>
+            </div>
+        </section>
+
+        <!-- TAB 4: PRÁCTICA DE EXAMEN (QUIZ) -->
+        <section id="tab-quiz" class="tab-content">
+            <div class="card" style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;">
+                <div>
+                    <h2 data-i18n="quiz_header">Banco Dinámico de Problemas — Números Reales</h2>
+                    <p data-i18n="quiz_sub">Resuelve los problemas aplicando tus conocimientos. Usa la pizarra vectorial de cada ejercicio para tus cálculos.</p>
+                </div>
+                <button class="btn btn-primary" onclick="generateQuiz()"><span data-i18n="btn_regenerate">🔄 Generar Nuevos Modelos / Preguntas</span></button>
+            </div>
+
+            <div id="quiz-container"></div>
+        </section>
+    </main>
+
+    <script>
+        /* ==========================================================================
+           1. ESTADO GLOBAL E IDIOMAS
+           ========================================================================== */
+        let currentLang = localStorage.getItem('emilio_lang') || 'ES';
+        let currentTheme = localStorage.getItem('emilio_theme') || 'light';
+        let currentLabMode = 'intervals';
+
+        const i18n = {
+            ES: {
+                tab_home: "Inicio",
+                tab_theory: "Teoría y Ejemplos",
+                tab_lab: "Laboratorio SVG",
+                tab_quiz: "Práctica de Examen",
+                grade_badge: "Preparación Grado 9° • Números Reales",
+                welcome_title: "¡Bienvenido a Aventura de Emilio -01°°!",
+                welcome_subtitle: "Entrena tu razonamiento matemático dominando los Números Reales: intervalos, operaciones, potenciación, radicación, logaritmación y ecuaciones.",
+                card_1_title: "1. Orden e Intervalos",
+                card_1_desc: "Ubicación en la recta real, desigualdades e intervalos abiertos, cerrados y semiabiertos.",
+                card_2_title: "2. Operaciones Básicas",
+                card_2_desc: "Propiedades y cálculo con números racionales, irracionales y decimales en contextos reales.",
+                card_3_title: "3. Potenciación",
+                card_3_desc: "Leyes de los exponentes enteros, negativos y fraccionarios aplicados al crecimiento numérico.",
+                card_4_title: "4. Radicación",
+                card_4_desc: "Simplificación de radicales, raíces cuadradas y cúbicas exactas e irracionales.",
+                card_5_title: "5. Logaritmación",
+                card_5_desc: "Relación inversa con la potenciación y propiedades fundamentales de los logaritmos.",
+                card_6_title: "6. Ecuaciones",
+                card_6_desc: "Planteamiento y resolución de ecuaciones lineales, cuadráticas puras y exponenciales simples.",
+                goals_title: "🎯 Metas Curriculares de Aprendizaje (Números Reales)",
+                theory_header: "Números Reales: Guía Teórica y 3 Ejemplos por Tema",
+                theory_sub: "Haz clic en cada uno de los 6 temas para estudiar sus fundamentos y analizar tres ejemplos resueltos paso a paso.",
+                lab_header: "Laboratorio Interactivo de Números Reales (SVG)",
+                lab_sub: "Manipula los parámetros visuales para explorar intervalos en la recta real, potencias, logaritmos y ecuaciones.",
+                lab_mode_int: "📏 Recta Real e Intervalos",
+                lab_mode_pow: "⚡ Potencias, Raíces y Logaritmos",
+                lab_mode_eq: "⚖️ Explorador de Ecuaciones",
+                quiz_header: "Banco Dinámico de Problemas — Números Reales",
+                quiz_sub: "Resuelve los problemas aplicando tus conocimientos. Usa la pizarra vectorial de cada ejercicio para tus cálculos.",
+                btn_regenerate: "🔄 Generar Nuevos Modelos / Preguntas",
+                correct_msg: "¡Excelente, Emilio! Respuesta correcta. 🎉",
+                incorrect_msg: "Respuesta incorrecta. Verifica tus cálculos e inténtalo de nuevo.",
+                sketch_pencil: "✏️ Pincel",
+                sketch_line: "📏 Línea",
+                sketch_rect: "⬛ Rectángulo",
+                sketch_eraser: "🧹 Borrador Inteligente",
+                sketch_clear: "🗑️ Limpiar Pizarra",
+                sketch_copy: "📋 Copiar Captura",
+                sketch_download: "💾 Descargar Imagen",
+                resize_label: "↕ Arrastra para ajustar altura del lienzo"
+            },
+            EN: {
+                tab_home: "Home",
+                tab_theory: "Theory & Examples",
+                tab_lab: "SVG Laboratory",
+                tab_quiz: "Exam Practice",
+                grade_badge: "9th Grade Prep • Real Numbers",
+                welcome_title: "Welcome to Emilio's Adventure -01°°!",
+                welcome_subtitle: "Sharpen your mathematical reasoning by mastering Real Numbers: intervals, operations, exponents, radicals, logarithms, and equations.",
+                card_1_title: "1. Order & Intervals",
+                card_1_desc: "Real number line placement, inequalities, and open, closed, and half-open intervals.",
+                card_2_title: "2. Basic Operations",
+                card_2_desc: "Properties and calculations with rational, irrational, and real-world decimal values.",
+                card_3_title: "3. Exponents (Powers)",
+                card_3_desc: "Laws of integer, negative, and rational exponents applied to numerical growth.",
+                card_4_title: "4. Radicals (Roots)",
+                card_4_desc: "Simplifying radicals, exact and irrational square and cube roots.",
+                card_5_title: "5. Logarithms",
+                card_5_desc: "Inverse relationship with exponentiation and core logarithmic properties.",
+                card_6_title: "6. Equations",
+                card_6_desc: "Setting up and solving linear, pure quadratic, and basic exponential equations.",
+                goals_title: "🎯 Curriculum Learning Goals (Real Numbers)",
+                theory_header: "Real Numbers: Theory Guide & 3 Examples per Topic",
+                theory_sub: "Click on each of the 6 topics to study core concepts and review three step-by-step solved examples.",
+                lab_header: "Interactive Real Numbers Laboratory (SVG)",
+                lab_sub: "Adjust visual parameters to explore real-line intervals, powers, logarithms, and equations.",
+                lab_mode_int: "📏 Real Line & Intervals",
+                lab_mode_pow: "⚡ Powers, Roots & Logarithms",
+                lab_mode_eq: "⚖️ Equation Explorer",
+                quiz_header: "Dynamic Problem Bank — Real Numbers",
+                quiz_sub: "Solve the problems using your own mathematical strategies. Use the vector sketchpad on each card for scratch work.",
+                btn_regenerate: "🔄 Generate New Models / Questions",
+                correct_msg: "Excellent job, Emilio! Correct answer. 🎉",
+                incorrect_msg: "Incorrect answer. Check your work and try again.",
+                sketch_pencil: "✏️ Pencil",
+                sketch_line: "📏 Line",
+                sketch_rect: "⬛ Rectangle",
+                sketch_eraser: "🧹 Smart Eraser",
+                sketch_clear: "🗑️ Clear Canvas",
+                sketch_copy: "📋 Copy Shot",
+                sketch_download: "💾 Download Image",
+                resize_label: "↕ Drag to resize canvas height"
+            }
+        };
+
+        const goalsData = {
+            ES: [
+                "Ordenar números racionales e irracionales en la recta real y representar subconjuntos mediante notación de intervalos y desigualdades.",
+                "Ejecutar operaciones combinadas en ℝ respetando la jerarquía operacional y las propiedades clausurativa, conmutativa y distributiva.",
+                "Aplicar las leyes de la potenciación con exponentes enteros positivos, nulos y negativos en expresiones numéricas y algebraicas.",
+                "Calcular y simplificar raíces n-ésimas exactas e irracionales reconociendo su relación con los exponentes fraccionarios.",
+                "Comprender la logaritmación como operación inversa de la potenciación y calcular logaritmos en distintas bases.",
+                "Modelar y resolver ecuaciones lineales y ecuaciones de segundo grado en ℝ para dar solución a problemas cotidianos."
+            ],
+            EN: [
+                "Order rational and irrational numbers on the real line and represent subsets using interval and inequality notation.",
+                "Execute combined operations in ℝ respecting order of operations and field properties.",
+                "Apply exponent laws with positive, zero, and negative integer exponents to numerical and algebraic expressions.",
+                "Compute and simplify exact and irrational nth roots recognizing their link to rational exponents.",
+                "Understand logarithms as the inverse operation of exponentiation and evaluate logarithms in different bases.",
+                "Model and solve linear and quadratic equations in ℝ to address real-world problems."
+            ]
+        };
+
+        /* Helper para escribir raíces convencionales con barra superior (vínculo) */
+        function radicalHTML(radicand, index = '') {
+            const idxTag = index !== '' ? `<sup class="root-index">${index}</sup>` : '';
+            return `${idxTag}√<span class="radicand">${radicand}</span>`;
+        }
+
+        /* ==========================================================================
+           2. TEORÍA Y 3 EJEMPLOS POR CADA UNO DE LOS 6 TEMAS (NOTACIÓN CONVENCIONAL)
+           ========================================================================== */
+        const theoryData = [
+            {
+                id: 1,
+                title: { ES: "Tema 1: Orden e Intervalos en ℝ", EN: "Topic 1: Order & Intervals in ℝ" },
+                content: {
+                    ES: `El conjunto de los <strong>Números Reales (ℝ)</strong> es ordenado: dados dos números reales <em>a</em> y <em>b</em>, siempre se cumple una y solo una relación (<em>a &lt; b</em>, <em>a = b</em> o <em>a &gt; b</em>).<br>
+                    Un <strong>intervalo</strong> es un subconjunto continuo de la recta real:<br>
+                    • <strong>Cerrado [a, b]:</strong> Incluye ambos extremos (<em>a ≤ x ≤ b</em>).<br>
+                    • <strong>Abierto (a, b):</strong> No incluye ninguno de los extremos (<em>a &lt; x &lt; b</em>).<br>
+                    • <strong>Semiabierto [a, b) o (a, b]:</strong> Incluye solo uno de los extremos.<br>
+                    • <strong>Infinito [a, ∞) o (-∞, b):</strong> Se extiende indefinidamente hacia un sentido de la recta.`,
+                    EN: `The set of <strong>Real Numbers (ℝ)</strong> is ordered: for any two real numbers <em>a</em> and <em>b</em>, exactly one relation holds (<em>a &lt; b</em>, <em>a = b</em>, or <em>a &gt; b</em>).<br>
+                    An <strong>interval</strong> is a continuous subset of the real line:<br>
+                    • <strong>Closed [a, b]:</strong> Includes both endpoints (<em>a ≤ x ≤ b</em>).<br>
+                    • <strong>Open (a, b):</strong> Excludes both endpoints (<em>a &lt; x &lt; b</em>).<br>
+                    • <strong>Half-open [a, b) or (a, b]:</strong> Includes only one endpoint.<br>
+                    • <strong>Infinite [a, ∞) or (-∞, b):</strong> Extends indefinitely in one direction.`
+                },
+                examples: [
+                    {
+                        ES: `<strong>Ejemplo 1 (Orden de reales):</strong> Ordena de menor a mayor: <span class="math-code">-${radicalHTML('10')}</span>, <span class="math-code">-3.1</span>, <span class="math-code">π</span> y <span class="math-code">10/3</span>.<br>
+                        <em>Solución:</em> Aproximamos cada valor: <span class="math-code">-${radicalHTML('10')} ≈ -3.16</span>, <span class="math-code">-3.1 = -3.10</span>, <span class="math-code">π ≈ 3.14</span> y <span class="math-code">10/3 ≈ 3.33</span>. Por tanto: <span class="math-code">-${radicalHTML('10')} &lt; -3.1 &lt; π &lt; 10/3</span>.`,
+                        EN: `<strong>Example 1 (Ordering reals):</strong> Order from least to greatest: <span class="math-code">-${radicalHTML('10')}</span>, <span class="math-code">-3.1</span>, <span class="math-code">π</span>, and <span class="math-code">10/3</span>.<br>
+                        <em>Solution:</em> Approximating values: <span class="math-code">-${radicalHTML('10')} ≈ -3.16</span>, <span class="math-code">-3.1 = -3.10</span>, <span class="math-code">π ≈ 3.14</span>, and <span class="math-code">10/3 ≈ 3.33</span>. Thus: <span class="math-code">-${radicalHTML('10')} &lt; -3.1 &lt; π &lt; 10/3</span>.`
+                    },
+                    {
+                        ES: `<strong>Ejemplo 2 (Notación de intervalo):</strong> Expresa como intervalo el conjunto <span class="math-code">{x ∈ ℝ | -4 ≤ x &lt; 7}</span> e indica cuántos enteros contiene.<br>
+                        <em>Solución:</em> Como incluye el -4 (corchete) y excluye el 7 (paréntesis), se escribe <span class="math-code">[-4, 7)</span>. Los enteros en él son {-4, -3, -2, -1, 0, 1, 2, 3, 4, 5, 6}, es decir, <strong>11 números enteros</strong>.`,
+                        EN: `<strong>Example 2 (Interval notation):</strong> Write <span class="math-code">{x ∈ ℝ | -4 ≤ x &lt; 7}</span> in interval notation and count its integers.<br>
+                        <em>Solution:</em> Including -4 and excluding 7 gives <span class="math-code">[-4, 7)</span>. The integers inside are {-4, -3, -2, -1, 0, 1, 2, 3, 4, 5, 6}, totaling <strong>11 integers</strong>.`
+                    },
+                    {
+                        ES: `<strong>Ejemplo 3 (Intersección de intervalos):</strong> Halla la intersección <span class="math-code">[-2, 5] ∩ (1, 8)</span>.<br>
+                        <em>Solución:</em> Buscamos los números reales que pertenecen simultáneamente a ambos intervalos. El límite inferior común empieza abierto en 1 y termina cerrado en 5: <span class="math-code">(1, 5]</span>.`,
+                        EN: `<strong>Example 3 (Interval intersection):</strong> Find <span class="math-code">[-2, 5] ∩ (1, 8)</span>.<br>
+                        <em>Solution:</em> The overlapping real numbers start open at 1 and end closed at 5: <span class="math-code">(1, 5]</span>.`
+                    }
+                ]
+            },
+            {
+                id: 2,
+                title: { ES: "Tema 2: Operaciones Básicas en ℝ", EN: "Topic 2: Basic Operations in ℝ" },
+                content: {
+                    ES: `Las operaciones de adición, sustracción, multiplicación y división (con divisor distinto de cero) son cerradas en ℝ. Para operar sin errores se respeta la <strong>jerarquía operacional</strong>: 1) Paréntesis y signos de agrupación, 2) Potencias y raíces, 3) Multiplicaciones y divisiones de izquierda a derecha, 4) Sumas y restas.`,
+                    EN: `Addition, subtraction, multiplication, and division (with non-zero divisor) are closed in ℝ. Calculations follow the <strong>order of operations</strong>: 1) Grouping symbols, 2) Powers and roots, 3) Multiplication and division left to right, 4) Addition and subtraction.`
+                },
+                examples: [
+                    {
+                        ES: `<strong>Ejemplo 1 (Operaciones con enteros y signos):</strong> Calcula <span class="math-code">-18 + 4 × (-5) - (-12) ÷ 3</span>.<br>
+                        <em>Solución:</em> Primero productos y cocientes: <span class="math-code">4 × (-5) = -20</span> y <span class="math-code">(-12) ÷ 3 = -4</span>. Luego: <span class="math-code">-18 + (-20) - (-4) = -38 + 4 = -34</span>.`,
+                        EN: `<strong>Example 1 (Signed integers):</strong> Compute <span class="math-code">-18 + 4 × (-5) - (-12) ÷ 3</span>.<br>
+                        <em>Solution:</em> First products and quotients: <span class="math-code">4 × (-5) = -20</span> and <span class="math-code">(-12) ÷ 3 = -4</span>. Then: <span class="math-code">-18 - 20 + 4 = -34</span>.`
+                    },
+                    {
+                        ES: `<strong>Ejemplo 2 (Operaciones con racionales):</strong> Resuelve <span class="math-code">(3/4 - 1/6) × 12/7</span>.<br>
+                        <em>Solución:</em> Restamos dentro del paréntesis con mcm = 12: <span class="math-code">(9/12 - 2/12) = 7/12</span>. Multiplicamos: <span class="math-code">(7/12) × (12/7) = 1</span>.`,
+                        EN: `<strong>Example 2 (Rational numbers):</strong> Evaluate <span class="math-code">(3/4 - 1/6) × 12/7</span>.<br>
+                        <em>Solution:</em> Inside parentheses with LCD = 12: <span class="math-code">(9/12 - 2/12) = 7/12</span>. Multiply: <span class="math-code">(7/12) × (12/7) = 1</span>.`
+                    },
+                    {
+                        ES: `<strong>Ejemplo 3 (Aplicación financiera):</strong> Un fondo inicia con <span class="math-code">12 500</span> unidades, gana <span class="math-code">3 850</span> y luego se retiran dos cuotas iguales de <span class="math-code">4 200</span>. ¿Cuál es el saldo final?<br>
+                        <em>Solución:</em> <span class="math-code">12 500 + 3 850 - 2 × 4 200 = 16 350 - 8 400 = 7 950</span>.`,
+                        EN: `<strong>Example 3 (Financial application):</strong> A fund starts with <span class="math-code">12 500</span> units, gains <span class="math-code">3 850</span>, and has two equal withdrawals of <span class="math-code">4 200</span>. What is the final balance?<br>
+                        <em>Solution:</em> <span class="math-code">12 500 + 3 850 - 2 × 4 200 = 16 350 - 8 400 = 7 950</span>.`
+                    }
+                ]
+            },
+            {
+                id: 3,
+                title: { ES: "Tema 3: Potenciación en ℝ", EN: "Topic 3: Exponentiation in ℝ" },
+                content: {
+                    ES: `Para todo número real <em>a ≠ 0</em> y exponentes enteros <em>m, n</em>:<br>
+                    • <strong>Producto de igual base:</strong> <span class="math-code">a<sup>m</sup> · a<sup>n</sup> = a<sup>m + n</sup></span><br>
+                    • <strong>Cociente de igual base:</strong> <span class="math-code">a<sup>m</sup> / a<sup>n</sup> = a<sup>m - n</sup></span><br>
+                    • <strong>Potencia de una potencia:</strong> <span class="math-code">(a<sup>m</sup>)<sup>n</sup> = a<sup>m · n</sup></span><br>
+                    • <strong>Exponente cero y negativo:</strong> <span class="math-code">a<sup>0</sup> = 1</span> y <span class="math-code">a<sup>-n</sup> = 1 / a<sup>n</sup></span>`,
+                    EN: `For any real number <em>a ≠ 0</em> and integer exponents <em>m, n</em>:<br>
+                    • <strong>Product rule:</strong> <span class="math-code">a<sup>m</sup> · a<sup>n</sup> = a<sup>m + n</sup></span><br>
+                    • <strong>Quotient rule:</strong> <span class="math-code">a<sup>m</sup> / a<sup>n</sup> = a<sup>m - n</sup></span><br>
+                    • <strong>Power of a power:</strong> <span class="math-code">(a<sup>m</sup>)<sup>n</sup> = a<sup>m · n</sup></span><br>
+                    • <strong>Zero & negative exponents:</strong> <span class="math-code">a<sup>0</sup> = 1</span> and <span class="math-code">a<sup>-n</sup> = 1 / a<sup>n</sup></span>`
+                },
+                examples: [
+                    {
+                        ES: `<strong>Ejemplo 1 (Leyes de exponentes):</strong> Simplifica <span class="math-code">(2<sup>4</sup> × 2<sup>-2</sup>)<sup>3</sup> ÷ 2<sup>3</sup></span>.<br>
+                        <em>Solución:</em> Dentro del paréntesis: <span class="math-code">2<sup>4 - 2</sup> = 2<sup>2</sup></span>. Elevamos al cubo: <span class="math-code">(2<sup>2</sup>)<sup>3</sup> = 2<sup>6</sup></span>. Dividimos: <span class="math-code">2<sup>6</sup> ÷ 2<sup>3</sup> = 2<sup>3</sup> = 8</span>.`,
+                        EN: `<strong>Example 1 (Exponent laws):</strong> Simplify <span class="math-code">(2<sup>4</sup> × 2<sup>-2</sup>)<sup>3</sup> ÷ 2<sup>3</sup></span>.<br>
+                        <em>Solution:</em> Inside parentheses: <span class="math-code">2<sup>4 - 2</sup> = 2<sup>2</sup></span>. Cube it: <span class="math-code">(2<sup>2</sup>)<sup>3</sup> = 2<sup>6</sup></span>. Divide: <span class="math-code">2<sup>6</sup> ÷ 2<sup>3</sup> = 2<sup>3</sup> = 8</span>.`
+                    },
+                    {
+                        ES: `<strong>Ejemplo 2 (Exponente negativo en fracción):</strong> Calcula <span class="math-code">(3/5)<sup>-2</sup> + 7<sup>0</sup></span>.<br>
+                        <em>Solución:</em> Invertimos la fracción para hacer positivo el exponente: <span class="math-code">(5/3)<sup>2</sup> + 1 = 25/9 + 9/9 = 34/9</span>.`,
+                        EN: `<strong>Example 2 (Negative fraction exponent):</strong> Evaluate <span class="math-code">(3/5)<sup>-2</sup> + 7<sup>0</sup></span>.<br>
+                        <em>Solution:</em> Flip the fraction for a positive exponent: <span class="math-code">(5/3)<sup>2</sup> + 1 = 25/9 + 9/9 = 34/9</span>.`
+                    },
+                    {
+                        ES: `<strong>Ejemplo 3 (Crecimiento exponencial):</strong> Una bacteria se triplica cada hora. Si inicialmente hay <span class="math-code">500</span> bacterias, ¿cuántas habrá tras 4 horas?<br>
+                        <em>Solución:</em> <span class="math-code">500 × 3<sup>4</sup> = 500 × 81 = 40 500</span> bacterias.`,
+                        EN: `<strong>Example 3 (Exponential growth):</strong> A bacterium triples every hour. Starting with <span class="math-code">500</span> bacteria, how many exist after 4 hours?<br>
+                        <em>Solution:</em> <span class="math-code">500 × 3<sup>4</sup> = 500 × 81 = 40 500</span> bacteria.`
+                    }
+                ]
+            },
+            {
+                id: 4,
+                title: { ES: "Tema 4: Radicación en ℝ", EN: "Topic 4: Radicals in ℝ" },
+                content: {
+                    ES: `La raíz <em>n</em>-ésima de un número real <em>a</em> se define como <span class="math-code">${radicalHTML('a', 'n')} = b ⇔ b<sup>n</sup> = a</span> (si <em>n</em> es par, <em>a ≥ 0</em> y <em>b ≥ 0</em>).<br>
+                    • <strong>Relación con exponentes:</strong> <span class="math-code">${radicalHTML('a<sup>m</sup>', 'n')} = a<sup>m/n</sup></span><br>
+                    • <strong>Raíz de un producto y cociente:</strong> <span class="math-code">${radicalHTML('a · b', 'n')} = ${radicalHTML('a', 'n')} · ${radicalHTML('b', 'n')}</span> y <span class="math-code">${radicalHTML('a / b', 'n')} = ${radicalHTML('a', 'n')} / ${radicalHTML('b', 'n')}</span>.`,
+                    EN: `The <em>n</em>th root of a real number <em>a</em> is defined as <span class="math-code">${radicalHTML('a', 'n')} = b ⇔ b<sup>n</sup> = a</span> (if <em>n</em> is even, <em>a ≥ 0</em> and <em>b ≥ 0</em>).<br>
+                    • <strong>Rational exponents:</strong> <span class="math-code">${radicalHTML('a<sup>m</sup>', 'n')} = a<sup>m/n</sup></span><br>
+                    • <strong>Product & quotient rules:</strong> <span class="math-code">${radicalHTML('a · b', 'n')} = ${radicalHTML('a', 'n')} · ${radicalHTML('b', 'n')}</span> and <span class="math-code">${radicalHTML('a / b', 'n')} = ${radicalHTML('a', 'n')} / ${radicalHTML('b', 'n')}</span>.`
+                },
+                examples: [
+                    {
+                        ES: `<strong>Ejemplo 1 (Simplificación de radicales):</strong> Reduce <span class="math-code">${radicalHTML('72')} + ${radicalHTML('50')} - ${radicalHTML('18')}</span>.<br>
+                        <em>Solución:</em> Factorizamos buscando cuadrados perfectos: <span class="math-code">${radicalHTML('36 × 2')} + ${radicalHTML('25 × 2')} - ${radicalHTML('9 × 2')} = 6${radicalHTML('2')} + 5${radicalHTML('2')} - 3${radicalHTML('2')} = 8${radicalHTML('2')}</span>.`,
+                        EN: `<strong>Example 1 (Simplifying radicals):</strong> Simplify <span class="math-code">${radicalHTML('72')} + ${radicalHTML('50')} - ${radicalHTML('18')}</span>.<br>
+                        <em>Solution:</em> Factor out perfect squares: <span class="math-code">${radicalHTML('36 × 2')} + ${radicalHTML('25 × 2')} - ${radicalHTML('9 × 2')} = 6${radicalHTML('2')} + 5${radicalHTML('2')} - 3${radicalHTML('2')} = 8${radicalHTML('2')}</span>.`
+                    },
+                    {
+                        ES: `<strong>Ejemplo 2 (Raíz cúbica y signos):</strong> Calcula <span class="math-code">${radicalHTML('-64', '3')} + ${radicalHTML('144 / 9')}</span>.<br>
+                        <em>Solución:</em> Como el índice 3 es impar, <span class="math-code">${radicalHTML('-64', '3')} = -4</span>. Además, <span class="math-code">${radicalHTML('144 / 9')} = 12/3 = 4</span>. Total: <span class="math-code">-4 + 4 = 0</span>.`,
+                        EN: `<strong>Example 2 (Cube roots & signs):</strong> Evaluate <span class="math-code">${radicalHTML('-64', '3')} + ${radicalHTML('144 / 9')}</span>.<br>
+                        <em>Solution:</em> Since index 3 is odd, <span class="math-code">${radicalHTML('-64', '3')} = -4</span>. Also <span class="math-code">${radicalHTML('144 / 9')} = 12/3 = 4</span>. Total: <span class="math-code">-4 + 4 = 0</span>.`
+                    },
+                    {
+                        ES: `<strong>Ejemplo 3 (Geometría con radicales):</strong> El área de un terreno cuadrado es <span class="math-code">2 025 m<sup>2</sup></span>. ¿Cuánto mide su perímetro?<br>
+                        <em>Solución:</em> El lado mide <span class="math-code">L = ${radicalHTML('2 025')} = 45 m</span>. Su perímetro es <span class="math-code">4 × 45 = 180 m</span>.`,
+                        EN: `<strong>Example 3 (Geometry with radicals):</strong> A square lot has an area of <span class="math-code">2 025 m<sup>2</sup></span>. What is its perimeter?<br>
+                        <em>Solution:</em> Side length is <span class="math-code">L = ${radicalHTML('2 025')} = 45 m</span>. Perimeter is <span class="math-code">4 × 45 = 180 m</span>.`
+                    }
+                ]
+            },
+            {
+                id: 5,
+                title: { ES: "Tema 5: Logaritmación en ℝ", EN: "Topic 5: Logarithms in ℝ" },
+                content: {
+                    ES: `El logaritmo en base <em>b</em> (con <em>b &gt; 0, b ≠ 1</em>) de un número real positivo <em>x</em> es el exponente <em>y</em> al que se debe elevar <em>b</em> para obtener <em>x</em>: <span class="math-code">log<sub>b</sub>(x) = y ⇔ b<sup>y</sup> = x</span>.<br>
+                    • <strong>Logaritmo de un producto:</strong> <span class="math-code">log<sub>b</sub>(M · N) = log<sub>b</sub>(M) + log<sub>b</sub>(N)</span><br>
+                    • <strong>Logaritmo de un cociente:</strong> <span class="math-code">log<sub>b</sub>(M / N) = log<sub>b</sub>(M) - log<sub>b</sub>(N)</span><br>
+                    • <strong>Logaritmo de una potencia:</strong> <span class="math-code">log<sub>b</sub>(M<sup>k</sup>) = k · log<sub>b</sub>(M)</span>`,
+                    EN: `The base-<em>b</em> logarithm (with <em>b &gt; 0, b ≠ 1</em>) of a positive real number <em>x</em> is the exponent <em>y</em> to which <em>b</em> must be raised to obtain <em>x</em>: <span class="math-code">log<sub>b</sub>(x) = y ⇔ b<sup>y</sup> = x</span>.<br>
+                    • <strong>Product rule:</strong> <span class="math-code">log<sub>b</sub>(M · N) = log<sub>b</sub>(M) + log<sub>b</sub>(N)</span><br>
+                    • <strong>Quotient rule:</strong> <span class="math-code">log<sub>b</sub>(M / N) = log<sub>b</sub>(M) - log<sub>b</sub>(N)</span><br>
+                    • <strong>Power rule:</strong> <span class="math-code">log<sub>b</sub>(M<sup>k</sup>) = k · log<sub>b</sub>(M)</span>`
+                },
+                examples: [
+                    {
+                        ES: `<strong>Ejemplo 1 (Definición directa):</strong> Calcula <span class="math-code">log<sub>2</sub>(32) + log<sub>3</sub>(81)</span>.<br>
+                        <em>Solución:</em> Como <span class="math-code">2<sup>5</sup> = 32</span>, <span class="math-code">log<sub>2</sub>(32) = 5</span>. Como <span class="math-code">3<sup>4</sup> = 81</span>, <span class="math-code">log<sub>3</sub>(81) = 4</span>. Suma: <span class="math-code">5 + 4 = 9</span>.`,
+                        EN: `<strong>Example 1 (Direct definition):</strong> Evaluate <span class="math-code">log<sub>2</sub>(32) + log<sub>3</sub>(81)</span>.<br>
+                        <em>Solution:</em> Since <span class="math-code">2<sup>5</sup> = 32</span>, <span class="math-code">log<sub>2</sub>(32) = 5</span>. Since <span class="math-code">3<sup>4</sup> = 81</span>, <span class="math-code">log<sub>3</sub>(81) = 4</span>. Sum: <span class="math-code">5 + 4 = 9</span>.`
+                    },
+                    {
+                        ES: `<strong>Ejemplo 2 (Propiedades de logaritmos):</strong> Reduce a un solo valor <span class="math-code">log<sub>5</sub>(50) - log<sub>5</sub>(2)</span>.<br>
+                        <em>Solución:</em> Aplicamos la propiedad del cociente: <span class="math-code">log<sub>5</sub>(50 / 2) = log<sub>5</sub>(25) = 2</span>, ya que <span class="math-code">5<sup>2</sup> = 25</span>.`,
+                        EN: `<strong>Example 2 (Logarithm properties):</strong> Evaluate <span class="math-code">log<sub>5</sub>(50) - log<sub>5</sub>(2)</span>.<br>
+                        <em>Solution:</em> Apply the quotient rule: <span class="math-code">log<sub>5</sub>(50 / 2) = log<sub>5</sub>(25) = 2</span>, since <span class="math-code">5<sup>2</sup> = 25</span>.`
+                    },
+                    {
+                        ES: `<strong>Ejemplo 3 (Base 10 y exponente negativo):</strong> Halla <span class="math-code">log<sub>10</sub>(1 000) + log<sub>10</sub>(0.01)</span>.<br>
+                        <em>Solución:</em> <span class="math-code">10<sup>3</sup> = 1 000 ⇒ log<sub>10</sub>(1 000) = 3</span>, y <span class="math-code">10<sup>-2</sup> = 0.01 ⇒ log<sub>10</sub>(0.01) = -2</span>. Resultado: <span class="math-code">3 + (-2) = 1</span>.`,
+                        EN: `<strong>Example 3 (Base 10 & negative exponent):</strong> Find <span class="math-code">log<sub>10</sub>(1 000) + log<sub>10</sub>(0.01)</span>.<br>
+                        <em>Solution:</em> <span class="math-code">10<sup>3</sup> = 1 000 ⇒ log<sub>10</sub>(1 000) = 3</span>, and <span class="math-code">10<sup>-2</sup> = 0.01 ⇒ log<sub>10</sub>(0.01) = -2</span>. Result: <span class="math-code">3 - 2 = 1</span>.`
+                    }
+                ]
+            },
+            {
+                id: 6,
+                title: { ES: "Tema 6: Ecuaciones en ℝ", EN: "Topic 6: Equations in ℝ" },
+                content: {
+                    ES: `Una <strong>ecuación</strong> es una igualdad algebraica que se verifica para determinados valores de la incógnita llamados <strong>soluciones o raíces</strong>.<br>
+                    • <strong>Ecuación lineal (ax + b = c):</strong> Se despeja la variable aplicando operaciones inversas en ambos miembros.<br>
+                    • <strong>Ecuación cuadrática pura (ax<sup>2</sup> = c):</strong> Tiene dos soluciones reales opuestas (<span class="math-code">x = ±${radicalHTML('c / a')}</span>) siempre que <span class="math-code">c / a &gt; 0</span>.`,
+                    EN: `An <strong>equation</strong> is an algebraic equality true for specific values of the unknown called <strong>solutions or roots</strong>.<br>
+                    • <strong>Linear equation (ax + b = c):</strong> Isolate the variable by applying inverse operations to both sides.<br>
+                    • <strong>Pure quadratic equation (ax<sup>2</sup> = c):</strong> Has two opposite real solutions (<span class="math-code">x = ±${radicalHTML('c / a')}</span>) whenever <span class="math-code">c / a &gt; 0</span>.`
+                },
+                examples: [
+                    {
+                        ES: `<strong>Ejemplo 1 (Ecuación lineal con paréntesis):</strong> Resuelve <span class="math-code">3(2x - 4) = 4x + 6</span>.<br>
+                        <em>Solución:</em> Distribuimos: <span class="math-code">6x - 12 = 4x + 6</span>. Agrupamos términos: <span class="math-code">6x - 4x = 6 + 12 ⇒ 2x = 18 ⇒ x = 9</span>.`,
+                        EN: `<strong>Example 1 (Linear equation):</strong> Solve <span class="math-code">3(2x - 4) = 4x + 6</span>.<br>
+                        <em>Solution:</em> Distribute: <span class="math-code">6x - 12 = 4x + 6</span>. Group terms: <span class="math-code">2x = 18 ⇒ x = 9</span>.`
+                    },
+                    {
+                        ES: `<strong>Ejemplo 2 (Ecuación con fracciones):</strong> Halla <em>x</em> en <span class="math-code">(x / 3) + 5 = 11</span>.<br>
+                        <em>Solución:</em> Restamos 5: <span class="math-code">x / 3 = 6</span>. Multiplicamos por 3: <span class="math-code">x = 18</span>.`,
+                        EN: `<strong>Example 2 (Fractional equation):</strong> Find <em>x</em> in <span class="math-code">(x / 3) + 5 = 11</span>.<br>
+                        <em>Solution:</em> Subtract 5: <span class="math-code">x / 3 = 6</span>. Multiply by 3: <span class="math-code">x = 18</span>.`
+                    },
+                    {
+                        ES: `<strong>Ejemplo 3 (Ecuación cuadrática pura):</strong> Resuelve en ℝ: <span class="math-code">2x<sup>2</sup> - 98 = 0</span>.<br>
+                        <em>Solución:</em> Despejamos <span class="math-code">x<sup>2</sup></span>: <span class="math-code">2x<sup>2</sup> = 98 ⇒ x<sup>2</sup> = 49</span>. Extraemos raíz cuadrada: <span class="math-code">x = 7</span> o <span class="math-code">x = -7</span>.`,
+                        EN: `<strong>Example 3 (Pure quadratic equation):</strong> Solve in ℝ: <span class="math-code">2x<sup>2</sup> - 98 = 0</span>.<br>
+                        <em>Solution:</em> Isolate <span class="math-code">x<sup>2</sup></span>: <span class="math-code">2x<sup>2</sup> = 98 ⇒ x<sup>2</sup> = 49</span>. Take square root: <span class="math-code">x = 7</span> or <span class="math-code">x = -7</span>.`
+                    }
+                ]
+            }
+        ];
+
+        /* Formateador numérico con espacios limpios como separadores de miles */
+        function formatNumber(num) {
+            if (num === null || num === undefined) return '';
+            let n = parseFloat(num);
+            if (isNaN(n)) return num;
+            let parts = n.toString().split('.');
+            parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
+            return parts.join('.');
+        }
+
+        /* ==========================================================================
+           3. NAVEGACIÓN Y CONFIGURACIÓN GLOBAL
+           ========================================================================== */
+        function toggleTheme() {
+            currentTheme = currentTheme === 'light' ? 'dark' : 'light';
+            document.documentElement.setAttribute('data-theme', currentTheme);
+            localStorage.setItem('emilio_theme', currentTheme);
+            document.getElementById('themeToggleBtn').innerText = currentTheme === 'light' ? '🌙' : '☀️';
+            renderLab();
+        }
+
+        function toggleLanguage() {
+            currentLang = currentLang === 'ES' ? 'EN' : 'ES';
+            localStorage.setItem('emilio_lang', currentLang);
+            document.getElementById('langToggleBtn').innerText = currentLang === 'ES' ? '🌐 ES' : '🌐 EN';
+            updateI18nText();
+            renderGoals();
+            renderTheory();
+            renderLab();
+            generateQuiz();
+        }
+
+        function updateI18nText() {
+            document.querySelectorAll('[data-i18n]').forEach(el => {
+                const key = el.getAttribute('data-i18n');
+                if (i18n[currentLang][key]) {
+                    el.innerText = i18n[currentLang][key];
+                }
+            });
+        }
+
+        function switchTab(tabId, btnEl) {
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
+            
+            if (btnEl) btnEl.classList.add('active');
+            document.getElementById(`tab-${tabId}`).classList.add('active');
+            
+            if (tabId === 'laboratorio') renderLab();
+            if (tabId === 'quiz') {
+                setTimeout(() => {
+                    Object.keys(canvasInstances).forEach(idx => syncCanvasResolution(idx));
+                }, 50);
+            }
+        }
+
+        function renderGoals() {
+            const list = document.getElementById('goals-list');
+            list.innerHTML = goalsData[currentLang].map(g => `<li style="margin-bottom:0.4rem;">${g}</li>`).join('');
+        }
+
+        function renderTheory() {
+            const container = document.getElementById('accordion-container');
+            container.innerHTML = theoryData.map(item => `
+                <div class="accordion-item" id="accordion-${item.id}">
+                    <button class="accordion-header" onclick="toggleAccordion(${item.id})">
+                        <span>${item.title[currentLang]}</span>
+                        <span class="accordion-icon">▼</span>
+                    </button>
+                    <div class="accordion-body">
+                        <div>${item.content[currentLang]}</div>
+                        <div class="examples-grid">
+                            ${item.examples.map(ex => `
+                                <div class="example-box">
+                                    ${ex[currentLang]}
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function toggleAccordion(id) {
+            const item = document.getElementById(`accordion-${id}`);
+            item.classList.toggle('active');
+        }
+
+        /* ==========================================================================
+           4. LABORATORIO SVG INTERACTIVO (NÚMEROS REALES CON NOTACIÓN CONVENCIONAL)
+           ========================================================================== */
+        let labState = {
+            intA: -3,
+            intB: 4,
+            leftClosed: true,
+            rightClosed: false,
+            base: 2,
+            exponent: 3,
+            eqA: 2,
+            eqB: -4,
+            eqC: 6
+        };
+
+        function setLabMode(mode) {
+            currentLabMode = mode;
+            renderLab();
+        }
+
+        function renderLab() {
+            const controls = document.getElementById('lab-controls');
+            const svg = document.getElementById('svg-lab-viewport');
+            const metrics = document.getElementById('lab-metrics');
+            svg.innerHTML = '';
+
+            const primaryColor = currentTheme === 'light' ? '#4b6cb7' : '#4895ef';
+            const textColor = currentTheme === 'light' ? '#2c3e50' : '#f1f5f9';
+            const gridColor = currentTheme === 'light' ? '#cbd5e1' : '#334155';
+
+            if (currentLabMode === 'intervals') {
+                controls.innerHTML = `
+                    <div class="control-group">
+                        <label>${currentLang === 'ES' ? 'Extremo izquierdo (a)' : 'Left endpoint (a)'}: ${labState.intA}</label>
+                        <input type="range" min="-7" max="2" step="1" value="${labState.intA}" oninput="labState.intA = parseInt(this.value); if(labState.intA >= labState.intB) labState.intB = labState.intA + 1; renderLab();">
+                    </div>
+                    <div class="control-group">
+                        <label>${currentLang === 'ES' ? 'Extremo derecho (b)' : 'Right endpoint (b)'}: ${labState.intB}</label>
+                        <input type="range" min="-2" max="7" step="1" value="${labState.intB}" oninput="labState.intB = parseInt(this.value); if(labState.intB <= labState.intA) labState.intA = labState.intB - 1; renderLab();">
+                    </div>
+                    <div class="control-group">
+                        <label>${currentLang === 'ES' ? 'Tipo de extremos' : 'Endpoint types'}:</label>
+                        <div style="display:flex; gap:0.5rem;">
+                            <button class="btn" onclick="labState.leftClosed = !labState.leftClosed; renderLab();">${labState.leftClosed ? '[a cerrado' : '(a abierto'}</button>
+                            <button class="btn" onclick="labState.rightClosed = !labState.rightClosed; renderLab();">${labState.rightClosed ? 'b] cerrado' : 'b) abierto'}</button>
+                        </div>
+                    </div>
+                `;
+
+                const startX = 60, endX = 540, yLine = 185;
+                const minVal = -8, maxVal = 8;
+                const scale = (endX - startX) / (maxVal - minVal);
+                const toX = (val) => startX + (val - minVal) * scale;
+
+                let ticks = '';
+                for (let v = minVal; v <= maxVal; v++) {
+                    const tx = toX(v);
+                    ticks += `
+                        <line x1="${tx}" y1="${yLine - 8}" x2="${tx}" y2="${yLine + 8}" stroke="${textColor}" stroke-width="${v === 0 ? 3 : 1.5}" />
+                        <text x="${tx}" y="${yLine + 28}" fill="${textColor}" font-size="13" font-weight="${v === 0 ? '700' : '400'}" text-anchor="middle">${v}</text>
+                    `;
+                }
+
+                const xA = toX(labState.intA);
+                const xB = toX(labState.intB);
+                const bgFill = currentTheme === 'light' ? '#ffffff' : '#1e2738';
+
+                svg.innerHTML = `
+                    <line x1="35" y1="${yLine}" x2="565" y2="${yLine}" stroke="${textColor}" stroke-width="2" />
+                    <polygon points="35,${yLine} 45,${yLine-5} 45,${yLine+5}" fill="${textColor}" />
+                    <polygon points="565,${yLine} 555,${yLine-5} 555,${yLine+5}" fill="${textColor}" />
+                    ${ticks}
+                    <line x1="${xA}" y1="${yLine - 35}" x2="${xB}" y2="${yLine - 35}" stroke="${primaryColor}" stroke-width="6" />
+                    <line x1="${xA}" y1="${yLine - 35}" x2="${xA}" y2="${yLine}" stroke="${primaryColor}" stroke-dasharray="4" stroke-width="2" />
+                    <line x1="${xB}" y1="${yLine - 35}" x2="${xB}" y2="${yLine}" stroke="${primaryColor}" stroke-dasharray="4" stroke-width="2" />
+                    <circle cx="${xA}" cy="${yLine - 35}" r="8" fill="${labState.leftClosed ? primaryColor : bgFill}" stroke="${primaryColor}" stroke-width="3" />
+                    <circle cx="${xB}" cy="${yLine - 35}" r="8" fill="${labState.rightClosed ? primaryColor : bgFill}" stroke="${primaryColor}" stroke-width="3" />
+                    <text x="300" y="75" fill="${primaryColor}" font-size="22" font-weight="700" text-anchor="middle">
+                        ${labState.leftClosed ? '[' : '('}${labState.intA}, ${labState.intB}${labState.rightClosed ? ']' : ')'}
+                    </text>
+                `;
+
+                const op1 = labState.leftClosed ? '≤' : '<';
+                const op2 = labState.rightClosed ? '≤' : '<';
+                metrics.innerHTML = `${currentLang === 'ES' ? 'Desigualdad equivalente' : 'Equivalent inequality'}: { x ∈ ℝ | ${labState.intA} ${op1} x ${op2} ${labState.intB} } &nbsp;|&nbsp; ${currentLang === 'ES' ? 'Longitud' : 'Length'}: ${labState.intB - labState.intA}`;
+
+            } else if (currentLabMode === 'powers_logs') {
+                controls.innerHTML = `
+                    <div class="control-group">
+                        <label>${currentLang === 'ES' ? 'Base (b)' : 'Base (b)'}: ${labState.base}</label>
+                        <input type="range" min="2" max="5" step="1" value="${labState.base}" oninput="labState.base = parseInt(this.value); renderLab();">
+                    </div>
+                    <div class="control-group">
+                        <label>${currentLang === 'ES' ? 'Exponente (n)' : 'Exponent (n)'}: ${labState.exponent}</label>
+                        <input type="range" min="-2" max="5" step="1" value="${labState.exponent}" oninput="labState.exponent = parseInt(this.value); renderLab();">
+                    </div>
+                `;
+
+                const result = Math.pow(labState.base, labState.exponent);
+                const displayRes = labState.exponent < 0 ? `1/${Math.pow(labState.base, -labState.exponent)} ≈ ${result.toFixed(4)}` : formatNumber(result);
+                const argLog = labState.exponent < 0 ? `1/${Math.pow(labState.base, -labState.exponent)}` : formatNumber(result);
+
+                svg.innerHTML = `
+                    <rect x="45" y="45" width="235" height="120" rx="12" fill="rgba(75, 108, 183, 0.14)" stroke="${primaryColor}" stroke-width="2" />
+                    <text x="162" y="80" fill="${textColor}" font-size="14" font-weight="600" text-anchor="middle">${currentLang === 'ES' ? 'POTENCIACIÓN' : 'EXPONENTIATION'}</text>
+                    <text x="162" y="130" fill="${primaryColor}" font-size="24" font-weight="700" text-anchor="middle">
+                        ${labState.base}<tspan dy="-11" font-size="15">${labState.exponent}</tspan><tspan dy="11"> = ${displayRes}</tspan>
+                    </text>
+
+                    <rect x="320" y="45" width="235" height="120" rx="12" fill="rgba(46, 196, 182, 0.14)" stroke="var(--success)" stroke-width="2" />
+                    <text x="437" y="80" fill="${textColor}" font-size="14" font-weight="600" text-anchor="middle">${currentLang === 'ES' ? 'LOGARITMACIÓN' : 'LOGARITHM'}</text>
+                    <text x="437" y="130" fill="var(--success)" font-size="20" font-weight="700" text-anchor="middle">
+                        log<tspan dy="5" font-size="14">${labState.base}</tspan><tspan dy="-5">(${argLog}) = ${labState.exponent}</tspan>
+                    </text>
+
+                    <rect x="130" y="200" width="340" height="115" rx="12" fill="rgba(255, 183, 3, 0.14)" stroke="var(--warning)" stroke-width="2" />
+                    <text x="300" y="235" fill="${textColor}" font-size="14" font-weight="600" text-anchor="middle">${currentLang === 'ES' ? 'RADICACIÓN (para n > 0)' : 'RADICALS (for n > 0)'}</text>
+                    <text x="300" y="280" fill="${textColor}" font-size="21" font-weight="700" text-anchor="middle">
+                        ${labState.exponent > 0
+                            ? `<tspan dy="-9" font-size="13">${labState.exponent}</tspan><tspan dy="9">√(${formatNumber(result)}) = ${labState.base}</tspan>`
+                            : `${labState.base}<tspan dy="-9" font-size="14">${labState.exponent}</tspan><tspan dy="9"> = 1 / ${labState.base}</tspan><tspan dy="-9" font-size="14">${-labState.exponent}</tspan>`
+                        }
+                    </text>
+                `;
+
+                metrics.innerHTML = `${currentLang === 'ES' ? 'Equivalencia fundamental' : 'Core equivalence'}: b<sup>n</sup> = x &nbsp;⇔&nbsp; log<sub>b</sub>(x) = n`;
+
+            } else if (currentLabMode === 'equations') {
+                controls.innerHTML = `
+                    <div class="control-group">
+                        <label>a (${currentLang === 'ES' ? 'pendiente' : 'slope'}): ${labState.eqA}</label>
+                        <input type="range" min="-4" max="4" step="1" value="${labState.eqA}" oninput="let v=parseInt(this.value); if(v===0) v=1; labState.eqA=v; renderLab();">
+                    </div>
+                    <div class="control-group">
+                        <label>b (${currentLang === 'ES' ? 'término independiente' : 'constant'}): ${labState.eqB}</label>
+                        <input type="range" min="-8" max="8" step="1" value="${labState.eqB}" oninput="labState.eqB = parseInt(this.value); renderLab();">
+                    </div>
+                    <div class="control-group">
+                        <label>c (${currentLang === 'ES' ? 'resultado' : 'target'}): ${labState.eqC}</label>
+                        <input type="range" min="-8" max="8" step="1" value="${labState.eqC}" oninput="labState.eqC = parseInt(this.value); renderLab();">
+                    </div>
+                `;
+
+                const solX = (labState.eqC - labState.eqB) / labState.eqA;
+                const cx = 300, cy = 185, unit = 22;
+
+                let grid = '';
+                for (let i = -10; i <= 10; i++) {
+                    grid += `<line x1="${cx + i * unit}" y1="30" x2="${cx + i * unit}" y2="335" stroke="${gridColor}" stroke-width="0.7" />`;
+                    if (i >= -6 && i <= 6) {
+                        grid += `<line x1="60" y1="${cy - i * unit}" x2="540" y2="${cy - i * unit}" stroke="${gridColor}" stroke-width="0.7" />`;
+                    }
+                }
+
+                const x1 = -10, y1 = labState.eqA * x1 + labState.eqB;
+                const x2 = 10, y2 = labState.eqA * x2 + labState.eqB;
+                const yTarget = cy - labState.eqC * unit;
+                const xSolPx = cx + solX * unit;
+
+                svg.innerHTML = `
+                    ${grid}
+                    <line x1="60" y1="${cy}" x2="540" y2="${cy}" stroke="${textColor}" stroke-width="2" />
+                    <line x1="${cx}" y1="30" x2="${cx}" y2="335" stroke="${textColor}" stroke-width="2" />
+                    <line x1="60" y1="${yTarget}" x2="540" y2="${yTarget}" stroke="var(--warning)" stroke-width="2" stroke-dasharray="5" />
+                    <line x1="${cx + x1 * unit}" y1="${cy - y1 * unit}" x2="${cx + x2 * unit}" y2="${cy - y2 * unit}" stroke="${primaryColor}" stroke-width="3" />
+                    ${Math.abs(solX) <= 10 && Math.abs(labState.eqC) <= 6 ? `
+                        <circle cx="${xSolPx}" cy="${yTarget}" r="7" fill="var(--danger)" />
+                        <text x="${xSolPx}" y="${yTarget - 14}" fill="var(--danger)" font-weight="700" font-size="14" text-anchor="middle">x = ${solX.toFixed(2)}</text>
+                    ` : ''}
+                `;
+
+                const signB = labState.eqB >= 0 ? `+ ${labState.eqB}` : `- ${Math.abs(labState.eqB)}`;
+                metrics.innerHTML = `${currentLang === 'ES' ? 'Ecuación' : 'Equation'}: ${labState.eqA}x ${signB} = ${labState.eqC} &nbsp;⇒&nbsp; x = ${solX.toFixed(2)}`;
+            }
+        }
+
+        /* ==========================================================================
+           5. GENERADOR ALGORÍTMICO DE PROBLEMAS (6 TEMAS - NOTACIÓN CONVENCIONAL)
+           ========================================================================== */
+        let quizData = [];
+        let canvasInstances = {};
+
+        function generateQuiz() {
+            quizData = [
+                generateTopic1Intervals(),   // Tema 1: Orden e Intervalos
+                generateTopic2Operations(),  // Tema 2: Operaciones básicas
+                generateTopic3Powers(),      // Tema 3: Potenciación
+                generateTopic4Radicals(),    // Tema 4: Radicación
+                generateTopic5Logarithms(),  // Tema 5: Logaritmación
+                generateTopic6Equations()    // Tema 6: Ecuaciones
+            ];
+
+            const container = document.getElementById('quiz-container');
+            container.innerHTML = quizData.map((q, idx) => `
+                <div class="card quiz-card" id="quiz-card-${idx}">
+                    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.65rem;">
+                        <span class="badge">${q.topicName[currentLang]}</span>
+                        <span class="topic-tag">${currentLang === 'ES' ? 'Ejercicio' : 'Problem'} #${idx + 1}</span>
+                    </div>
+                    <div class="quiz-question">${q.question[currentLang]}</div>
+
+                    <div class="quiz-options">
+                        ${q.options.map((opt, oIdx) => `
+                            <button class="option-btn" onclick="checkAnswer(${idx}, ${oIdx})">${opt}</button>
+                        `).join('')}
+                    </div>
+                    <div class="feedback" id="feedback-${idx}"></div>
+
+                    <!-- Lienzo Vectorial Redimensionable por cada Pregunta -->
+                    <div class="sketchpad-container">
+                        <div class="sketchpad-toolbar">
+                            <button class="tool-btn active" onclick="setCanvasTool(${idx}, 'pencil', this)" title="${i18n[currentLang].sketch_pencil}">✏️ Pincel</button>
+                            <button class="tool-btn" onclick="setCanvasTool(${idx}, 'line', this)" title="${i18n[currentLang].sketch_line}">📏 Línea</button>
+                            <button class="tool-btn" onclick="setCanvasTool(${idx}, 'rect', this)" title="${i18n[currentLang].sketch_rect}">⬛ Rect</button>
+                            <button class="tool-btn" onclick="setCanvasTool(${idx}, 'eraser', this)" title="${i18n[currentLang].sketch_eraser}">🧹 Borrador</button>
+                            <input type="color" id="color-${idx}" value="#2c3e50" onchange="updateCanvasStyle(${idx})" style="width:28px; height:28px; border:none; cursor:pointer;">
+                            <input type="range" id="size-${idx}" min="1" max="15" value="3" onchange="updateCanvasStyle(${idx})" style="width:60px;">
+                            <button class="tool-btn" onclick="adjustCanvasHeight(${idx}, -60)" title="${currentLang === 'ES' ? 'Reducir altura' : 'Decrease height'}">➖</button>
+                            <button class="tool-btn" onclick="adjustCanvasHeight(${idx}, 60)" title="${currentLang === 'ES' ? 'Ampliar altura' : 'Increase height'}">➕</button>
+                            <button class="tool-btn" onclick="clearCanvas(${idx})" title="${i18n[currentLang].sketch_clear}">🗑️ Limpiar</button>
+                            <button class="tool-btn" onclick="copyCardScreenshot(${idx})" title="${i18n[currentLang].sketch_copy}" style="background-color:rgba(0,180,216,0.15); font-weight:600;">📋 Copiar Captura</button>
+                            <button class="tool-btn" onclick="downloadCardScreenshot(${idx})" title="${i18n[currentLang].sketch_download}" style="background-color:rgba(46,196,182,0.15); font-weight:600;">💾 Descargar Imagen</button>
+                        </div>
+                        <div class="canvas-resize-wrapper" id="canvas-wrapper-${idx}">
+                            <canvas id="sketchpad-${idx}" class="sketchpad"></canvas>
+                        </div>
+                        <div class="canvas-resize-handle" onpointerdown="startCanvasResize(event, ${idx})">
+                            ${i18n[currentLang].resize_label}
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+
+            setTimeout(() => {
+                quizData.forEach((_, idx) => initCanvas(idx));
+            }, 100);
+        }
+
+        // Tema 1: Orden e Intervalos (Múltiples modelos)
+        function generateTopic1Intervals() {
+            const model = Math.floor(Math.random() * 2);
+            if (model === 0) {
+                const a = -Math.floor(Math.random() * 5 + 2);
+                const b = Math.floor(Math.random() * 6 + 3);
+                const count = b - a;
+                const ansCorrect = currentLang === 'ES' ? `${count} números enteros` : `${count} integers`;
+                const options = shuffle([
+                    ansCorrect,
+                    currentLang === 'ES' ? `${count + 1} números enteros` : `${count + 1} integers`,
+                    currentLang === 'ES' ? `${count - 1} números enteros` : `${count - 1} integers`,
+                    currentLang === 'ES' ? `${count + 2} números enteros` : `${count + 2} integers`
+                ]);
+                return {
+                    topicName: { ES: "Tema 1: Orden e Intervalos", EN: "Topic 1: Order & Intervals" },
+                    question: {
+                        ES: `¿Cuántos números enteros pertenecen al intervalo semiabierto [${a}, ${b})?`,
+                        EN: `How many integers belong to the half-open interval [${a}, ${b})?`
+                    },
+                    correctIndex: options.indexOf(ansCorrect),
+                    options
+                };
+            } else {
+                const a = -Math.floor(Math.random() * 4 + 3);
+                const b = Math.floor(Math.random() * 4 + 2);
+                const c = a + 2;
+                const d = b + 3;
+                const ansCorrect = `(${c}, ${b}]`;
+                const options = shuffle([
+                    ansCorrect,
+                    `[${a}, ${d})`,
+                    `[${c}, ${b})`,
+                    `(${a}, ${b}]`
+                ]);
+                return {
+                    topicName: { ES: "Tema 1: Orden e Intervalos", EN: "Topic 1: Order & Intervals" },
+                    question: {
+                        ES: `Determina el intervalo resultante de la intersección [${a}, ${b}] ∩ (${c}, ${d}).`,
+                        EN: `Determine the resulting interval from the intersection [${a}, ${b}] ∩ (${c}, ${d}).`
+                    },
+                    correctIndex: options.indexOf(ansCorrect),
+                    options
+                };
+            }
+        }
+
+        // Tema 2: Operaciones básicas en ℝ (Múltiples modelos)
+        function generateTopic2Operations() {
+            const model = Math.floor(Math.random() * 2);
+            if (model === 0) {
+                const initial = (Math.floor(Math.random() * 9 + 12)) * 1000;
+                const income = (Math.floor(Math.random() * 6 + 3)) * 500;
+                const expense = (Math.floor(Math.random() * 4 + 2)) * 1200;
+                const res = initial + income - 3 * expense;
+                const ansCorrect = `$${formatNumber(res)}`;
+                const options = shuffle([
+                    ansCorrect,
+                    `$${formatNumber(initial + income - expense)}`,
+                    `$${formatNumber(initial - income + 3 * expense)}`,
+                    `$${formatNumber(res + 2400)}`
+                ]);
+                return {
+                    topicName: { ES: "Tema 2: Operaciones Básicas", EN: "Topic 2: Basic Operations" },
+                    question: {
+                        ES: `Una cuenta inicia con un saldo de $${formatNumber(initial)}, recibe un abono de $${formatNumber(income)} y luego se realizan 3 débitos iguales de $${formatNumber(expense)} cada uno. ¿Cuál es el saldo final?`,
+                        EN: `An account starts with a balance of $${formatNumber(initial)}, receives a deposit of $${formatNumber(income)}, and then has 3 equal withdrawals of $${formatNumber(expense)} each. What is the final balance?`
+                    },
+                    correctIndex: options.indexOf(ansCorrect),
+                    options
+                };
+            } else {
+                const a = Math.floor(Math.random() * 5 + 4);
+                const b = Math.floor(Math.random() * 4 + 2);
+                const c = Math.floor(Math.random() * 3 + 2);
+                const val = -a * b + (c * 6) / 2 - 5;
+                const ansCorrect = `${val}`;
+                const options = shuffle([
+                    ansCorrect,
+                    `${val + 6}`,
+                    `${-val}`,
+                    `${val - 4}`
+                ]);
+                return {
+                    topicName: { ES: "Tema 2: Operaciones Básicas", EN: "Topic 2: Basic Operations" },
+                    question: {
+                        ES: `Calcula el valor numérico de la expresión: (-${a}) × ${b} + (${c * 6} ÷ 2) - 5`,
+                        EN: `Compute the numerical value of the expression: (-${a}) × ${b} + (${c * 6} ÷ 2) - 5`
+                    },
+                    correctIndex: options.indexOf(ansCorrect),
+                    options
+                };
+            }
+        }
+
+        // Tema 3: Potenciación en ℝ (Múltiples modelos con superíndices reales)
+        function generateTopic3Powers() {
+            const model = Math.floor(Math.random() * 2);
+            if (model === 0) {
+                const base = [2, 3, 5][Math.floor(Math.random() * 3)];
+                const e1 = Math.floor(Math.random() * 3 + 3);
+                const e2 = Math.floor(Math.random() * 2 + 1);
+                const e3 = e1 - e2 - 2;
+                const finalExp = (e1 - e2) - e3;
+                const res = Math.pow(base, finalExp);
+                const ansCorrect = `${formatNumber(res)}`;
+                const options = shuffle([
+                    ansCorrect,
+                    `${formatNumber(Math.pow(base, finalExp + 1))}`,
+                    `${formatNumber(base)}`,
+                    `1`
+                ]);
+                return {
+                    topicName: { ES: "Tema 3: Potenciación", EN: "Topic 3: Exponents" },
+                    question: {
+                        ES: `Halla el valor simplificado de: (${base}<sup>${e1}</sup> × ${base}<sup>-${e2}</sup>) ÷ ${base}<sup>${e3}</sup>`,
+                        EN: `Find the simplified value of: (${base}<sup>${e1}</sup> × ${base}<sup>-${e2}</sup>) ÷ ${base}<sup>${e3}</sup>`
+                    },
+                    correctIndex: options.indexOf(ansCorrect),
+                    options
+                };
+            } else {
+                const num = [2, 3, 4][Math.floor(Math.random() * 3)];
+                const den = num + 2;
+                const ansCorrect = `${den * den}/${num * num}`;
+                const options = shuffle([
+                    ansCorrect,
+                    `${num * num}/${den * den}`,
+                    `-${den * den}/${num * num}`,
+                    `${den}/${num}`
+                ]);
+                return {
+                    topicName: { ES: "Tema 3: Potenciación", EN: "Topic 3: Exponents" },
+                    question: {
+                        ES: `Calcula el resultado de (${num}/${den})<sup>-2</sup>:`,
+                        EN: `Compute the result of (${num}/${den})<sup>-2</sup>:`
+                    },
+                    correctIndex: options.indexOf(ansCorrect),
+                    options
+                };
+            }
+        }
+
+        // Tema 4: Radicación en ℝ (Múltiples modelos con radicales convencionales)
+        function generateTopic4Radicals() {
+            const model = Math.floor(Math.random() * 2);
+            if (model === 0) {
+                const k = [2, 3, 5][Math.floor(Math.random() * 3)];
+                const a = Math.floor(Math.random() * 3 + 3);
+                const b = Math.floor(Math.random() * 2 + 2);
+                const coeff = a + b - 1;
+                const ansCorrect = `${coeff}${radicalHTML(k)}`;
+                const options = shuffle([
+                    ansCorrect,
+                    `${coeff + 2}${radicalHTML(k)}`,
+                    `${a * b}${radicalHTML(k)}`,
+                    `${radicalHTML((a * a + b * b) * k)}`
+                ]);
+                return {
+                    topicName: { ES: "Tema 4: Radicación", EN: "Topic 4: Radicals" },
+                    question: {
+                        ES: `Reduce a su mínima expresión: ${radicalHTML(a * a * k)} + ${radicalHTML(b * b * k)} - ${radicalHTML(k)}`,
+                        EN: `Simplify to lowest terms: ${radicalHTML(a * a * k)} + ${radicalHTML(b * b * k)} - ${radicalHTML(k)}`
+                    },
+                    correctIndex: options.indexOf(ansCorrect),
+                    options
+                };
+            } else {
+                const side = [25, 35, 45, 55, 65][Math.floor(Math.random() * 5)];
+                const area = side * side;
+                const perim = side * 4;
+                const ansCorrect = `${formatNumber(perim)} m`;
+                const options = shuffle([
+                    ansCorrect,
+                    `${formatNumber(side)} m`,
+                    `${formatNumber(side * 2)} m`,
+                    `${formatNumber(area / 2)} m`
+                ]);
+                return {
+                    topicName: { ES: "Tema 4: Radicación", EN: "Topic 4: Radicals" },
+                    question: {
+                        ES: `Un parque cuadrado tiene una superficie exacta de ${formatNumber(area)} m<sup>2</sup>. ¿Cuál es el perímetro total del parque?`,
+                        EN: `A square park has an exact surface area of ${formatNumber(area)} m<sup>2</sup>. What is the total perimeter of the park?`
+                    },
+                    correctIndex: options.indexOf(ansCorrect),
+                    options
+                };
+            }
+        }
+
+        // Tema 5: Logaritmación en ℝ (Múltiples modelos con subíndices reales)
+        function generateTopic5Logarithms() {
+            const model = Math.floor(Math.random() * 2);
+            if (model === 0) {
+                const base = [2, 3, 4, 5][Math.floor(Math.random() * 4)];
+                const exp1 = Math.floor(Math.random() * 3 + 2);
+                const exp2 = Math.floor(Math.random() * 2 + 1);
+                const res = exp1 + exp2;
+                const ansCorrect = `${res}`;
+                const options = shuffle([
+                    ansCorrect,
+                    `${exp1 * exp2}`,
+                    `${formatNumber(Math.pow(base, res))}`,
+                    `${res + 2}`
+                ]);
+                return {
+                    topicName: { ES: "Tema 5: Logaritmación", EN: "Topic 5: Logarithms" },
+                    question: {
+                        ES: `Determina el valor de: log<sub>${base}</sub>(${formatNumber(Math.pow(base, exp1))}) + log<sub>${base}</sub>(${formatNumber(Math.pow(base, exp2))})`,
+                        EN: `Determine the value of: log<sub>${base}</sub>(${formatNumber(Math.pow(base, exp1))}) + log<sub>${base}</sub>(${formatNumber(Math.pow(base, exp2))})`
+                    },
+                    correctIndex: options.indexOf(ansCorrect),
+                    options
+                };
+            } else {
+                const base = [2, 3, 5][Math.floor(Math.random() * 3)];
+                const mult = Math.floor(Math.random() * 4 + 2);
+                const power = Math.floor(Math.random() * 2 + 2);
+                const arg1 = Math.pow(base, power) * mult;
+                const ansCorrect = `${power}`;
+                const options = shuffle([
+                    ansCorrect,
+                    `${mult}`,
+                    `${power + 1}`,
+                    `${base}`
+                ]);
+                return {
+                    topicName: { ES: "Tema 5: Logaritmación", EN: "Topic 5: Logarithms" },
+                    question: {
+                        ES: `Calcula el valor numérico de: log<sub>${base}</sub>(${formatNumber(arg1)}) - log<sub>${base}</sub>(${mult})`,
+                        EN: `Compute the numerical value of: log<sub>${base}</sub>(${formatNumber(arg1)}) - log<sub>${base}</sub>(${mult})`
+                    },
+                    correctIndex: options.indexOf(ansCorrect),
+                    options
+                };
+            }
+        }
+
+        // Tema 6: Ecuaciones en ℝ (Múltiples modelos)
+        function generateTopic6Equations() {
+            const model = Math.floor(Math.random() * 2);
+            if (model === 0) {
+                const xSol = Math.floor(Math.random() * 8 + 4);
+                const a = Math.floor(Math.random() * 3 + 2);
+                const b = Math.floor(Math.random() * 5 + 2);
+                const c = a + 2;
+                const d = c * xSol - a * (xSol - b);
+                const ansCorrect = `x = ${xSol}`;
+                const options = shuffle([
+                    ansCorrect,
+                    `x = ${xSol + 3}`,
+                    `x = -${xSol}`,
+                    `x = ${xSol - 2}`
+                ]);
+                return {
+                    topicName: { ES: "Tema 6: Ecuaciones", EN: "Topic 6: Equations" },
+                    question: {
+                        ES: `Encuentra el valor real de x que satisface la ecuación: ${c}x - ${d} = ${a}(x - ${b})`,
+                        EN: `Find the real value of x that satisfies the equation: ${c}x - ${d} = ${a}(x - ${b})`
+                    },
+                    correctIndex: options.indexOf(ansCorrect),
+                    options
+                };
+            } else {
+                const coeff = [2, 3, 5][Math.floor(Math.random() * 3)];
+                const root = Math.floor(Math.random() * 6 + 4);
+                const indep = coeff * root * root;
+                const ansCorrect = `x = ${root}  o  x = -${root}`;
+                const options = shuffle([
+                    ansCorrect,
+                    `x = ${root}`,
+                    `x = ${root * root}  o  x = -${root * root}`,
+                    `x = ${coeff * root}  o  x = -${coeff * root}`
+                ]);
+                return {
+                    topicName: { ES: "Tema 6: Ecuaciones", EN: "Topic 6: Equations" },
+                    question: {
+                        ES: `Halla el conjunto solución en ℝ de la ecuación: ${coeff}x<sup>2</sup> - ${formatNumber(indep)} = 0`,
+                        EN: `Find the solution set in ℝ for the equation: ${coeff}x<sup>2</sup> - ${formatNumber(indep)} = 0`
+                    },
+                    correctIndex: options.indexOf(ansCorrect),
+                    options
+                };
+            }
+        }
+
+        function shuffle(arr) {
+            return arr.sort(() => Math.random() - 0.5);
+        }
+
+        function checkAnswer(qIdx, optionIdx) {
+            const feedbackEl = document.getElementById(`feedback-${qIdx}`);
+            const q = quizData[qIdx];
+
+            if (optionIdx === q.correctIndex) {
+                feedbackEl.className = "feedback success";
+                feedbackEl.innerText = i18n[currentLang].correct_msg;
+            } else {
+                feedbackEl.className = "feedback error";
+                feedbackEl.innerText = i18n[currentLang].incorrect_msg;
+            }
+        }
+
+        /* ==========================================================================
+           6. LIENZO DE DIBUJO VECTORIAL CON BORRADOR PRECISO Y CAPTURA HTML2CANVAS
+           ========================================================================== */
+        function initCanvas(idx) {
+            const canvas = document.getElementById(`sketchpad-${idx}`);
+            if (!canvas) return;
+            const ctx = canvas.getContext('2d');
+            
+            const rect = canvas.getBoundingClientRect();
+            canvas.width = rect.width || 600;
+            canvas.height = rect.height || 240;
+
+            canvasInstances[idx] = {
+                canvas: canvas,
+                ctx: ctx,
+                tool: 'pencil',
+                color: document.getElementById(`color-${idx}`).value,
+                size: parseInt(document.getElementById(`size-${idx}`).value),
+                isDrawing: false,
+                startX: 0,
+                startY: 0,
+                strokes: [],
+                currentStroke: null
+            };
+
+            canvas.addEventListener('pointerdown', (e) => startDraw(e, idx));
+            canvas.addEventListener('pointermove', (e) => draw(e, idx));
+            canvas.addEventListener('pointerup', (e) => endDraw(e, idx));
+            canvas.addEventListener('pointerleave', (e) => endDraw(e, idx));
+        }
+
+        function syncCanvasResolution(idx) {
+            const inst = canvasInstances[idx];
+            if (!inst) return;
+            const rect = inst.canvas.getBoundingClientRect();
+            if (rect.width > 0 && rect.height > 0) {
+                inst.canvas.width = rect.width;
+                inst.canvas.height = rect.height;
+                redrawCanvas(idx);
+            }
+        }
+
+        function adjustCanvasHeight(idx, delta) {
+            const wrapper = document.getElementById(`canvas-wrapper-${idx}`);
+            if (!wrapper) return;
+            const currentH = wrapper.getBoundingClientRect().height;
+            const nextH = Math.max(150, Math.min(750, currentH + delta));
+            wrapper.style.height = `${nextH}px`;
+            syncCanvasResolution(idx);
+        }
+
+        function startCanvasResize(e, idx) {
+            e.preventDefault();
+            const wrapper = document.getElementById(`canvas-wrapper-${idx}`);
+            if (!wrapper) return;
+            const startY = e.clientY;
+            const startHeight = wrapper.getBoundingClientRect().height;
+
+            const onPointerMove = (moveEvent) => {
+                const newHeight = Math.max(150, Math.min(750, startHeight + (moveEvent.clientY - startY)));
+                wrapper.style.height = `${newHeight}px`;
+                syncCanvasResolution(idx);
+            };
+
+            const onPointerUp = () => {
+                window.removeEventListener('pointermove', onPointerMove);
+                window.removeEventListener('pointerup', onPointerUp);
+            };
+
+            window.addEventListener('pointermove', onPointerMove);
+            window.addEventListener('pointerup', onPointerUp);
+        }
+
+        window.addEventListener('resize', () => {
+            Object.keys(canvasInstances).forEach(idx => syncCanvasResolution(idx));
+        });
+
+        function setCanvasTool(idx, tool, btnEl) {
+            canvasInstances[idx].tool = tool;
+            const toolbar = document.getElementById(`canvas-wrapper-${idx}`).previousElementSibling;
+            toolbar.querySelectorAll('.tool-btn').forEach(btn => btn.classList.remove('active'));
+            if (btnEl) btnEl.classList.add('active');
+        }
+
+        function updateCanvasStyle(idx) {
+            canvasInstances[idx].color = document.getElementById(`color-${idx}`).value;
+            canvasInstances[idx].size = parseInt(document.getElementById(`size-${idx}`).value);
+        }
+
+        function getPos(e, canvas) {
+            const rect = canvas.getBoundingClientRect();
+            const scaleX = canvas.width / rect.width;
+            const scaleY = canvas.height / rect.height;
+            return {
+                x: (e.clientX - rect.left) * scaleX,
+                y: (e.clientY - rect.top) * scaleY
+            };
+        }
+
+        function startDraw(e, idx) {
+            const inst = canvasInstances[idx];
+            inst.isDrawing = true;
+            const pos = getPos(e, inst.canvas);
+            inst.startX = pos.x;
+            inst.startY = pos.y;
+
+            if (inst.tool === 'pencil') {
+                inst.currentStroke = {
+                    type: 'pencil',
+                    color: inst.color,
+                    size: inst.size,
+                    points: [{ x: pos.x, y: pos.y }]
+                };
+            } else if (inst.tool === 'eraser') {
+                eraseStrokeAt(idx, pos.x, pos.y);
+            }
+        }
+
+        function draw(e, idx) {
+            const inst = canvasInstances[idx];
+            if (!inst.isDrawing) return;
+            const pos = getPos(e, inst.canvas);
+
+            if (inst.tool === 'pencil') {
+                inst.currentStroke.points.push({ x: pos.x, y: pos.y });
+                redrawCanvas(idx);
+            } else if (inst.tool === 'line' || inst.tool === 'rect') {
+                redrawCanvas(idx);
+                inst.ctx.beginPath();
+                inst.ctx.strokeStyle = inst.color;
+                inst.ctx.lineWidth = inst.size;
+                if (inst.tool === 'line') {
+                    inst.ctx.moveTo(inst.startX, inst.startY);
+                    inst.ctx.lineTo(pos.x, pos.y);
+                } else if (inst.tool === 'rect') {
+                    inst.ctx.rect(inst.startX, inst.startY, pos.x - inst.startX, pos.y - inst.startY);
+                }
+                inst.ctx.stroke();
+            } else if (inst.tool === 'eraser') {
+                eraseStrokeAt(idx, pos.x, pos.y);
+            }
+        }
+
+        function endDraw(e, idx) {
+            const inst = canvasInstances[idx];
+            if (!inst.isDrawing) return;
+            inst.isDrawing = false;
+            const pos = getPos(e, inst.canvas);
+
+            if (inst.tool === 'pencil' && inst.currentStroke) {
+                inst.strokes.push(inst.currentStroke);
+                inst.currentStroke = null;
+            } else if (inst.tool === 'line') {
+                inst.strokes.push({
+                    type: 'line', color: inst.color, size: inst.size,
+                    x1: inst.startX, y1: inst.startY, x2: pos.x, y2: pos.y
+                });
+            } else if (inst.tool === 'rect') {
+                inst.strokes.push({
+                    type: 'rect', color: inst.color, size: inst.size,
+                    x1: inst.startX, y1: inst.startY, x2: pos.x, y2: pos.y
+                });
+            }
+            redrawCanvas(idx);
+        }
+
+        function redrawCanvas(idx) {
+            const inst = canvasInstances[idx];
+            inst.ctx.clearRect(0, 0, inst.canvas.width, inst.canvas.height);
+
+            const renderStroke = (s) => {
+                inst.ctx.beginPath();
+                inst.ctx.strokeStyle = s.color;
+                inst.ctx.lineWidth = s.size;
+                inst.ctx.lineCap = 'round';
+                inst.ctx.lineJoin = 'round';
+
+                if (s.type === 'pencil') {
+                    if (s.points.length === 1) {
+                        inst.ctx.arc(s.points[0].x, s.points[0].y, s.size / 2, 0, Math.PI * 2);
+                        inst.ctx.fillStyle = s.color;
+                        inst.ctx.fill();
+                        return;
+                    }
+                    if (s.points.length < 2) return;
+                    inst.ctx.moveTo(s.points[0].x, s.points[0].y);
+                    for (let i = 1; i < s.points.length; i++) {
+                        inst.ctx.lineTo(s.points[i].x, s.points[i].y);
+                    }
+                } else if (s.type === 'line') {
+                    inst.ctx.moveTo(s.x1, s.y1);
+                    inst.ctx.lineTo(s.x2, s.y2);
+                } else if (s.type === 'rect') {
+                    inst.ctx.rect(s.x1, s.y1, s.x2 - s.x1, s.y2 - s.y1);
+                }
+                inst.ctx.stroke();
+            };
+
+            inst.strokes.forEach(renderStroke);
+            if (inst.currentStroke) renderStroke(inst.currentStroke);
+        }
+
+        function eraseStrokeAt(idx, px, py) {
+            const inst = canvasInstances[idx];
+            const threshold = 14;
+            const p = { x: px, y: py };
+
+            inst.strokes = inst.strokes.filter(s => {
+                if (s.type === 'pencil') {
+                    if (s.points.length === 1) {
+                        return Math.hypot(s.points[0].x - px, s.points[0].y - py) > threshold;
+                    }
+                    for (let i = 0; i < s.points.length - 1; i++) {
+                        if (distToSegment(p, s.points[i], s.points[i + 1]) <= threshold) return false;
+                    }
+                    return true;
+                } else if (s.type === 'line') {
+                    return distToSegment(p, { x: s.x1, y: s.y1 }, { x: s.x2, y: s.y2 }) > threshold;
+                } else if (s.type === 'rect') {
+                    const p1 = { x: s.x1, y: s.y1 }, p2 = { x: s.x2, y: s.y1 };
+                    const p3 = { x: s.x2, y: s.y2 }, p4 = { x: s.x1, y: s.y2 };
+                    return Math.min(
+                        distToSegment(p, p1, p2), distToSegment(p, p2, p3),
+                        distToSegment(p, p3, p4), distToSegment(p, p4, p1)
+                    ) > threshold;
+                }
+                return true;
+            });
+            redrawCanvas(idx);
+        }
+
+        function distToSegment(p, v, w) {
+            const l2 = Math.pow(v.x - w.x, 2) + Math.pow(v.y - w.y, 2);
+            if (l2 === 0) return Math.hypot(p.x - v.x, p.y - v.y);
+            let t = ((p.x - v.x) * (w.x - v.x) + (p.y - v.y) * (w.y - v.y)) / l2;
+            t = Math.max(0, Math.min(1, t));
+            return Math.hypot(p.x - (v.x + t * (w.x - v.x)), p.y - (v.y + t * (w.y - v.y)));
+        }
+
+        function clearCanvas(idx) {
+            canvasInstances[idx].strokes = [];
+            redrawCanvas(idx);
+        }
+
+        function copyCardScreenshot(idx) {
+            const cardElement = document.getElementById(`quiz-card-${idx}`);
+            html2canvas(cardElement, { scale: 2 }).then(canvas => {
+                canvas.toBlob(blob => {
+                    if (navigator.clipboard && navigator.clipboard.write) {
+                        navigator.clipboard.write([new ClipboardItem({ 'image/png': blob })]);
+                        alert(currentLang === 'ES' ? '¡Captura completa del ejercicio copiada al portapapeles!' : 'Full exercise shot copied to clipboard!');
+                    } else {
+                        alert(currentLang === 'ES' ? 'El navegador no soporta copiado directo. Usa Descargar Imagen.' : 'Direct copy unsupported. Use Download Image instead.');
+                    }
+                });
+            });
+        }
+
+        function downloadCardScreenshot(idx) {
+            const cardElement = document.getElementById(`quiz-card-${idx}`);
+            html2canvas(cardElement, { scale: 2 }).then(canvas => {
+                const link = document.createElement('a');
+                link.download = `Aventura_Emilio_Ejercicio_${idx + 1}.png`;
+                link.href = canvas.toDataURL('image/png');
+                link.click();
+            });
+        }
+
+        /* ==========================================================================
+           7. INICIALIZACIÓN GENERAL
+           ========================================================================== */
+        window.addEventListener('DOMContentLoaded', () => {
+            if (currentTheme === 'dark') {
+                document.documentElement.setAttribute('data-theme', 'dark');
+                document.getElementById('themeToggleBtn').innerText = '☀️';
+            }
+            document.getElementById('langToggleBtn').innerText = currentLang === 'ES' ? '🌐 ES' : '🌐 EN';
+
+            updateI18nText();
+            renderGoals();
+            renderTheory();
+            generateQuiz();
+        });
+    </script>
+</body>
+</html>
